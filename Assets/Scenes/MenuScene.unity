@@ -420,6 +420,7 @@ MonoBehaviour:
   newgameButton: {fileID: 1863097187}
   continueButton: {fileID: 1724778969}
   settingsButton: {fileID: 934403026}
+  leaderboardButton: {fileID: 1441406748}
   quitButton: {fileID: 1912890179}
 --- !u!1001 &934403024
 PrefabInstance:
@@ -606,6 +607,17 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1441406748 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8630450328323752686, guid: 71b4555b3245cf34f82b5f877587bf5a, type: 3}
+  m_PrefabInstance: {fileID: 482206798}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1447076828
 GameObject:
   m_ObjectHideFlags: 0
