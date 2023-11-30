@@ -7,11 +7,11 @@ public static class Loader
 {
     public enum Scene
     {
-        Gameplay,
-        MainMenu,
-        Settings,
-        Leaderboard,
-        Loading
+        GameplayScene,
+        MainMenuScene,
+        SettingsScene,
+        LeaderboardScene,
+        LoadingScene
     }
 
     private static Scene targetScene;
@@ -20,7 +20,12 @@ public static class Loader
     {
         Loader.targetScene = scene;
 
-        SceneManager.LoadScene(Scene.Loading.ToString());
+        SceneManager.LoadScene(Scene.LoadingScene.ToString());
+    }
+    
+    public static void LoadWithoutLoading(Scene scene )
+    {
+        SceneManager.LoadScene(scene.ToString());
     }
 
     public static void LoaderCallback()
