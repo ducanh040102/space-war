@@ -4,23 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private Transform playerFiringPoint;
-    [SerializeField] private Transform playerBullet;
-    [SerializeField] private float playerFireCountdownMax = 0;
-
-    private float playerFireCountdown = 0;
-    private Vector3 screenBoundary;
-
-    private void Start()
-    {
-        screenBoundary = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, transform.position.z));
-    }
+    [SerializeField] private PlayerBulletSpawner playerBulletSpawner;
 
     void Update()
     {
         MoveWithMouse();
         Fire();
-        playerFireCountdown -= Time.deltaTime;
     }
 
     private void MoveWithMouse()
@@ -30,11 +19,11 @@ public class Player : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
             
-
-            if(mousePos.x < screenBoundary.x && mousePos.x > -screenBoundary.x) {
-                if(mousePos.y < screenBoundary.y && mousePos.y > -screenBoundary.y)
-                    transform.position = mousePos;
+            if(mousePos.x > ScreenBoundary.Instance.ScreenWidth || mousePos.x < -ScreenBoundary.Instance.ScreenWidth ||
+                mousePos.y > ScreenBoundary.Instance.ScreenHeight || mousePos.y < -ScreenBoundary.Instance.ScreenHeight) {
+                return;
             }
+            transform.position = mousePos;
         }
     }
 
@@ -42,18 +31,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            if (playerFireCountdown <= 0)
-            {
-                SpawnBullet();
-                playerFireCountdown = playerFireCountdownMax;
-            }
-            
+            playerBulletSpawner.SpawnBullet();
         }
     }
-
-    private void SpawnBullet()
-    {
-        Instantiate(playerBullet, playerFiringPoint.transform.position, playerBullet.transform.rotation);
-    }
-
 }
