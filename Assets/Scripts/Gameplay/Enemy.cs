@@ -16,7 +16,11 @@ public class Enemy : MonoBehaviour
     private void GotDestroy()
     {
         if(hitPoint <= 0)
+        {
+            EnemySpawner.Instance.enemySpawnedList.Remove(transform);
             Destroy(gameObject);
+        }
+            
     }
 
     public void GotHit()
