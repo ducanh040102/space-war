@@ -12,6 +12,11 @@ public class ObjectMoveInScene : MonoBehaviour
         Down,
         Left,
         Right,
+        UpLeft,
+        DownLeft,
+        UpRight,
+        DownRight,
+        Still
     }
 
     [SerializeField] private Move move;
@@ -31,6 +36,22 @@ public class ObjectMoveInScene : MonoBehaviour
                 break;
             case Move.Down:
                 MoveWithDirection(Vector3.down);
+                break;
+            case Move.UpLeft:
+                MoveWithDirection(Vector3.up);
+                MoveWithDirection(Vector3.left);
+                break;
+            case Move.DownLeft:
+                MoveWithDirection(Vector3.left);
+                MoveWithDirection(Vector3.down);
+                break;
+            case Move.UpRight:
+                MoveWithDirection(Vector3.up);
+                MoveWithDirection(Vector3.right); 
+                break;
+            case Move.DownRight:
+                MoveWithDirection(Vector3.down);
+                MoveWithDirection(Vector3.right);
                 break;
         }
     }
