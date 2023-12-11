@@ -6,6 +6,16 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerBulletSpawner playerBulletSpawner;
 
+    public HitPoints hitPoints;
+    public Nuke nuke;
+    [SerializeField] private int maxHitPoints;
+    
+    public void Start()
+    {
+        hitPoints.value = 5;
+        nuke.value = 0;
+    }
+
     void Update()
     {
         MoveWithMouse();
@@ -33,5 +43,46 @@ public class Player : MonoBehaviour
         {
             playerBulletSpawner.SpawnBullet();
         }
+    }
+
+    public void Damaged(int damage)
+    {
+        hitPoints.value -= damage;
+        if (hitPoints.value <= 0)
+        {
+            KillPlayer();
+        }
+    }
+
+    public void KillPlayer()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+
+        }
+    }
+
+    public void PowerupHealth()
+    {
+        if (hitPoints.value < maxHitPoints)
+        {
+            hitPoints.value++;
+
+        }
+    }
+
+    public void PowerupNuke()
+    {
+        nuke.value++;
+    }
+
+    public void PowerupShield()
+    {
+
     }
 }
