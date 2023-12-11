@@ -1,35 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float hitPoint = 50;
-    [SerializeField] private EnemyBulletSpawner enemyBulletSpawner;
+    [SerializeField] protected float hitPointMax = 50;
+    [SerializeField] protected EnemyBulletSpawner enemyBulletSpawner;
+    [SerializeField] protected bool isStartAction = false;
+    [SerializeField] protected bool isSpawningBullet = false;
 
-    private void Update()
+    [SerializeField] protected float hitPoint;
+
+
+    public void InitHP()
     {
-        Fire();
-        GotDestroy();
+        hitPoint = hitPointMax;
     }
 
-    private void GotDestroy()
+    public void Fire(bool isFiring)
     {
-        if(hitPoint <= 0)
-        {
-            EnemySpawner.Instance.enemySpawnedList.Remove(transform);
-            Destroy(gameObject);
-        }
-            
+        if (isFiring)
+            enemyBulletSpawner.SpawnBullet();
     }
+    public void StartAction()
+    {
+        isStartAction = true;
+    }
+    
 
     public void GotHit()
     {
         hitPoint -= 1;
+        if(hitPoint <= 0)
+        {
+            GotDestroy();
+        }
     }
 
-    private void Fire()
+    private void GotDestroy()
     {
-        enemyBulletSpawner.SpawnBullet();
+        EnemySpawner.Instance.enemySpawnedList.Remove(transform);
+        Destroy(gameObject);
     }
+
+    
 }

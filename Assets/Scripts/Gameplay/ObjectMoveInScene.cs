@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ObjectMoveInScene : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
 
-    private enum Move
+    public enum Move
     {
         Up,
         Down,
@@ -19,7 +20,21 @@ public class ObjectMoveInScene : MonoBehaviour
         Still
     }
 
-    [SerializeField] private Move move;
+    public Move move;
+
+    private void Start()
+    {
+        switch (move)
+        {
+            case Move.DownRight:
+                transform.Rotate(new Vector3(0, 0, 45)) ;
+                break;
+            case Move.DownLeft:
+                transform.Rotate(new Vector3(0, 0, -45));
+                break;
+
+        }
+    }
 
     private void Update()
     {
@@ -38,26 +53,26 @@ public class ObjectMoveInScene : MonoBehaviour
                 MoveWithDirection(Vector3.down);
                 break;
             case Move.UpLeft:
-                MoveWithDirection(Vector3.up);
                 MoveWithDirection(Vector3.left);
+                MoveWithDirection(Vector3.up);
                 break;
             case Move.DownLeft:
                 MoveWithDirection(Vector3.left);
                 MoveWithDirection(Vector3.down);
                 break;
             case Move.UpRight:
+                MoveWithDirection(Vector3.right);
                 MoveWithDirection(Vector3.up);
-                MoveWithDirection(Vector3.right); 
                 break;
             case Move.DownRight:
-                MoveWithDirection(Vector3.down);
                 MoveWithDirection(Vector3.right);
+                MoveWithDirection(Vector3.down);
                 break;
         }
     }
 
     private void MoveWithDirection(Vector3 direction)
     {
-        transform.position += direction * Time.deltaTime * moveSpeed;
+        transform.localPosition += direction * Time.deltaTime * moveSpeed;
     }
 }

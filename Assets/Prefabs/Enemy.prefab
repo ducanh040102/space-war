@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 9033898346042632013}
   - component: {fileID: 8282921558029175380}
   - component: {fileID: 4269761304507089698}
-  - component: {fileID: 2487766335282315235}
   - component: {fileID: 4186491912566786892}
+  - component: {fileID: 5705863105455951917}
+  - component: {fileID: 8625929560355462315}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -109,20 +110,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2487766335282315235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2641745181381371123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa2b94b18c7f869458a7dd4d8bfe4f32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitPoint: 2
-  enemyBulletSpawner: {fileID: 4186491912566786892}
 --- !u!114 &4186491912566786892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +126,45 @@ MonoBehaviour:
   spawnCountdownMin: 2
   spawnCountdownMax: 10
   enemyFiringPoint: {fileID: 41445173580848126}
+  firingPattern: 0
+--- !u!114 &5705863105455951917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2641745181381371123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b2a6bcc7473bf4787f124579ee198d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPointMax: 2
+  enemyBulletSpawner: {fileID: 4186491912566786892}
+  isStartAction: 0
+  isSpawningBullet: 0
+  hitPoint: 0
+--- !u!95 &8625929560355462315
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2641745181381371123}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 17a625c19727eae42be4ea327797e8ca, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2933156740069715748
 GameObject:
   m_ObjectHideFlags: 0

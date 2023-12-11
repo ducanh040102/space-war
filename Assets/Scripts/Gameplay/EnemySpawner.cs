@@ -3,19 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Sequence = DG.Tweening.Sequence;
 
 public class EnemySpawner : MonoBehaviour
 {
-    const float stepx = 1f;
-    const float stepy = 1f;
-
     public static EnemySpawner Instance { get; private set; }
 
     public List<Transform> enemySpawnedList;
 
     [SerializeField] private LoadCSV loadCSV;
     [SerializeField] private Transform enemyPrefab;
+    [SerializeField] private Transform clawBossPrefab;
     [SerializeField] private Transform spawnPosittion;
     [SerializeField] private Transform endInitialPostition;
     
@@ -33,9 +32,9 @@ public class EnemySpawner : MonoBehaviour
 
     private async void Wave1()
     {
-        loadCSV.LoadNewCSV(1);
+        await Task.Delay(5000);
 
-        ReadCSVAndSpawnEnemy();
+        LoadCSVAndSpawnEnemy(1);
 
         while (!(enemySpawnedList.Count == 0))
         {
@@ -47,20 +46,28 @@ public class EnemySpawner : MonoBehaviour
 
     private async void Wave2() 
     {
-        loadCSV.LoadNewCSV(2);
+        await Task.Delay(5000);
 
-        ReadCSVAndSpawnEnemy();
+        LoadCSVAndSpawnEnemy(2);
 
         while (!(enemySpawnedList.Count == 0))
         {
             await Task.Delay(1000);
         }
 
-        Wave2();
+        BossFight();
     }
 
-    private void ReadCSVAndSpawnEnemy()
+    private async void BossFight()
     {
+        await Task.Delay(5000);
+        LoadCSVAndSpawnEnemy(3);
+    }
+
+    public void LoadCSVAndSpawnEnemy(int number)
+    {
+
+        loadCSV.LoadNewCSV(number);
         for (int i = 0; i < 6; i++)
         {
             string[] row = loadCSV.ReadSpawnRow(i);
@@ -70,11 +77,26 @@ public class EnemySpawner : MonoBehaviour
 
                 if (int.Parse(row[j]) == 1)
                 {
-                    Transform enemySpawned = Instantiate(enemyPrefab, spawnPosittion.position, enemyPrefab.transform.rotation);
-                    enemySpawnedList.Add(enemySpawned);
-                    enemySpawned.DOMove(position, 0.5f).SetEase(Ease.InOutSine);
+                    SpawnEnemy(enemyPrefab, position);
+                }
+
+                if (int.Parse(row[j]) == 2)
+                {
+                    SpawnEnemy(clawBossPrefab, position);
                 }
             }
         }
+    }
+
+    private Transform SpawnEnemy(Transform enemyPrefab, Vector3 position)
+    {
+        Transform enemySpawned = Instantiate(enemyPrefab, spawnPosittion.position, enemyPrefab.transform.rotation);
+        enemySpawnedList.Add(enemySpawned);
+        enemySpawned.DOMove(position, 2f).SetEase(Ease.InOutSine).OnComplete(() =>
+        {
+            enemySpawned.GetComponent<Enemy>().StartAction();
+        });
+
+        return enemySpawned;
     }
 }
