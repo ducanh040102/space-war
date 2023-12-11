@@ -6,7 +6,6 @@ public class LoadCSV : MonoBehaviour
 {
     private string[] data;
 
-
     public void LoadNewCSV(int wave)
     {
         TextAsset csv = Resources.Load<TextAsset>("Wave"+wave);
