@@ -143,9 +143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a75f49d3093ce9c49b1312e9e0afba80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: 50
+  hitPointMax: 50
   enemyBulletSpawner: {fileID: 5104150157245339512}
   isStartAction: 0
+  isSpawningBullet: 0
   moveDestinations:
   - {x: -7, y: 3, z: 0}
   - {x: 6, y: 0, z: 0}
@@ -185,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec363dd206bf28418a93f1a397741c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 15
   move: 8
 --- !u!1 &4329549091441660440
 GameObject:

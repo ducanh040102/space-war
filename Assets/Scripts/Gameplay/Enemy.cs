@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -7,7 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected bool isStartAction = false;
     [SerializeField] protected bool isSpawningBullet = false;
 
-    [SerializeField] protected float hitPoint;
+    protected float hitPoint;
 
 
     public void InitHP()
@@ -28,15 +29,20 @@ public class Enemy : MonoBehaviour
 
     public void GotHit()
     {
-        hitPoint -= 1;
-        if(hitPoint <= 0)
+        if(isStartAction)
         {
-            GotDestroy();
+            hitPoint -= 1;
+            if (hitPoint <= 0)
+            {
+                GotDestroy();
+            }
         }
+        
     }
 
     private void GotDestroy()
     {
+        transform.DOKill();
         EnemySpawner.Instance.enemySpawnedList.Remove(transform);
         Destroy(gameObject);
     }

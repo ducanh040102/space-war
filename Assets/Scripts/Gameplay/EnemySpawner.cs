@@ -34,7 +34,7 @@ public class EnemySpawner : MonoBehaviour
     {
         await Task.Delay(5000);
 
-        LoadCSVAndSpawnEnemy(1);
+        LoadCSVAndSpawnEnemy(4);
 
         while (!(enemySpawnedList.Count == 0))
         {

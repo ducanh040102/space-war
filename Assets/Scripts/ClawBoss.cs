@@ -114,7 +114,6 @@ public class ClawBoss : Enemy
     private void FollowingPlayer()
     {
         player = GameObject.Find("Player").transform;
-        Debug.Log(player.transform.position);
         if (!isFollowingPlayer || player == null)
         {
             return;
