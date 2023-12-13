@@ -8,7 +8,15 @@ public class LoopingBackground : MonoBehaviour
 {
     [SerializeField] private float scrollSpeed = 0.5f;
 
-    [SerializeField] private Transform[] backgrounds;
+    private Vector3 startPos;
+    private float repeatWidth;
+
+    private void Start()
+    {
+        startPos = transform.position;
+        repeatWidth = GetComponent<BoxCollider2D>().size.y * 0.5f;
+    }
+
     void Update()
     {
         ScrollAndReset();
@@ -16,8 +24,11 @@ public class LoopingBackground : MonoBehaviour
 
     private void ScrollAndReset()
     {
-        if (transform.position.y <= -backgrounds[backgrounds.Length - 1].position.y)
-            transform.position = Vector3.zero;
-        transform.position -= Vector3.up * scrollSpeed * Time.deltaTime;
+        if (transform.position.y < startPos.y - repeatWidth - 1)
+            transform.position = startPos;
+
+        transform.position += Time.deltaTime * scrollSpeed * Vector3.down;
+
+        
     }
 }
