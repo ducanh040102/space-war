@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     public Nuke nuke;
     [SerializeField] private int maxHitPoints;
     
+    public bool hasShield = false;
+
     public void Start()
     {
         hitPoints.value = 5;
@@ -47,7 +49,11 @@ public class Player : MonoBehaviour
 
     public void Damaged(int damage)
     {
-        hitPoints.value -= damage;
+        if (hasShield == false)
+        {
+            hitPoints.value -= damage;
+        }
+        
         if (hitPoints.value <= 0)
         {
             KillPlayer();
@@ -63,7 +69,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-
+            Damaged(1);
         }
     }
 
@@ -83,6 +89,6 @@ public class Player : MonoBehaviour
 
     public void PowerupShield()
     {
-
+        hasShield = true;
     }
 }

@@ -22,11 +22,16 @@ public class PowerUp : MonoBehaviour
                     case 1:
                         player.PowerupNuke();
                         break;
+                    case 2:
+                        player.PowerupShield();
+                        gameObject.transform.SetParent(player.transform);
+                        gameObject.transform.position = player.transform.position;
+                        break;
                     default: 
                         break;
                 }
 
-                this.gameObject.SetActive(false);
+                //this.gameObject.SetActive(false);
             }
         }
     }
