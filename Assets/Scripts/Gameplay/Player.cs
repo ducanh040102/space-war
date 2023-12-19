@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             playerBulletSpawner.SpawnBullet();
+
         }
     }
 
