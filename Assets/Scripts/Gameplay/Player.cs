@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public HitPoints hitPoints;
     public Nuke nuke;
     [SerializeField] private int maxHitPoints;
+
+    
     
     public bool hasShield = false;
 
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             playerBulletSpawner.SpawnBullet();
+            
 
         }
     }

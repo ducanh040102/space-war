@@ -1,41 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
     public Transform firePoint;
-    public GameObject laser; 
+    public LineRenderer lineRenderer;
+    public float maxDistance;
+    public LayerMask obstacleLayer;
 
+    public GameObject obj;
     void Start()
     {
-        laser.SetActive(false);
+        lineRenderer.enabled = true;
+
     }
 
    
-    void LateUpdate()
+    void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            
+
             EnableLaser();
         }
 
-        //if (Input.GetMouseButton(0))
-        //{
-        //    DisableLaser();
-        //}
+        if (Input.GetMouseButton(0))
+        {
+            UpdateLaser();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            DisableLaser();
+        }
+        //UpdateLaser();
+    }
+
+    public void UpdateLaser()
+    {
+        //lineRenderer.SetPosition(0, firePoint.position);
+        lineRenderer.SetPosition(1, new Vector3(0,12,0));
+
+        RaycastHit2D hit = Physics2D.Raycast( (Vector2)transform.position, transform.up, maxDistance, obstacleLayer);
+        if (hit)
+        {
+           
+            lineRenderer.SetPosition(1, new Vector3(0, Vector2.Distance(transform.position, obj.transform.position), 0));
+        }
     }
 
     public void EnableLaser()
     {
-        laser.SetActive(true);
-        laser.transform.position = firePoint.position;
+        lineRenderer.enabled = true;
+
+
     }
 
     public void DisableLaser()
     {
-        laser.SetActive(false);
+        lineRenderer.enabled = false;
+
 
     }
+
 }

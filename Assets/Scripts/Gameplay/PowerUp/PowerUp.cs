@@ -15,7 +15,8 @@ public class PowerUp : MonoBehaviour
         Health,
         Nuke,
         Shield,
-        TwoWayShooter
+        TwoWayShooter,
+        Laser,
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -40,6 +41,11 @@ public class PowerUp : MonoBehaviour
                         player.PowerupShield();
                         gameObject.transform.SetParent(player.transform);
                         gameObject.transform.position = player.transform.position;
+                        break;
+                    case TypeOfPowerup.TwoWayShooter:
+                        break;
+                    case TypeOfPowerup.Laser:
+
                         break;
                     default: 
                         break;
