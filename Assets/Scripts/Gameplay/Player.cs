@@ -9,9 +9,9 @@ public class Player : MonoBehaviour
     public HitPoints hitPoints;
     public Nuke nuke;
     [SerializeField] private int maxHitPoints;
+    public GameObject laserPrefab;
 
-    
-    
+
     public bool hasShield = false;
 
     public void Start()
@@ -94,5 +94,26 @@ public class Player : MonoBehaviour
     public void PowerupShield()
     {
         hasShield = true;
+    }
+
+    public void PowerupLase()
+    {
+        StartCoroutine(LaserTimer());
+    }
+
+    public IEnumerator LaserTimer()
+    {
+        GameObject laserPre = Instantiate(laserPrefab);
+
+        laserPre.transform.SetParent(this.transform);
+        laserPre.transform.position = this.transform.position;
+        yield return new WaitForSeconds(10f);
+        Destroy(laserPre);
+    }
+
+    public IEnumerator TwoWayShot()
+    {
+        yield return new WaitForSeconds(5.0f);
+
     }
 }

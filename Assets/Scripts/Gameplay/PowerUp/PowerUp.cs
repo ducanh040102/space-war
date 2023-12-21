@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour
 {
     [SerializeField] TypeOfPowerup typeOfPowerup;
-
+    
 
     protected Player player;
 
@@ -15,7 +15,7 @@ public class PowerUp : MonoBehaviour
         Health,
         Nuke,
         Shield,
-        TwoWayShooter,
+        TwoWayShot,
         Laser,
     }
 
@@ -42,9 +42,13 @@ public class PowerUp : MonoBehaviour
                         gameObject.transform.SetParent(player.transform);
                         gameObject.transform.position = player.transform.position;
                         break;
-                    case TypeOfPowerup.TwoWayShooter:
+                    case TypeOfPowerup.TwoWayShot:
                         break;
                     case TypeOfPowerup.Laser:
+                        //StartCoroutine(LaserTimer());
+                        this.gameObject.SetActive(false);
+
+                        player.PowerupLase();
 
                         break;
                     default: 
@@ -55,6 +59,5 @@ public class PowerUp : MonoBehaviour
             }
         }
     }
-
 
 }
