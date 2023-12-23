@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int maxHitPoints;
     public GameObject laserPrefab;
     DefaultShooter db;
+
+    public bool isFireDefault = true;
     
 
     public bool hasShield = false;
@@ -44,7 +46,7 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && isFireDefault == true)
         {
             playerBulletSpawner.SpawnBullet();
 
@@ -104,16 +106,19 @@ public class Player : MonoBehaviour
 
     public IEnumerator LaserTimer()
     {
+        isFireDefault = false;
         GameObject laserPre = Instantiate(laserPrefab);
 
         laserPre.transform.SetParent(this.transform);
         laserPre.transform.position = this.transform.position;
         yield return new WaitForSeconds(10f);
         Destroy(laserPre);
+        isFireDefault= true;
     }
 
     public IEnumerator TwoWayShot()
     {
+        // 1 ham ban 2 tia
         yield return new WaitForSeconds(5.0f);
 
     }
