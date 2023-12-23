@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Player;
 
 public class PowerUp : MonoBehaviour
 {
     [SerializeField] TypeOfPowerup typeOfPowerup;
     
-
-    protected Player player;
-
-
     public enum TypeOfPowerup
     {
         Health,
@@ -23,10 +20,10 @@ public class PowerUp : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            player = collision.gameObject.GetComponent<Player>();
+            Player player = collision.gameObject.GetComponent<Player>();
             if (player != null)
             {
-                // 0 = health, 1 = nuke, 2 = shield
+                // 0 = health, 1 = nuke, 2 = shield, 3 = twowayshot, 4 = laser
                 switch (typeOfPowerup)
                 {
                     case TypeOfPowerup.Health:
@@ -43,13 +40,15 @@ public class PowerUp : MonoBehaviour
                         gameObject.transform.position = player.transform.position;
                         break;
                     case TypeOfPowerup.TwoWayShot:
+                        this.gameObject.SetActive(false);
+                        player.typeBullet = TypeOfBullet.TwoWayBullet;
+                        player.PowerupTwoWayShot();
                         break;
                     case TypeOfPowerup.Laser:
-                        //StartCoroutine(LaserTimer());
                         this.gameObject.SetActive(false);
-
-                        player.PowerupLase();
-
+                        player.typeBullet = TypeOfBullet.Laser;
+                        player.PowerupLaser();
+                        
                         break;
                     default: 
                         break;

@@ -4,29 +4,38 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private PlayerBulletSpawner playerBulletSpawner;
+    private PlayerBulletSpawnDefault dPBullet;
+    private PlayerBulletSpawnTwoWay twoWayPBullet;
 
     public HitPoints hitPoints;
     public Nuke nuke;
     [SerializeField] private int maxHitPoints;
     public GameObject laserPrefab;
-    DefaultShooter db;
-
-    public bool isFireDefault = true;
-    
 
     public bool hasShield = false;
+
+    public enum TypeOfBullet
+    {
+        DefaultBullet,
+        TwoWayBullet,
+        Laser
+    }
+
+    public TypeOfBullet typeBullet = TypeOfBullet.DefaultBullet;
 
     public void Start()
     {
         hitPoints.value = 5;
         nuke.value = 0;
+        dPBullet = this.gameObject.GetComponent<PlayerBulletSpawnDefault>();
+        twoWayPBullet = this.gameObject.GetComponent<PlayerBulletSpawnTwoWay>();
     }
 
     void Update()
     {
         MoveWithMouse();
         Fire();
+      
     }
 
     private void MoveWithMouse()
@@ -46,11 +55,13 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        if (Input.GetMouseButton(0) && isFireDefault == true)
+        if (Input.GetMouseButtonDown(0) && typeBullet == TypeOfBullet.DefaultBullet)
         {
-            playerBulletSpawner.SpawnBullet();
-
-            
+            dPBullet.FireBullet();
+        }
+        else if (Input.GetMouseButtonDown(0) && typeBullet == TypeOfBullet.TwoWayBullet)
+        {
+            twoWayPBullet.FireBullet();
         }
     }
 
@@ -99,27 +110,31 @@ public class Player : MonoBehaviour
         hasShield = true;
     }
 
-    public void PowerupLase()
+    public void PowerupLaser()
     {
         StartCoroutine(LaserTimer());
     }
 
+    public void PowerupTwoWayShot()
+    {
+        StartCoroutine(TwoWayShot());
+    }
+
     public IEnumerator LaserTimer()
     {
-        isFireDefault = false;
+        //typeBullet = TypeOfBullet.Laser;
         GameObject laserPre = Instantiate(laserPrefab);
-
         laserPre.transform.SetParent(this.transform);
         laserPre.transform.position = this.transform.position;
         yield return new WaitForSeconds(10f);
         Destroy(laserPre);
-        isFireDefault= true;
+        typeBullet = TypeOfBullet.DefaultBullet;
     }
 
     public IEnumerator TwoWayShot()
     {
-        // 1 ham ban 2 tia
-        yield return new WaitForSeconds(5.0f);
-
+        //typeBullet = TypeOfBullet.TwoWayBullet;
+        yield return new WaitForSeconds(10f);
+        typeBullet = TypeOfBullet.DefaultBullet;
     }
 }

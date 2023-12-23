@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 4926366461536061293}
   - component: {fileID: 5104150157245339512}
   - component: {fileID: 4749941332817371910}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}

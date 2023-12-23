@@ -6,15 +6,19 @@ using UnityEngine;
 public class PlayerBullet : Bullet
 {
     public float moveSpeed;
+    public int damage;
     public Vector3 direction = Vector3.up;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.TryGetComponent<Enemy>(out Enemy enemy);
-        if (enemy != null)
+        if (collision.CompareTag("Enemy"))
         {
-            enemy.GotHit();
-            Destroy(gameObject);
+            Enemy enemy = collision.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.GotHit(damage);
+                gameObject.SetActive(false);
+            }
         }
     }
 
@@ -28,5 +32,12 @@ public class PlayerBullet : Bullet
     private void Move()
     {
         transform.localPosition += direction * Time.deltaTime * moveSpeed;
+    }
+
+    protected override void CrossBoarderDestroySelf()
+    {
+        if (transform.position.y < ScreenBoundary.Instance.ScreenWidth && transform.position.y > -ScreenBoundary.Instance.ScreenWidth)
+            return;
+        gameObject.SetActive(false);
     }
 }

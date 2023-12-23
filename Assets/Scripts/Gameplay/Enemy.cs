@@ -26,9 +26,9 @@ public class Enemy : MonoBehaviour
     }
     
 
-    public void GotHit()
+    public void GotHit(int damage)
     {
-        hitPoint -= 1;
+        hitPoint -= damage;
         if(hitPoint <= 0)
         {
             GotDestroy();
