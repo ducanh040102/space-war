@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,11 +6,16 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    public int damage;
-    public LineRenderer lineRenderer;
-    public float maxDistance;
-    public LayerMask obstacleLayer;
-    //public Transform firingPoint;
+    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private Transform firingPoint;
+    [SerializeField] private float maxLength;
+    [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] private float damage;
+
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
     void Start()
     {
         lineRenderer.enabled = false;
@@ -23,27 +29,34 @@ public class Laser : MonoBehaviour
             EnableLaser();
         }
 
-        //if (Input.GetMouseButton(0))
-        //{
-        //    UpdateLaser();
-        //}
+        if (Input.GetMouseButton(0))
+        {
+            UpdateLaser();
+        }
 
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    DisableLaser();
-        //}
+        if (Input.GetMouseButtonUp(0))
+        {
+            DisableLaser();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        //pdateLaser();
     }
 
     public void UpdateLaser()
     {
-        lineRenderer.SetPosition(1, new Vector3(0,12,0));
+        RaycastHit2D hit = Physics2D.Raycast(firingPoint.position, firingPoint.up, maxLength, obstacleLayer);
+        Vector3 hitPosition = hit ? new Vector3(0, hit.distance + .1f, 0) : firingPoint.position + firingPoint.up * maxLength;
 
-        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, transform.up, maxDistance, obstacleLayer);
-        if (hit)
+        lineRenderer.SetPosition(1, new Vector3(0, Math.Abs(hitPosition.y), 0));
+
+        if (hit.collider != null)
         {
-            lineRenderer.SetPosition(1, new Vector3(0, Vector2.Distance(transform.position, hit.point) + .1f, 0));
+            Enemy enemy = hit.collider.GetComponent<Enemy>();
+            enemy.GotHit(damage * Time.deltaTime);
         }
-
     }
 
     public void EnableLaser()
@@ -54,24 +67,5 @@ public class Laser : MonoBehaviour
     public void DisableLaser()
     {
         lineRenderer.enabled = false;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            Enemy enemy = collision.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                print("damage enemy");
-                //enemy.GotHit(damage);
-            }
-        }
-    }
-
-    public IEnumerator LaserDamage()
-    {
-
-        yield return null;
     }
 }

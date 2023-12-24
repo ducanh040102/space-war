@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerBullet : Bullet
 {
     public float moveSpeed;
-    public int damage;
+    public float damage;
     public Vector3 direction = Vector3.up;
 
     private void OnTriggerEnter2D(Collider2D collision)

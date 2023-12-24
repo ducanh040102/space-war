@@ -13,7 +13,14 @@ public class EnemyBullet : Bullet
             if (player != null)
             {
                 player.Damaged(damage);
+                Destroy(gameObject);
             }
+        }
+
+        if (collision.CompareTag("Shield"))
+        {
+                Destroy(gameObject);
+
         }
     }
 

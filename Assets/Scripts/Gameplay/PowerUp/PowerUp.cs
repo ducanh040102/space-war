@@ -28,35 +28,34 @@ public class PowerUp : MonoBehaviour
                 {
                     case TypeOfPowerup.Health:
                         player.PowerupHealth();
-                        this.gameObject.SetActive(false);
                         break;
                     case TypeOfPowerup.Nuke:
                         player.PowerupNuke();
-                        this.gameObject.SetActive(false);
                         break;
                     case TypeOfPowerup.Shield:
                         player.PowerupShield();
-                        gameObject.transform.SetParent(player.transform);
-                        gameObject.transform.position = player.transform.position;
                         break;
                     case TypeOfPowerup.TwoWayShot:
-                        this.gameObject.SetActive(false);
                         player.typeBullet = TypeOfBullet.TwoWayBullet;
                         player.PowerupTwoWayShot();
                         break;
                     case TypeOfPowerup.Laser:
-                        this.gameObject.SetActive(false);
                         player.typeBullet = TypeOfBullet.Laser;
                         player.PowerupLaser();
-                        
                         break;
                     default: 
                         break;
                 }
 
-                
+                Destroy(gameObject);
+
             }
         }
+    }
+
+    void Move()
+    {
+
     }
 
 }

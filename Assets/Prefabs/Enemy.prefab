@@ -144,6 +144,13 @@ MonoBehaviour:
   isStartAction: 0
   isSpawningBullet: 0
   hitPoint: 0
+  powerups:
+  - {fileID: 2240630075657266591, guid: afeb0dbc08e4a7d498fba6ad1eaa648e, type: 3}
+  - {fileID: 1741331318571708761, guid: 995c97c939000ab4c934965d902937ff, type: 3}
+  - {fileID: 5516252033062286583, guid: 4443bf4f2aa4b9249b6a7e8e4a3e864d, type: 3}
+  - {fileID: 8787241469478616669, guid: a279c64f49cb1f04dbae9f53a9494f03, type: 3}
+  - {fileID: 4530483634359689366, guid: 1e82afed1e787d9428d8bc121a61efde, type: 3}
+  powerupDropChance: 0.5
 --- !u!95 &8625929560355462315
 Animator:
   serializedVersion: 5

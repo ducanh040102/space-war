@@ -10,7 +10,8 @@ public class Player : MonoBehaviour
     public HitPoints hitPoints;
     public Nuke nuke;
     [SerializeField] private int maxHitPoints;
-    public GameObject laserPrefab;
+    public GameObject laserObject;
+    public GameObject shieldPrefab;
 
     public bool hasShield = false;
 
@@ -67,11 +68,17 @@ public class Player : MonoBehaviour
 
     public void Damaged(int damage)
     {
-        if (hasShield == false)
+        //if (hasShield == false)
+        //{
+        //    hitPoints.value -= damage;
+        //}
+        if (hasShield == true)
         {
-            hitPoints.value -= damage;
+            return;
         }
-        
+
+        hitPoints.value -= damage;
+        //explosion o day
         if (hitPoints.value <= 0)
         {
             KillPlayer();
@@ -107,7 +114,7 @@ public class Player : MonoBehaviour
 
     public void PowerupShield()
     {
-        hasShield = true;
+        StartCoroutine(ShiledTimer());
     }
 
     public void PowerupLaser()
@@ -117,21 +124,30 @@ public class Player : MonoBehaviour
 
     public void PowerupTwoWayShot()
     {
-        StartCoroutine(TwoWayShot());
+        StartCoroutine(TwoWayShotTimer());
+    }
+
+    public IEnumerator ShiledTimer()
+    {
+        hasShield = true;
+        GameObject shieldObject = Instantiate(shieldPrefab);
+        shieldObject.transform.SetParent(this.transform);
+        shieldObject.transform.position = this.transform.position;
+        yield return new WaitForSeconds(10f);
+        Destroy(shieldObject);
+        hasShield= false;
     }
 
     public IEnumerator LaserTimer()
     {
         //typeBullet = TypeOfBullet.Laser;
-        GameObject laserPre = Instantiate(laserPrefab);
-        laserPre.transform.SetParent(this.transform);
-        laserPre.transform.position = this.transform.position;
+        laserObject.SetActive(true);
         yield return new WaitForSeconds(10f);
-        Destroy(laserPre);
+        laserObject.SetActive(false);
         typeBullet = TypeOfBullet.DefaultBullet;
     }
 
-    public IEnumerator TwoWayShot()
+    public IEnumerator TwoWayShotTimer()
     {
         //typeBullet = TypeOfBullet.TwoWayBullet;
         yield return new WaitForSeconds(10f);

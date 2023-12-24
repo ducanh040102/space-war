@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected bool isSpawningBullet = false;
 
     [SerializeField] protected float hitPoint;
-
+    public GameObject[] powerups;
+    public float powerupDropChance = .5f;
 
     public void InitHP()
     {
@@ -26,7 +27,7 @@ public class Enemy : MonoBehaviour
     }
     
 
-    public void GotHit(int damage)
+    public void GotHit(float damage)
     {
         hitPoint -= damage;
         if(hitPoint <= 0)
@@ -41,5 +42,19 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
+    private void OnDestroy()
+    {
+        if (Random.value < powerupDropChance)
+        {
+            DropPowerup();
+        }
+    }
+
+    void DropPowerup()
+    {
+        // Chon ngau nhien
+        GameObject powerup = powerups[Random.Range(0, powerups.Length)];
+
+        Instantiate(powerup, transform.position, Quaternion.identity);
+    }
 }
