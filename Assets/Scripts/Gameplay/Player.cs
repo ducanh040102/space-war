@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerBulletSpawner playerBulletSpawner;
 
+    [SerializeField] private AudioSource bulletSoundEffect;
+
     void Update()
     {
         MoveWithMouse();
@@ -32,6 +34,7 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             playerBulletSpawner.SpawnBullet();
+            bulletSoundEffect.Play();
         }
     }
 }
