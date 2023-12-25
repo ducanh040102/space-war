@@ -5,8 +5,9 @@ using static Player;
 
 public class PowerUp : MonoBehaviour
 {
-    [SerializeField] TypeOfPowerup typeOfPowerup;
-    
+    [SerializeField] private TypeOfPowerup typeOfPowerup;
+    [SerializeField] private float speedFall = .5f;
+    [SerializeField] private Vector3 direction = Vector3.down;
     public enum TypeOfPowerup
     {
         Health,
@@ -15,6 +16,17 @@ public class PowerUp : MonoBehaviour
         TwoWayShot,
         Laser,
     }
+
+    private void Start()
+    {
+        Destroy(gameObject,15f);
+    }
+
+    private void Update()
+    {
+        Move();
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -55,7 +67,11 @@ public class PowerUp : MonoBehaviour
 
     void Move()
     {
-
+        transform.localPosition += direction * speedFall * Time.deltaTime;
     }
 
+    //protected void CrossBoarderDestroySelf()
+    //{
+    //    Destroy(gameObject);
+    //}
 }

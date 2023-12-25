@@ -8,8 +8,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected bool isSpawningBullet = false;
 
     [SerializeField] protected float hitPoint;
+
     public GameObject[] powerups;
     public float powerupDropChance = .5f;
+
+    protected GameUIController gameUIController;
+
+    private void Start()
+    {
+        
+    }
 
     public void InitHP()
     {
@@ -30,11 +38,24 @@ public class Enemy : MonoBehaviour
     public void GotHit(float damage)
     {
         hitPoint -= damage;
-        if(hitPoint <= 0)
+
+        if (hitPoint <= 0)
         {
+            gameUIController.UpdateScore(50);
+            SpawnPowerup();
             GotDestroy();
         }
     }
+
+    //public virtual void KillEnemy()
+    //{
+    //    if (hitPoint <= 0)
+    //    {
+    //        gameUIController.UpdateScore(50);
+    //        SpawnPowerup();
+    //        GotDestroy();
+    //    }
+    //}
 
     private void GotDestroy()
     {
@@ -42,7 +63,8 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnDestroy()
+    //private void OnDestroy()
+    public void SpawnPowerup()
     {
         if (Random.value < powerupDropChance)
         {

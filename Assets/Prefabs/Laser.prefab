@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2408969023105141256}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.5901036, y: -3.7034454, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 321f10570b05c774282c185bb88e6621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
   lineRenderer: {fileID: 2064494197411323356}
-  maxDistance: 100
+  firingPoint: {fileID: 0}
+  maxLength: 17
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 256
+  damage: 2
 --- !u!1 &4635959199324479785
 GameObject:
   m_ObjectHideFlags: 0

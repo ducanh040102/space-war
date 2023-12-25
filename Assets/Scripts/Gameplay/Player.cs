@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     [SerializeField] private int maxHitPoints;
     public GameObject laserObject;
     public GameObject shieldPrefab;
-
     public bool hasShield = false;
 
     public enum TypeOfBullet

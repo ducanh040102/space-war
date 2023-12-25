@@ -17,6 +17,8 @@ public class ClawBoss : Enemy
 
     private void Start()
     {
+        gameUIController = GameObject.FindWithTag("GameManager").GetComponent<GameUIController>();
+
         InitHP();
         StartCoroutine(WaitForAttack());
         StartCoroutine(WaitForSpawnMore());

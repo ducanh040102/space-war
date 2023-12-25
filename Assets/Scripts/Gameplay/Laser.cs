@@ -16,6 +16,7 @@ public class Laser : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
     void Start()
     {
         lineRenderer.enabled = false;
@@ -40,14 +41,12 @@ public class Laser : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        //pdateLaser();
-    }
+
 
     public void UpdateLaser()
     {
         RaycastHit2D hit = Physics2D.Raycast(firingPoint.position, firingPoint.up, maxLength, obstacleLayer);
+
         Vector3 hitPosition = hit ? new Vector3(0, hit.distance + .1f, 0) : firingPoint.position + firingPoint.up * maxLength;
 
         lineRenderer.SetPosition(1, new Vector3(0, Math.Abs(hitPosition.y), 0));

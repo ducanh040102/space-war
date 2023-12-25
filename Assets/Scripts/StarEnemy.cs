@@ -8,6 +8,8 @@ public class StarEnemy : Enemy
     {
         InitHP();
         StartCoroutine(WaitForAttack());
+        gameUIController = GameObject.FindWithTag("GameManager").GetComponent<GameUIController>();
+
     }
 
     private IEnumerator WaitForAttack()

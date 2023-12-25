@@ -148,6 +148,8 @@ MonoBehaviour:
   isStartAction: 0
   isSpawningBullet: 0
   hitPoint: 50
+  powerups: []
+  powerupDropChance: 0.1
   moveDestinations:
   - {x: -7, y: 3, z: 0}
   - {x: 6, y: 0, z: 0}

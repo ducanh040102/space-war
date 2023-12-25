@@ -9,6 +9,7 @@ public class PlayerBullet : Bullet
     public float damage;
     public Vector3 direction = Vector3.up;
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
@@ -32,6 +33,7 @@ public class PlayerBullet : Bullet
     private void Move()
     {
         transform.localPosition += direction * Time.deltaTime * moveSpeed;
+
     }
 
     protected override void CrossBoarderDestroySelf()
