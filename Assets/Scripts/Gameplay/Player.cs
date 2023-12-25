@@ -10,8 +10,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        MoveWithMouse();
-        Fire();
+        if (!PauseMenu.isPaused)
+        {
+            MoveWithMouse();
+            Fire();
+        }
     }
 
     private void MoveWithMouse()
