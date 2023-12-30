@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.FilePathAttribute;
 
-public class PlayerBulletSpawnDefault : MonoBehaviour
+public abstract class PBulletSpawner : MonoBehaviour
 {
     public GameObject bulletPrefab;
     List<GameObject> bulletPool;
@@ -16,13 +16,6 @@ public class PlayerBulletSpawnDefault : MonoBehaviour
         CreatePool();
     }
 
-    private void Update()
-    {
-        //if (Input.GetMouseButtonDown(0))
-        {
-            //FireBullet();
-        }
-    }
 
     public void CreatePool()
     {
@@ -55,12 +48,11 @@ public class PlayerBulletSpawnDefault : MonoBehaviour
     }
 
 
-    public virtual void FireBullet()
-    {
+    public abstract void FireBullet();
+       
+        //GameObject bullet = SpawnBullet(firingPoint.position);
         
-        GameObject bullet = SpawnBullet(firingPoint.position);
-        
-    }
+    
 
     private void OnDestroy()
     {

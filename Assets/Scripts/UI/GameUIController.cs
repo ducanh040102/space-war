@@ -21,6 +21,8 @@ public class GameUIController : MonoBehaviour
 
     void Start()
     {
+        hitPoints.value = 5;
+        nuke.value = 0;
         hitPointText.text = hitPoints.value.ToString();
         nukeText.text = nuke.value.ToString();
         scoreText.text = score.value.ToString();
@@ -40,5 +42,25 @@ public class GameUIController : MonoBehaviour
         score.value += points;
         //scoreText.text = score.value.ToString();
 
+    }
+
+    public void IncreHitPoints()
+    {
+        hitPoints.value++;
+    }
+
+    public void DecreHitPoints()
+    {
+        hitPoints.value--;
+    }
+
+    public int GetHitPoints()
+    {
+        return hitPoints.value;
+    }
+
+    public void IncreNuke()
+    {
+        nuke.value++;
     }
 }

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private PlayerBulletSpawnDefault dPBullet;
+    [SerializeField] private GameUIController gameUIController;
+
+    private PGunBulletSpawner dPBullet;
     private PlayerBulletSpawnTwoWay twoWayPBullet;
 
-    public HitPoints hitPoints;
+    
     public Nuke nuke;
     [SerializeField] private int maxHitPoints;
     public GameObject laserObject;
@@ -25,9 +27,8 @@ public class Player : MonoBehaviour
 
     public void Start()
     {
-        hitPoints.value = 5;
-        nuke.value = 0;
-        dPBullet = this.gameObject.GetComponent<PlayerBulletSpawnDefault>();
+        
+        dPBullet = this.gameObject.GetComponent<PGunBulletSpawner>();
         twoWayPBullet = this.gameObject.GetComponent<PlayerBulletSpawnTwoWay>();
     }
 
@@ -67,18 +68,14 @@ public class Player : MonoBehaviour
 
     public void Damaged(int damage)
     {
-        //if (hasShield == false)
-        //{
-        //    hitPoints.value -= damage;
-        //}
         if (hasShield == true)
         {
             return;
         }
 
-        hitPoints.value -= damage;
+        gameUIController.DecreHitPoints();
         //explosion o day
-        if (hitPoints.value <= 0)
+        if (gameUIController.GetHitPoints() <= 0)
         {
             KillPlayer();
         }
@@ -99,16 +96,16 @@ public class Player : MonoBehaviour
 
     public void PowerupHealth()
     {
-        if (hitPoints.value < maxHitPoints)
+        if (gameUIController.GetHitPoints() < maxHitPoints)
         {
-            hitPoints.value++;
+            gameUIController.IncreHitPoints();
 
         }
     }
 
     public void PowerupNuke()
     {
-        nuke.value++;
+        gameUIController.IncreNuke();
     }
 
     public void PowerupShield()
@@ -123,7 +120,10 @@ public class Player : MonoBehaviour
 
     public void PowerupTwoWayShot()
     {
-        StartCoroutine(TwoWayShotTimer());
+        PlayerBulletSpawnTwoWay.bulletCounts++;
+        //StartCoroutine(TwoWayShotTimer());
+        //typeBullet = TypeOfBullet.DefaultBullet;
+
     }
 
     public IEnumerator ShiledTimer()
@@ -146,10 +146,10 @@ public class Player : MonoBehaviour
         typeBullet = TypeOfBullet.DefaultBullet;
     }
 
-    public IEnumerator TwoWayShotTimer()
-    {
-        //typeBullet = TypeOfBullet.TwoWayBullet;
-        yield return new WaitForSeconds(10f);
-        typeBullet = TypeOfBullet.DefaultBullet;
-    }
+    //public IEnumerator TwoWayShotTimer()
+    //{
+        
+    //    yield return new WaitForSeconds(10f);
+    //    typeBullet = TypeOfBullet.DefaultBullet;
+    //}
 }

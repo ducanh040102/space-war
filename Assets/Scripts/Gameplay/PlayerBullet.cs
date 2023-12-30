@@ -7,7 +7,7 @@ public class PlayerBullet : Bullet
 {
     public float moveSpeed;
     public float damage;
-    public Vector3 direction = Vector3.up;
+    public Vector3 direction;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -32,7 +32,7 @@ public class PlayerBullet : Bullet
 
     private void Move()
     {
-        transform.localPosition += direction * Time.deltaTime * moveSpeed;
+        transform.Translate(transform.up * Time.deltaTime * moveSpeed);
 
     }
 
