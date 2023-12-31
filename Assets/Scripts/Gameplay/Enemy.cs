@@ -9,14 +9,13 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] protected float hitPoint;
 
-    public GameObject[] powerups;
-    public float powerupDropChance = .5f;
-
     protected GameUIController gameUIController;
+    public PowerupSpawner powerupSpawner;
+    public GameObject explosion;
 
     private void Start()
     {
-        
+        //powerupSpawner = GameObject.FindObjectOfType<PowerupSpawner>();
     }
 
     public void InitHP()
@@ -41,42 +40,19 @@ public class Enemy : MonoBehaviour
 
         if (hitPoint <= 0)
         {
+            if (gameObject.CompareTag("Boss")){
+                gameUIController.UpdateScore(1000);
+            }
             gameUIController.UpdateScore(50);
-            SpawnPowerup();
+            powerupSpawner.SpawnPowerup(this.transform);
+            Instantiate(explosion, transform.position, Quaternion.identity);
             GotDestroy();
         }
     }
-
-    //public virtual void KillEnemy()
-    //{
-    //    if (hitPoint <= 0)
-    //    {
-    //        gameUIController.UpdateScore(50);
-    //        SpawnPowerup();
-    //        GotDestroy();
-    //    }
-    //}
 
     private void GotDestroy()
     {
         EnemySpawner.Instance.enemySpawnedList.Remove(transform);
         Destroy(gameObject);
-    }
-
-    //private void OnDestroy()
-    public void SpawnPowerup()
-    {
-        if (Random.value < powerupDropChance)
-        {
-            DropPowerup();
-        }
-    }
-
-    void DropPowerup()
-    {
-        // Chon ngau nhien
-        GameObject powerup = powerups[Random.Range(0, powerups.Length)];
-
-        Instantiate(powerup, transform.position, Quaternion.identity);
     }
 }

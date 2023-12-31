@@ -19,7 +19,8 @@ public class EnemyBullet : Bullet
 
         if (collision.CompareTag("Shield"))
         {
-                Destroy(gameObject);
+
+            Destroy(gameObject);
 
         }
     }

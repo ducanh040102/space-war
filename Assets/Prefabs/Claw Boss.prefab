@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 4749941332817371910}
   m_Layer: 8
   m_Name: Claw Boss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,8 +148,8 @@ MonoBehaviour:
   isStartAction: 0
   isSpawningBullet: 0
   hitPoint: 50
-  powerups: []
-  powerupDropChance: 0.1
+  powerupSpawner: {fileID: 0}
+  explosion: {fileID: 0}
   moveDestinations:
   - {x: -7, y: 3, z: 0}
   - {x: 6, y: 0, z: 0}

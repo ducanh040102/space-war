@@ -10,38 +10,39 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreText;
 
     public HitPoints hitPoints;
+    public int maxHitPoints;
     public Nuke nuke;
     public Score score;
-    // Start is called before the first frame update
+
+    public int MaxHitPoints { get => maxHitPoints; set => maxHitPoints = value; }
 
     private void Awake()
     {
         score.value = 0;
+        hitPoints.value = MaxHitPoints;
+        nuke.value = 0;
     }
 
     void Start()
     {
-        hitPoints.value = 5;
-        nuke.value = 0;
+        DisplayedInfor();
+    }
+
+    private void DisplayedInfor()
+    {
         hitPointText.text = hitPoints.value.ToString();
         nukeText.text = nuke.value.ToString();
         scoreText.text = score.value.ToString();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        hitPointText.text = hitPoints.value.ToString();
-        nukeText.text = nuke.value.ToString();
-        scoreText.text = score.value.ToString();
-
+        DisplayedInfor();
     }
 
     public void UpdateScore(int points)
     {
         score.value += points;
-        //scoreText.text = score.value.ToString();
-
     }
 
     public void IncreHitPoints()

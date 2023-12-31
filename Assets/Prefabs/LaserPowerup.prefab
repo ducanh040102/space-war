@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3734324651474052794}
   - component: {fileID: 1620156734714936899}
   - component: {fileID: 8770435398908206269}
-  - component: {fileID: 4954789360715287953}
   - component: {fileID: 5290708374605883416}
+  - component: {fileID: 4787231668982363058}
   m_Layer: 0
   m_Name: LaserPowerup
   m_TagString: Untagged
@@ -132,21 +132,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
---- !u!114 &4954789360715287953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5516252033062286583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faaa1406fe1545543b8dfb2b4d933764, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  typeOfPowerup: 4
-  speedFall: 0.5
-  direction: {x: 0, y: -1, z: 0}
 --- !u!95 &5290708374605883416
 Animator:
   serializedVersion: 5
@@ -168,3 +153,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4787231668982363058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5516252033062286583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5166a02e88837740a4cf6b8038a0005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedFall: 0.5
+  direction: {x: 0, y: -1, z: 0}
+  laserPrefab: {fileID: 2408969023105141256, guid: de89d95f63b65784285ce4fa5c01fe3f, type: 3}

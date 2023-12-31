@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class PowerupSpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject[] powerups;
+    public float powerupDropChance = .2f;
 
-    // Update is called once per frame
-    void Update()
+    public void SpawnPowerup(Transform pos)
     {
         
+        if (Random.value < powerupDropChance)
+        {
+            GameObject powerup = powerups[Random.Range(0, powerups.Length)];
+
+
+            Instantiate(powerup, pos.position, Quaternion.identity);
+        }
     }
 }

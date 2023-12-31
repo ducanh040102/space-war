@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthPowerup : MonoBehaviour
+public class HealthPowerup : PowerUp
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameUIController gameUIController;
+
+    private void Start()
     {
-        
+        gameUIController = GameObject.FindWithTag("GameManager").GetComponent<GameUIController>();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void ActPowerup()
     {
-        
+        if (gameUIController.GetHitPoints() < gameUIController.MaxHitPoints)
+        {
+            gameUIController.IncreHitPoints();
+
+        }
     }
 }

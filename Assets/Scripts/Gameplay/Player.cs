@@ -6,30 +6,34 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private GameUIController gameUIController;
 
-    private PGunBulletSpawner dPBullet;
-    private PlayerBulletSpawnTwoWay twoWayPBullet;
+    private PMainGun pMainGun;
+    private PDoubleshotGun pDoubleshotGun;
 
-    
-    public Nuke nuke;
-    [SerializeField] private int maxHitPoints;
-    public GameObject laserObject;
+    public GameObject laserPrefab;
     public GameObject shieldPrefab;
+
+
     public bool hasShield = false;
 
     public enum TypeOfBullet
     {
-        DefaultBullet,
-        TwoWayBullet,
+        MainGun,
+        DoubleshotGun,
         Laser
     }
 
-    public TypeOfBullet typeBullet = TypeOfBullet.DefaultBullet;
+    public static TypeOfBullet typeBullet = TypeOfBullet.MainGun;
+
+    private void Awake()
+    {
+        typeBullet = TypeOfBullet.MainGun;
+    }
 
     public void Start()
     {
-        
-        dPBullet = this.gameObject.GetComponent<PGunBulletSpawner>();
-        twoWayPBullet = this.gameObject.GetComponent<PlayerBulletSpawnTwoWay>();
+
+        pMainGun = this.gameObject.GetComponent<PMainGun>();
+        pDoubleshotGun = this.gameObject.GetComponent<PDoubleshotGun>();
     }
 
     void Update()
@@ -56,13 +60,13 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        if (Input.GetMouseButtonDown(0) && typeBullet == TypeOfBullet.DefaultBullet)
+        if (Input.GetMouseButtonDown(0) && typeBullet == TypeOfBullet.MainGun)
         {
-            dPBullet.FireBullet();
+            pMainGun.FireBullet();
         }
-        else if (Input.GetMouseButtonDown(0) && typeBullet == TypeOfBullet.TwoWayBullet)
+        else if (Input.GetMouseButtonDown(0) && typeBullet == TypeOfBullet.DoubleshotGun)
         {
-            twoWayPBullet.FireBullet();
+            pDoubleshotGun.FireBullet();
         }
     }
 
@@ -94,62 +98,43 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void PowerupHealth()
-    {
-        if (gameUIController.GetHitPoints() < maxHitPoints)
-        {
-            gameUIController.IncreHitPoints();
-
-        }
-    }
-
-    public void PowerupNuke()
-    {
-        gameUIController.IncreNuke();
-    }
-
-    public void PowerupShield()
-    {
-        StartCoroutine(ShiledTimer());
-    }
-
     public void PowerupLaser()
     {
         StartCoroutine(LaserTimer());
     }
 
-    public void PowerupTwoWayShot()
+    public void PowerupShield()
     {
-        PlayerBulletSpawnTwoWay.bulletCounts++;
-        //StartCoroutine(TwoWayShotTimer());
-        //typeBullet = TypeOfBullet.DefaultBullet;
-
+        StartCoroutine(ShieldTimer());
     }
 
-    public IEnumerator ShiledTimer()
+    private IEnumerator ShieldTimer()
     {
         hasShield = true;
-        GameObject shieldObject = Instantiate(shieldPrefab);
-        shieldObject.transform.SetParent(this.transform);
-        shieldObject.transform.position = this.transform.position;
+        GameObject shieldObj = Instantiate(shieldPrefab);
+        shieldObj.transform.SetParent(this.transform);
+        shieldObj.transform.position = this.transform.position;
         yield return new WaitForSeconds(10f);
-        Destroy(shieldObject);
-        hasShield= false;
+        Destroy(shieldObj);
+        hasShield = false;
     }
 
-    public IEnumerator LaserTimer()
+    private IEnumerator LaserTimer()
     {
-        //typeBullet = TypeOfBullet.Laser;
-        laserObject.SetActive(true);
-        yield return new WaitForSeconds(10f);
-        laserObject.SetActive(false);
-        typeBullet = TypeOfBullet.DefaultBullet;
-    }
 
-    //public IEnumerator TwoWayShotTimer()
-    //{
-        
-    //    yield return new WaitForSeconds(10f);
-    //    typeBullet = TypeOfBullet.DefaultBullet;
-    //}
+        //laserObject.SetActive(true);
+        GameObject laserObj = Instantiate(laserPrefab);
+        //GameObject laserObj2 = Instantiate(laserPrefab);
+
+        laserObj.transform.SetParent(this.transform);
+        laserObj.transform.position = this.transform.GetChild(1).position;
+
+        //laserObj2.transform.SetParent(player.transform);
+        //laserObj2.transform.position = player.transform.GetChild(1).position + new Vector3(.5f,0,0);
+
+        yield return new WaitForSeconds(10f);
+        //laserObject.SetActive(false);
+        Destroy(laserObj);
+        typeBullet = TypeOfBullet.MainGun;
+    }
 }

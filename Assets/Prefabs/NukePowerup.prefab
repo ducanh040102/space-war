@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2072862088450725462}
   - component: {fileID: 3425468431572651673}
   - component: {fileID: 216644268983124608}
-  - component: {fileID: 8439076811378901145}
+  - component: {fileID: 8508591487871431108}
   m_Layer: 0
   m_Name: NukePowerup
   m_TagString: Untagged
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -5333349321414413341, guid: 0720209e4efad46f58d619c8204392da, type: 3}
+  m_Sprite: {fileID: 6012713405212955673, guid: f9c4e95b605604783a2f54ab5890be65, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
---- !u!114 &8439076811378901145
+--- !u!114 &8508591487871431108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,9 +140,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8787241469478616669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faaa1406fe1545543b8dfb2b4d933764, type: 3}
+  m_Script: {fileID: 11500000, guid: fb01f39586489204d83c6ea52504135d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeOfPowerup: 1
   speedFall: 0.5
   direction: {x: 0, y: -1, z: 0}
+  gameUIController: {fileID: 0}
