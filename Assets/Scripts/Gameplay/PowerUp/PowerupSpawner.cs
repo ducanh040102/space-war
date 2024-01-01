@@ -5,7 +5,9 @@ using UnityEngine;
 public class PowerupSpawner : MonoBehaviour
 {
     public GameObject[] powerups;
-    public float powerupDropChance = .2f;
+    public float powerupDropChance = .1f;
+
+
 
     public void SpawnPowerup(Transform pos)
     {
@@ -13,8 +15,8 @@ public class PowerupSpawner : MonoBehaviour
         if (Random.value < powerupDropChance)
         {
             GameObject powerup = powerups[Random.Range(0, powerups.Length)];
-
-
+           
+            
             Instantiate(powerup, pos.position, Quaternion.identity);
         }
     }

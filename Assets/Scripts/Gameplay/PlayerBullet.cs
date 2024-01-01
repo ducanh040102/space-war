@@ -12,7 +12,7 @@ public class PlayerBullet : Bullet
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Boss"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
             if (enemy != null)
@@ -21,6 +21,8 @@ public class PlayerBullet : Bullet
                 gameObject.SetActive(false);
             }
         }
+
+
     }
 
     void Update()

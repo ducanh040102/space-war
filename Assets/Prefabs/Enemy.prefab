@@ -144,6 +144,7 @@ MonoBehaviour:
   isStartAction: 0
   isSpawningBullet: 0
   hitPoint: 0
+  gameUIController: {fileID: 930349575269648282, guid: 94dc27dc6db583345a41d0a0a57d0890, type: 3}
   powerupSpawner: {fileID: 0}
   explosion: {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
 --- !u!95 &8625929560355462315

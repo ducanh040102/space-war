@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameUIController gameUIController;
+    public GameUIController gameUIController;
 
     private PMainGun pMainGun;
     private PDoubleshotGun pDoubleshotGun;
@@ -12,8 +12,11 @@ public class Player : MonoBehaviour
     public GameObject laserPrefab;
     public GameObject shieldPrefab;
 
-
     public bool hasShield = false;
+
+    public GameObject explosion;
+    public PGameManager pGameManager;
+  
 
     public enum TypeOfBullet
     {
@@ -38,9 +41,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        MoveWithMouse();
-        Fire();
-      
+            MoveWithMouse();
+            Fire();
     }
 
     private void MoveWithMouse()
@@ -78,17 +80,26 @@ public class Player : MonoBehaviour
         }
 
         gameUIController.DecreHitPoints();
-        //explosion o day
+        
         if (gameUIController.GetHitPoints() <= 0)
         {
+            gameUIController.hitPoints.value = 0;
             KillPlayer();
         }
+        else
+        {
+            pGameManager.RunEplosion(explosion);
+            
+        }
+
     }
 
     public void KillPlayer()
     {
+        Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -108,7 +119,7 @@ public class Player : MonoBehaviour
         StartCoroutine(ShieldTimer());
     }
 
-    private IEnumerator ShieldTimer()
+    public IEnumerator ShieldTimer()
     {
         hasShield = true;
         GameObject shieldObj = Instantiate(shieldPrefab);
@@ -121,8 +132,6 @@ public class Player : MonoBehaviour
 
     private IEnumerator LaserTimer()
     {
-
-        //laserObject.SetActive(true);
         GameObject laserObj = Instantiate(laserPrefab);
         //GameObject laserObj2 = Instantiate(laserPrefab);
 
@@ -133,7 +142,6 @@ public class Player : MonoBehaviour
         //laserObj2.transform.position = player.transform.GetChild(1).position + new Vector3(.5f,0,0);
 
         yield return new WaitForSeconds(10f);
-        //laserObject.SetActive(false);
         Destroy(laserObj);
         typeBullet = TypeOfBullet.MainGun;
     }

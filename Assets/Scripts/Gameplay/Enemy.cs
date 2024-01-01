@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] protected float hitPoint;
 
-    protected GameUIController gameUIController;
+    public GameUIController gameUIController;
     public PowerupSpawner powerupSpawner;
     public GameObject explosion;
 
@@ -43,7 +43,11 @@ public class Enemy : MonoBehaviour
             if (gameObject.CompareTag("Boss")){
                 gameUIController.UpdateScore(1000);
             }
-            gameUIController.UpdateScore(50);
+            else
+            {
+                gameUIController.UpdateScore(50);
+            }
+
             powerupSpawner.SpawnPowerup(this.transform);
             Instantiate(explosion, transform.position, Quaternion.identity);
             GotDestroy();

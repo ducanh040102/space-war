@@ -9,15 +9,10 @@ public class Laser : MonoBehaviour
     [SerializeField] private float damage;
 
     [SerializeField] private LineRenderer lineRenderer;
-    //[SerializeField] private Transform firingPoint;
     [SerializeField] private float maxLength;
     [SerializeField] private LayerMask obstacleLayer;
     
 
-    private void Awake()
-    {
-        //gameObject.SetActive(false);
-    }
 
     void Start()
     {

@@ -14,10 +14,21 @@ public class GameUIController : MonoBehaviour
     public Nuke nuke;
     public Score score;
 
+    public static GameUIController sharedInstance = null;
+
     public int MaxHitPoints { get => maxHitPoints; set => maxHitPoints = value; }
 
     private void Awake()
     {
+        if (sharedInstance != null && sharedInstance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            sharedInstance = this;
+        }
+
         score.value = 0;
         hitPoints.value = MaxHitPoints;
         nuke.value = 0;
