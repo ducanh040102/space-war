@@ -7,7 +7,6 @@ public class PlayerBullet : Bullet
 {
     public float moveSpeed;
     public float damage;
-    public Vector3 direction;
 
 
     private void OnTriggerEnter2D(Collider2D collision)

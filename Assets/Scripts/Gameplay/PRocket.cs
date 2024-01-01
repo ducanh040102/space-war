@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,17 +6,29 @@ using UnityEngine;
 public class PRocket : MonoBehaviour
 {
     public float explosionRadius;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    public float moveSpeed;
+    public float damage;
     // Update is called once per frame
     void Update()
     {
-        
+        Move();
+        CrossBoarderDestroySelf();
     }
+
+    private void Move()
+    {
+        transform.Translate(transform.up * Time.deltaTime * moveSpeed);
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Boss"))
+        {
+            Explode();
+        }
+    }
+
 
     void Explode()
     {
@@ -23,10 +36,19 @@ public class PRocket : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider.CompareTag("Enemy"))
+            if (collider.CompareTag("Enemy") || collider.CompareTag("Boss"))
             {
-
+                Enemy enemy = collider.GetComponent<Enemy>();
+                enemy.GotHit(damage);
             }
         }
+        Destroy(gameObject);
+    }
+
+    void CrossBoarderDestroySelf()
+    {
+        if (transform.position.y < ScreenBoundary.Instance.ScreenWidth && transform.position.y > -ScreenBoundary.Instance.ScreenWidth)
+            return;
+        Destroy(gameObject);
     }
 }

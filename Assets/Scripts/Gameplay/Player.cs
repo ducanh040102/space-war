@@ -5,18 +5,18 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public GameUIController gameUIController;
-
-    private PMainGun pMainGun;
-    private PDoubleshotGun pDoubleshotGun;
-
     public GameObject laserPrefab;
     public GameObject shieldPrefab;
 
-    public bool hasShield = false;
-
     public GameObject explosion;
     public PGameManager pGameManager;
-  
+
+    public bool hasShield = false;
+
+    private PMainGun pMainGun;
+    private PDoubleshotGun pDoubleshotGun;
+    private PRocketGun pRocketGun;
+
 
     public enum TypeOfBullet
     {
@@ -37,12 +37,14 @@ public class Player : MonoBehaviour
 
         pMainGun = this.gameObject.GetComponent<PMainGun>();
         pDoubleshotGun = this.gameObject.GetComponent<PDoubleshotGun>();
+        pRocketGun = this.gameObject.gameObject.GetComponent<PRocketGun>();
     }
 
     void Update()
     {
-            MoveWithMouse();
-            Fire();
+        MoveWithMouse();
+        Fire();
+        FireRocket();
     }
 
     private void MoveWithMouse()
@@ -72,6 +74,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void FireRocket()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && gameUIController.GetNukeValue() > 0)
+        {
+            pRocketGun.Fire();
+            gameUIController.DecreNuke();
+        }
+    }
+
     public void Damaged(int damage)
     {
         if (hasShield == true)
@@ -81,7 +92,7 @@ public class Player : MonoBehaviour
 
         gameUIController.DecreHitPoints();
         
-        if (gameUIController.GetHitPoints() <= 0)
+        if (gameUIController.GetHitPointsValue() <= 0)
         {
             gameUIController.hitPoints.value = 0;
             KillPlayer();
@@ -122,8 +133,7 @@ public class Player : MonoBehaviour
     public IEnumerator ShieldTimer()
     {
         hasShield = true;
-        GameObject shieldObj = Instantiate(shieldPrefab);
-        shieldObj.transform.SetParent(this.transform);
+        GameObject shieldObj = Instantiate(shieldPrefab, this.transform);
         shieldObj.transform.position = this.transform.position;
         yield return new WaitForSeconds(10f);
         Destroy(shieldObj);
@@ -132,10 +142,9 @@ public class Player : MonoBehaviour
 
     private IEnumerator LaserTimer()
     {
-        GameObject laserObj = Instantiate(laserPrefab);
+        GameObject laserObj = Instantiate(laserPrefab, this.transform);
         //GameObject laserObj2 = Instantiate(laserPrefab);
 
-        laserObj.transform.SetParent(this.transform);
         laserObj.transform.position = this.transform.GetChild(1).position;
 
         //laserObj2.transform.SetParent(player.transform);

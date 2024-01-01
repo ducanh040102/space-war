@@ -66,13 +66,25 @@ public class GameUIController : MonoBehaviour
         hitPoints.value--;
     }
 
-    public int GetHitPoints()
+    public int GetHitPointsValue()
     {
         return hitPoints.value;
+    }
+
+    public int GetNukeValue()
+    {
+        return nuke.value;
     }
 
     public void IncreNuke()
     {
         nuke.value++;
     }
+
+    public void DecreNuke()
+    {
+        nuke.value--;
+    }
+
+
 }

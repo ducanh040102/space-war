@@ -14,7 +14,7 @@ public class HealthPowerup : PowerUp
 
     protected override void ActPowerup()
     {
-        if (gameUIController.GetHitPoints() < gameUIController.MaxHitPoints)
+        if (gameUIController.GetHitPointsValue() < gameUIController.MaxHitPoints)
         {
             gameUIController.IncreHitPoints();
 
