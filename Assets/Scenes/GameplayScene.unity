@@ -384,6 +384,7 @@ RectTransform:
   - {fileID: 1839077344}
   - {fileID: 444145019}
   - {fileID: 1868799889}
+  - {fileID: 200584968}
   - {fileID: 2028007444}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1779,6 +1780,7 @@ GameObject:
   - component: {fileID: 200584970}
   - component: {fileID: 200584969}
   - component: {fileID: 200584971}
+  - component: {fileID: 200584972}
   m_Layer: 5
   m_Name: Sound setting
   m_TagString: Untagged
@@ -1800,7 +1802,7 @@ RectTransform:
   m_Children:
   - {fileID: 906890034}
   - {fileID: 1882026287}
-  m_Father: {fileID: 2028007444}
+  m_Father: {fileID: 2825117}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1860,6 +1862,19 @@ MonoBehaviour:
   myMixer: {fileID: 24100000, guid: f4448f0446edb0f4f989a61c6d752381, type: 2}
   musicSlider: {fileID: 906890035}
   SFXSlider: {fileID: 1882026288}
+--- !u!114 &200584972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200584967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2520f80f19d21434e977bf8e268907da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseContainer: {fileID: 0}
 --- !u!1 &209259337
 GameObject:
   m_ObjectHideFlags: 0
@@ -22672,6 +22687,7 @@ GameObject:
   - component: {fileID: 2028007444}
   - component: {fileID: 2028007446}
   - component: {fileID: 2028007445}
+  - component: {fileID: 2028007447}
   m_Layer: 5
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -22695,7 +22711,6 @@ RectTransform:
   - {fileID: 1133714891}
   - {fileID: 345332531}
   - {fileID: 1336900845}
-  - {fileID: 200584968}
   m_Father: {fileID: 2825117}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -22741,6 +22756,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028007443}
   m_CullTransparentMesh: 1
+--- !u!114 &2028007447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028007443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 489b4632baf769b44abb13b6495e356a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseContainer: {fileID: 0}
 --- !u!1001 &2028234902
 PrefabInstance:
   m_ObjectHideFlags: 0
