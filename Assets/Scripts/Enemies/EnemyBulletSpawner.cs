@@ -97,7 +97,7 @@ public class EnemyBulletSpawner : Spawner
         
         if(laserBullet != null)
         {
-            Laser laser = laserBullet.GetComponent<Laser>();
+            EnemyLaser laser = laserBullet.GetComponent<EnemyLaser>();
             laser.EnableLaser();
             await Task.Delay(laserDuration * 1000);
             laser.DisableLaser();

@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1498998107514726435}
   - component: {fileID: -3526590568064352516}
   m_Layer: 2
-  m_Name: Laser
+  m_Name: EnemyLaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 1401781740165016228}
-  firingPoint: {fileID: 0}
   startVFX: {fileID: 950216277762419872}
   endVFX: {fileID: 8554966093231265794}
 --- !u!1 &3279596440982187997
