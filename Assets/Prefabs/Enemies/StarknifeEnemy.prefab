@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8551877054684989261}
   m_Layer: 0
   m_Name: StarknifeEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -190,7 +190,9 @@ MonoBehaviour:
   spawnCountdownMin: 2
   spawnCountdownMax: 2
   enemyFiringPoint: {fileID: 3956811127557407252}
-  firingPattern: 0
+  firingPattern: 3
+  laserDuration: 0
+  isFiring: 0
 --- !u!114 &8551877054684989261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,8 +207,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPointMax: 5
   enemyBulletSpawner: {fileID: 4109946081041660198}
-  isStartAction: 1
-  isSpawningBullet: 0
+  isStartAction: 0
+  hitPoint: 0
+  gameUIController: {fileID: 0}
+  powerupSpawner: {fileID: 0}
+  explosion: {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
 --- !u!1 &3644038820244014003
 GameObject:
   m_ObjectHideFlags: 0

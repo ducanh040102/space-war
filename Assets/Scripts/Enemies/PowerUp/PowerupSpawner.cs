@@ -7,7 +7,19 @@ public class PowerupSpawner : MonoBehaviour
     public GameObject[] powerups;
     public float powerupDropChance = .1f;
 
+    public static PowerupSpawner sharedInstance = null;
 
+    private void Awake()
+    {
+        if (sharedInstance != null && sharedInstance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            sharedInstance = this;
+        }
+    }
 
     public void SpawnPowerup(Transform pos)
     {

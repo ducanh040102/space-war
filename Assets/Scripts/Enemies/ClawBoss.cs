@@ -19,7 +19,7 @@ public class ClawBoss : Enemy
     {
         gameUIController = GameObject.FindWithTag("GameManager").GetComponent<GameUIController>();
 
-        InitHP();
+        InitStats();
         StartCoroutine(WaitForAttack());
         StartCoroutine(WaitForSpawnMore());
     }
@@ -106,11 +106,6 @@ public class ClawBoss : Enemy
         {
             transform.position = new Vector3(transform.position.x, ScreenBoundary.Instance.ScreenHeight, 0);
         }
-    }
-
-    private void ChangeAnimation()
-    {
-
     }
 
     private void FollowingPlayer()

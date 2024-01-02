@@ -8,8 +8,8 @@ public class StarknifeEnemy : Enemy
 
     void Start()
     {
-        player = GameObject.Find("Player").transform;
-        InitHP();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        InitStats();
         StartCoroutine(WaitForAttack());
     }
 
@@ -26,7 +26,7 @@ public class StarknifeEnemy : Enemy
 
     private void LookAtPlayer()
     {
-        if (enemyBulletSpawner.isFiring)
+        if (enemyBulletSpawner.isFiring && player != null)
         {
             Vector3 direction = player.position - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

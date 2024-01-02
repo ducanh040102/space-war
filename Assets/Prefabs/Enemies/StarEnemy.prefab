@@ -117,6 +117,8 @@ MonoBehaviour:
   spawnCountdownMax: 10
   enemyFiringPoint: {fileID: 41445173580848126}
   firingPattern: 0
+  laserDuration: 0
+  isFiring: 0
 --- !u!114 &5705863105455951917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +134,6 @@ MonoBehaviour:
   hitPointMax: 2
   enemyBulletSpawner: {fileID: 4186491912566786892}
   isStartAction: 0
-  isSpawningBullet: 0
   hitPoint: 0
   gameUIController: {fileID: 930349575269648282, guid: 94dc27dc6db583345a41d0a0a57d0890, type: 3}
   powerupSpawner: {fileID: 0}

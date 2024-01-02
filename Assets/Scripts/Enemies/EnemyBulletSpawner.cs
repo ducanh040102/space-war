@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class EnemyBulletSpawner : Spawner
 {
+    public bool isFiring = false;
+
     [SerializeField] private Transform enemyFiringPoint;
     [SerializeField] private FiringPattern firingPattern;
 
     [SerializeField] private int laserDuration;
 
     private float enemyFireCountdown = 0;
-    public bool isFiring = false;
     private Transform laserBullet;
 
     public enum FiringPattern

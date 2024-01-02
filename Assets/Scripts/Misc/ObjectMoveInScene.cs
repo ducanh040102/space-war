@@ -7,8 +7,9 @@ public class ObjectMoveInScene : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
 
-    private Transform player;
     private Vector3 direction;
+    private Vector3 playerPosition;
+    private Transform player;
 
     public enum Move
     {
@@ -28,7 +29,15 @@ public class ObjectMoveInScene : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.Find("Player").transform;
+        if(GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+            playerPosition = player.position; 
+        }
+        else
+        {
+            move = Move.Down;
+        }
 
         switch (move)
         {
@@ -57,7 +66,7 @@ public class ObjectMoveInScene : MonoBehaviour
                 direction = new Vector3(-1, -1, 0);
                 break;
             case Move.FlyToPlayer:
-                direction = player.position - transform.position;
+                direction = playerPosition - transform.position;
                 break;
         }
 
@@ -68,8 +77,15 @@ public class ObjectMoveInScene : MonoBehaviour
 
     private void Update()
     {
-
         MoveWithDirection(direction.normalized);
+    }
+
+    private void UpdatePlayerPosition()
+    {
+        if(player != null)
+        {
+            playerPosition = player.position;
+        }
     }
 
     private void MoveWithDirection(Vector3 direction)

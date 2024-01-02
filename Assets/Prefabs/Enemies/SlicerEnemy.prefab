@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 6370122029282798612}
   m_Layer: 0
   m_Name: SlicerEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -242,6 +242,11 @@ MonoBehaviour:
   hitPointMax: 10
   enemyBulletSpawner: {fileID: 7287245427756333557}
   isStartAction: 0
+  isSpawningBullet: 0
+  hitPoint: 0
+  gameUIController: {fileID: 0}
+  powerupSpawner: {fileID: 0}
+  explosion: {fileID: 0}
 --- !u!114 &7287245427756333557
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -7,7 +8,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float hitPointMax = 50;
     [SerializeField] protected EnemyBulletSpawner enemyBulletSpawner;
     [SerializeField] protected bool isStartAction = false;
-    [SerializeField] protected bool isSpawningBullet = false;
 
     [SerializeField] protected float hitPoint;
 
@@ -15,13 +15,11 @@ public class Enemy : MonoBehaviour
     public PowerupSpawner powerupSpawner;
     public GameObject explosion;
 
-    private void Start()
+    public void InitStats()
     {
-        //powerupSpawner = GameObject.FindObjectOfType<PowerupSpawner>();
-    }
+        gameUIController = GameUIController.sharedInstance;
+        powerupSpawner = PowerupSpawner.sharedInstance;
 
-    public void InitHP()
-    {
         hitPoint = hitPointMax;
     }
 
@@ -49,9 +47,10 @@ public class Enemy : MonoBehaviour
             {
                 gameUIController.UpdateScore(50);
             }
-
+            
             powerupSpawner.SpawnPowerup(this.transform);
             Instantiate(explosion, transform.position, Quaternion.identity);
+            GotDestroy();
         }
         
     }

@@ -6,7 +6,7 @@ public class SlicerEnemy : Enemy
 {
     void Start()
     {
-        InitHP();
+        InitStats();
         StartCoroutine(WaitForAttack());
     }
 

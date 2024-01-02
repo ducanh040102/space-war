@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 4749941332817371910}
   m_Layer: 0
   m_Name: ClawBoss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,6 +147,10 @@ MonoBehaviour:
   enemyBulletSpawner: {fileID: 5104150157245339512}
   isStartAction: 0
   isSpawningBullet: 0
+  hitPoint: 0
+  gameUIController: {fileID: 0}
+  powerupSpawner: {fileID: 0}
+  explosion: {fileID: 0}
   moveDestinations:
   - {x: -7, y: 3, z: 0}
   - {x: 6, y: 0, z: 0}
@@ -174,6 +178,8 @@ MonoBehaviour:
   spawnCountdownMax: 1
   enemyFiringPoint: {fileID: 7560980551359210749}
   firingPattern: 1
+  laserDuration: 0
+  isFiring: 0
 --- !u!114 &4749941332817371910
 MonoBehaviour:
   m_ObjectHideFlags: 0
