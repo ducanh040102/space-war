@@ -24,12 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164205353592826160}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.55, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7377374853025349962}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &164205353592826166
 SpriteRenderer:
@@ -42,6 +43,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -130,13 +132,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7377374853025349980}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 164205353592826167}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &7377374853025349963
 SpriteRenderer:
@@ -149,6 +152,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -178,8 +182,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -948810827438414497, guid: 092962fd72c5c9141ac5623af0349dff,
-    type: 3}
+  m_Sprite: {fileID: -948810827438414497, guid: 092962fd72c5c9141ac5623af0349dff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -192,7 +195,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &7377374853025349956
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -205,10 +208,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!58 &7377374853025349960
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -219,6 +224,25 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -271,6 +295,8 @@ MonoBehaviour:
   directionSettings:
     smartSpawn: 0
     rotation: {x: 0, y: 0, z: 0}
+  pointInSpaceSettings:
+    position: {x: 0, y: 0, z: 0}
 --- !u!114 &7377374853025349967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +330,8 @@ MonoBehaviour:
   directionSettings:
     smartSpawn: 0
     rotation: {x: 0, y: 0, z: 0}
+  pointInSpaceSettings:
+    position: {x: 0, y: 0, z: 0}
 --- !u!114 &7377374853025349964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +365,8 @@ MonoBehaviour:
   directionSettings:
     smartSpawn: 0
     rotation: {x: 0, y: 0, z: 0}
+  pointInSpaceSettings:
+    position: {x: 0, y: 0, z: 0}
 --- !u!114 &7377374853025349965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +400,8 @@ MonoBehaviour:
   directionSettings:
     smartSpawn: 0
     rotation: {x: 0, y: 0, z: 5}
+  pointInSpaceSettings:
+    position: {x: 0, y: 0, z: 0}
 --- !u!114 &7377374853025349970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,6 +435,8 @@ MonoBehaviour:
   directionSettings:
     smartSpawn: 0
     rotation: {x: 0, y: 0, z: 180}
+  pointInSpaceSettings:
+    position: {x: 0, y: 0, z: 0}
 --- !u!114 &7377374853025349971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,6 +470,8 @@ MonoBehaviour:
   directionSettings:
     smartSpawn: 0
     rotation: {x: 0, y: 0, z: 90}
+  pointInSpaceSettings:
+    position: {x: 0, y: 0, z: 0}
 --- !u!114 &7377374853025349968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,6 +505,8 @@ MonoBehaviour:
   directionSettings:
     smartSpawn: 0
     rotation: {x: 0, y: 0, z: -90}
+  pointInSpaceSettings:
+    position: {x: 0, y: 0, z: 0}
 --- !u!114 &7377374853025349969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -815,9 +853,11 @@ MonoBehaviour:
   _material: Metal
   _structuralIntegrity: 100
   _points: 0
+  playerIndex: -1
   autoPoints: 1
   _indestructible: 0
   _friend: {fileID: 0}
+  bodyCount: 0
   outroSettings:
     emitterId: Explosion Red
     emitterScale: 1
@@ -835,6 +875,7 @@ MonoBehaviour:
   cargoSettings:
     prefab: []
     mode: 0
+    scale: 1
   spriteRenderer: {fileID: 0}
   generateBoxCollider: 1
   ghostMaterial: {fileID: 2100000, guid: bb7b330a3d22c9f4f9e1d0fab8c1c266, type: 2}

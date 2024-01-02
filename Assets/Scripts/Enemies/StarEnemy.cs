@@ -8,6 +8,8 @@ public class StarEnemy : Enemy
     {
         InitHP();
         StartCoroutine(WaitForAttack());
+        //gameUIController = GameObject.FindWithTag("GameManager").GetComponent<GameUIController>();
+        powerupSpawner = GameObject.FindObjectOfType<PowerupSpawner>();
     }
 
     private void Update()

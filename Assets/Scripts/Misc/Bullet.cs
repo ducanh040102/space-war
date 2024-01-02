@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    protected void CrossBoarderDestroySelf()
+    protected virtual void CrossBoarderDestroySelf()
     {
         if (transform.position.y < ScreenBoundary.Instance.ScreenWidth && transform.position.y > - ScreenBoundary.Instance.ScreenWidth)
             return;

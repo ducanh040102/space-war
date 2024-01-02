@@ -7,8 +7,18 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float hitPointMax = 50;
     [SerializeField] protected EnemyBulletSpawner enemyBulletSpawner;
     [SerializeField] protected bool isStartAction = false;
+    [SerializeField] protected bool isSpawningBullet = false;
 
-    protected float hitPoint;
+    [SerializeField] protected float hitPoint;
+
+    public GameUIController gameUIController;
+    public PowerupSpawner powerupSpawner;
+    public GameObject explosion;
+
+    private void Start()
+    {
+        //powerupSpawner = GameObject.FindObjectOfType<PowerupSpawner>();
+    }
 
     public void InitHP()
     {
@@ -26,15 +36,22 @@ public class Enemy : MonoBehaviour
     }
     
 
-    public void GotHit()
+    public void GotHit(float damage)
     {
-        if(isStartAction)
+        hitPoint -= damage;
+
+        if (hitPoint <= 0)
         {
-            hitPoint -= 1;
-            if (hitPoint <= 0)
-            {
-                GotDestroy();
+            if (gameObject.CompareTag("Boss")){
+                gameUIController.UpdateScore(1000);
             }
+            else
+            {
+                gameUIController.UpdateScore(50);
+            }
+
+            powerupSpawner.SpawnPowerup(this.transform);
+            Instantiate(explosion, transform.position, Quaternion.identity);
         }
         
     }
