@@ -5,6 +5,13 @@ using UnityEngine;
 public class PlayerBulletSpawner : Spawner
 {
     [SerializeField] private Transform playerFiringPoint;
+    
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     private float playerFireCountdown = 0;
 
@@ -17,6 +24,7 @@ public class PlayerBulletSpawner : Spawner
     {
         if (playerFireCountdown <= 0)
         {
+            audioManager.PlaySFX(audioManager.playerShoot);
             Spawn(playerFiringPoint.transform.position);
             playerFireCountdown = SpawnCountdownMax;
         }
