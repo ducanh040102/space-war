@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
 
     public List<Transform> enemySpawnedList;
 
+    [SerializeField] private int wave;
     [SerializeField] private LoadCSV loadCSV;
     [SerializeField] private Transform[] enemyPrefab;
     [SerializeField] private Transform[] bossPrefab;
@@ -25,46 +26,27 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        Wave1();
+        NextWave();
     }
 
-    private async void Wave1()
+    private async void NextWave()
     {
         await Task.Delay(5000);
 
-        LoadCSVAndSpawnEnemy(1);
+        LoadCSVAndSpawnEnemy(wave);
 
         while (!(enemySpawnedList.Count == 0))
         {
             await Task.Delay(1000);
         }
 
-        Wave2();
+        wave++;
+        NextWave();
     }
 
-    private async void Wave2() 
-    {
-        await Task.Delay(5000);
-
-        LoadCSVAndSpawnEnemy(2);
-
-        while (!(enemySpawnedList.Count == 0))
-        {
-            await Task.Delay(1000);
-        }
-
-        BossFight();
-    }
-
-    private async void BossFight()
-    {
-        await Task.Delay(5000);
-        LoadCSVAndSpawnEnemy(3);
-    }
 
     public void LoadCSVAndSpawnEnemy(int number)
     {
-
         loadCSV.LoadNewCSV(number);
         for (int i = 0; i < 6; i++)
         {
