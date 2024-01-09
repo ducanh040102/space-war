@@ -26,8 +26,7 @@ public class PowerupSpawner : MonoBehaviour
     {
         if (Random.value < powerupDropChance)
         {
-            //GameObject powerup = powerups[Random.Range(0, powerups.Length)];
-            GameObject powerup = powerups[3];
+            GameObject powerup = powerups[Random.Range(0, powerups.Length)];
 
             Instantiate(powerup, position.position, Quaternion.identity);
         }
