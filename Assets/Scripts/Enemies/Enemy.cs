@@ -1,75 +1,82 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] protected float hitPointMax = 50;
-    [SerializeField] protected EnemyBulletSpawner enemyBulletSpawner;
-    [SerializeField] protected bool isStartAction = false;
+    [SerializeField] private float hitPointMax = 50;
+    [SerializeField] private float hitPoint;
+    [SerializeField] private bool isStartAction = false;
 
-    [SerializeField] protected float hitPoint;
+    protected EnemyBulletSpawner enemyBulletSpawner;
+    private PowerupSpawner powerupSpawner;
 
-    public GameUIController gameUIController;
-    public PowerupSpawner powerupSpawner;
-    public GameObject explosion;
+    public bool IsStartAction { get => isStartAction; private set => isStartAction = value; }
+    public float HitPoint { get => hitPoint; private set => hitPoint = value; }
+    public float HitPointMax { get => hitPointMax; private set => hitPointMax = value; }
 
-    public void InitStats()
+    private void Start()
     {
-        gameUIController = GameUIController.sharedInstance;
+        InitialStats();
+        StartCoroutine(WaitForAttack());
+    }
+
+    private void Update()
+    {
+        Fire();
+        Destroy();
+    }
+
+    protected virtual void InitialStats()
+    {
         powerupSpawner = PowerupSpawner.sharedInstance;
+        enemyBulletSpawner = gameObject.GetComponent<EnemyBulletSpawner>();
 
-        hitPoint = hitPointMax;
+        HitPoint = HitPointMax;
     }
 
-    public void Fire(bool isFiring)
+    protected virtual void Fire()
     {
-        if (isFiring)
-            enemyBulletSpawner.SpawnBullet();
+        enemyBulletSpawner.SpawnBullet();
     }
-    public void StartAction()
-    {
-        isStartAction = true;
-    }
-    
 
-    public void GotHit(float damage)
+    public void Hit(float damage)
     {
-        hitPoint -= damage;
-
-        if (hitPoint <= 0)
+        if (IsStartAction)
         {
-            if (gameObject.CompareTag("Boss")){
-                gameUIController.UpdateScore(1000);
-            }
-            else
-            {
-                gameUIController.UpdateScore(50);
-            }
-            
-            powerupSpawner.SpawnPowerup(this.transform);
-            Instantiate(explosion, transform.position, Quaternion.identity);
-            GotDestroy();
+            HitPoint -= damage;
+        }
+    }
+
+    protected virtual void Destroy()
+    {
+        if(HitPoint <= 0)
+        {
+            transform.DOKill();
+            powerupSpawner.SpawnPowerup(transform);
+            enemyBulletSpawner.StopFiring();
+
+            EnemySpawner.Instance.enemySpawnedList.Remove(transform);
+            VFXManager.instance.SpawnExplosion(transform.position, Vector3.one, 1);
+
+            Destroy(gameObject);
         }
         
     }
 
-    private void GotDestroy()
-    {
-        transform.DOKill();
-        EnemySpawner.Instance.enemySpawnedList.Remove(transform);
-        Destroy(gameObject);
-    }
-
     protected virtual IEnumerator WaitForAttack()
     {
-        while (!isStartAction)
+        while (!IsStartAction)
         {
             yield return null;
         }
-        enemyBulletSpawner.isFiring = true;
+        enemyBulletSpawner.StartFiring();
     }
 
-
+    public void StartAction()
+    {
+        IsStartAction = true;
+    }
 }

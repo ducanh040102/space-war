@@ -80,9 +80,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9555e27054be56046a47fcdfdf0c716c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
+  perSec: 0
+  maxLength: 20
+  direction: {x: 0, y: -1, z: 0}
   lineRenderer: {fileID: 1401781740165016228}
   startVFX: {fileID: 950216277762419872}
   endVFX: {fileID: 8554966093231265794}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  countdown: 1
 --- !u!1 &3279596440982187997
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +144,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fe25035c580aaf447b44060f0585c7f5, type: 2}
+  - {fileID: 2100000, guid: c2771f09ab7a37147aecbaca327d5aff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

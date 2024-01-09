@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1086736937045270025}
   - component: {fileID: 4269761304507089698}
   - component: {fileID: 4186491912566786892}
-  - component: {fileID: 5705863105455951917}
+  - component: {fileID: -241012045260719192}
   - component: {fileID: 8625929560355462315}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: StarEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -115,11 +115,11 @@ MonoBehaviour:
   spawnObjectTransform: {fileID: 8150724272112130020, guid: e16c39cefe3cd1c4382a92a70c37f600, type: 3}
   spawnCountdownMin: 2
   spawnCountdownMax: 10
+  isFiring: 0
   enemyFiringPoint: {fileID: 41445173580848126}
   firingPattern: 0
   laserDuration: 0
-  isFiring: 0
---- !u!114 &5705863105455951917
+--- !u!114 &-241012045260719192
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,16 +128,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2641745181381371123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1b2a6bcc7473bf4787f124579ee198d, type: 3}
+  m_Script: {fileID: 11500000, guid: aa2b94b18c7f869458a7dd4d8bfe4f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hitPointMax: 2
-  enemyBulletSpawner: {fileID: 4186491912566786892}
-  isStartAction: 0
   hitPoint: 0
-  gameUIController: {fileID: 930349575269648282, guid: 94dc27dc6db583345a41d0a0a57d0890, type: 3}
-  powerupSpawner: {fileID: 0}
-  explosion: {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
+  isStartAction: 0
 --- !u!95 &8625929560355462315
 Animator:
   serializedVersion: 5
@@ -170,7 +166,7 @@ GameObject:
   - component: {fileID: 3089986249524700871}
   - component: {fileID: 6210393031055926944}
   - component: {fileID: 2465228474999335926}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 41445173580848126}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FiringPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

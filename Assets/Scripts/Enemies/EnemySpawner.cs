@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Sequence = DG.Tweening.Sequence;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -88,6 +86,11 @@ public class EnemySpawner : MonoBehaviour
                 if (int.Parse(row[j]) == 3)
                 {
                     SpawnEnemy(enemyPrefab[1], position);
+                }
+                
+                if (int.Parse(row[j]) == 4)
+                {
+                    SpawnEnemy(enemyPrefab[2], position);
                 }
             }
         }

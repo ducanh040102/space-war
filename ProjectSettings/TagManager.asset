@@ -9,11 +9,12 @@ TagManager:
   - GameManager
   - Boss
   - Audio
+  - PlayerBullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 

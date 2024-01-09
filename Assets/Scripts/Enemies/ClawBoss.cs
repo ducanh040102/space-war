@@ -2,34 +2,37 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
-public class ClawBoss : Enemy
+public class ClawBoss : MonoBehaviour
 {
-
     [SerializeField] private Vector3[] moveDestinations;
-    [SerializeField] private ObjectMoveInScene objectMoveInScene;
-    [SerializeField] private Transform player;
+
     [SerializeField] private Animator clawAnimator;
 
     private Vector3 spawnPosition;
-    
     private bool isFollowingPlayer = false;
+
+    private ObjectMoveInScene objectMoveInScene;
+    private Enemy enemy;
+    private EnemyBulletSpawner enemyBulletSpawner;
     private Tween move;
 
     private void Start()
     {
-        gameUIController = GameObject.FindWithTag("GameManager").GetComponent<GameUIController>();
+        objectMoveInScene = gameObject.GetComponent<ObjectMoveInScene>();
+        enemy = gameObject.GetComponent<Enemy>();
+        enemyBulletSpawner = gameObject.GetComponent<EnemyBulletSpawner>();
 
-        InitStats();
-        StartCoroutine(WaitForAttack());
+        StartCoroutine(WaitForStart());
         StartCoroutine(WaitForSpawnMore());
     }
 
-    protected override IEnumerator WaitForAttack()
+    protected IEnumerator WaitForStart()
     {
-        while (!isStartAction)
+        while (!enemy.IsStartAction)
         {
             yield return null;
         }
+
         spawnPosition = transform.position;
         Attack();
         StartCoroutine(WaitForDoSpecial());
@@ -38,12 +41,13 @@ public class ClawBoss : Enemy
     
     private IEnumerator WaitForDoSpecial()
     {
-        while (hitPoint != (int)(hitPointMax/2))
+        while (enemy.HitPoint != (int)(enemy.HitPointMax / 2))
         {
             yield return null;
         }
         move.Pause();
-        enemyBulletSpawner.isFiring = false;
+        enemyBulletSpawner.StopFiring();
+
         transform.DOMove(spawnPosition, 3f).SetEase(Ease.InSine);
         clawAnimator.SetTrigger("ballAttack");
         yield return new WaitForSeconds(5f);
@@ -52,7 +56,7 @@ public class ClawBoss : Enemy
     
     private IEnumerator WaitForEndSpecial()
     {
-        yield return new WaitForSeconds(20f);
+        yield return new WaitForSeconds(15f);
         EndSpecial();
 
     }
@@ -67,22 +71,20 @@ public class ClawBoss : Enemy
     private void Update()
     {
         OutBoader();
-        FollowingPlayer();
-        Fire(enemyBulletSpawner.isFiring);
+        FollowingPlayerHorizontal();
     }
 
 
     private void Attack()
     {
-        enemyBulletSpawner.isFiring = true;
+        enemyBulletSpawner.StartFiring();
         move = transform.DOLocalPath(moveDestinations, 30f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
     }
 
     private void DoSpecial()
     {
-        
         isFollowingPlayer = true;
-        objectMoveInScene.move = ObjectMoveInScene.Move.Down;
+        objectMoveInScene.UpdateMoveType(ObjectMoveInScene.Move.Down);
         
         StartCoroutine(WaitForEndSpecial());
         
@@ -91,7 +93,7 @@ public class ClawBoss : Enemy
     private void EndSpecial()
     {
         isFollowingPlayer = false;
-        objectMoveInScene.move = ObjectMoveInScene.Move.Still;
+        objectMoveInScene.UpdateMoveType(ObjectMoveInScene.Move.Still);
         clawAnimator.SetTrigger("idle");
         
         transform.DOMove(spawnPosition, 2f).OnComplete(() =>
@@ -108,16 +110,13 @@ public class ClawBoss : Enemy
         }
     }
 
-    private void FollowingPlayer()
+    private void FollowingPlayerHorizontal()
     {
-        player = GameObject.Find("Player").transform;
-        if (!isFollowingPlayer || player == null)
+        if (!isFollowingPlayer || Player.instance == null)
         {
             return;
         }
         float step = 5f * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.position.x, transform.position.y, transform.position.z), step);
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(Player.instance.transform.position.x, transform.position.y, transform.position.z), step);
     }
-
-
 }

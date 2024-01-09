@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Laser
+  m_Name: Shader Graphs_LaserEnemy
   m_Shader: {fileID: -6465566751694194690, guid: 458c2aa74735ab3469de2b64fe82960f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -41,7 +41,7 @@ Material:
     - LaserThickness_: 30
     - _LaserScale: 5
     m_Colors:
-    - _Color: {r: 5.992157, g: 1.0039214, b: 1.2668254, a: 0}
+    - _Color: {r: 1.0039214, g: 5.992157, b: 1.145373, a: 0}
     - _LaserSpeed: {r: -1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3596582760874242633

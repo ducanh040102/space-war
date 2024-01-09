@@ -25,22 +25,35 @@ public class ObjectMoveInScene : MonoBehaviour
         FlyToPlayer,
     }
 
-    public Move move;
+    [SerializeField] private Move move;
 
     private void Start()
     {
-        if(GameObject.FindGameObjectWithTag("Player") != null)
+        playerPosition = Player.instance.transform.position;
+
+        UpdateMoveType(move);
+    }
+    
+    
+
+    private void Update()
+    {
+        if (move != Move.Still)
         {
-            player = GameObject.FindGameObjectWithTag("Player").transform;
-            playerPosition = player.position; 
+            MoveWithDirection(direction.normalized);
         }
-        else
-        {
-            move = Move.Down;
-        }
+
+    }
+
+    public void UpdateMoveType(Move _move)
+    {
+        move = _move;
 
         switch (move)
         {
+            case Move.Still:
+                direction = Vector3.down;
+                break;
             case Move.Left:
                 direction = Vector3.left;
                 break;
@@ -73,19 +86,6 @@ public class ObjectMoveInScene : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = rotation;
-    }
-
-    private void Update()
-    {
-        MoveWithDirection(direction.normalized);
-    }
-
-    private void UpdatePlayerPosition()
-    {
-        if(player != null)
-        {
-            playerPosition = player.position;
-        }
     }
 
     private void MoveWithDirection(Vector3 direction)

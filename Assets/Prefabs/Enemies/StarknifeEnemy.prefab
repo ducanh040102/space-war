@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 3405088920452161857}
   - component: {fileID: 1446089878145048607}
   - component: {fileID: 4109946081041660198}
-  - component: {fileID: 8551877054684989261}
-  m_Layer: 0
+  - component: {fileID: -3198195986214911062}
+  - component: {fileID: 8752468063919200885}
+  m_Layer: 8
   m_Name: StarknifeEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594361469879297503}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 5.07, y: -1.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -38,7 +39,7 @@ Transform:
   - {fileID: 8532034536804641754}
   - {fileID: 3956811127557407252}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!212 &9074857305733176223
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -189,11 +190,11 @@ MonoBehaviour:
   spawnObjectTransform: {fileID: 4828423039550468004, guid: f174c3ffa219ff4499e2ab406eb8f4bc, type: 3}
   spawnCountdownMin: 2
   spawnCountdownMax: 2
+  isFiring: 0
   enemyFiringPoint: {fileID: 3956811127557407252}
   firingPattern: 3
   laserDuration: 0
-  isFiring: 0
---- !u!114 &8551877054684989261
+--- !u!114 &-3198195986214911062
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,16 +203,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1594361469879297503}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bffc2c089189134eb6ba3c918da6b4b, type: 3}
+  m_Script: {fileID: 11500000, guid: 7adc50bfdf9a61142b5c58613e75cac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8752468063919200885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594361469879297503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa2b94b18c7f869458a7dd4d8bfe4f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hitPointMax: 5
-  enemyBulletSpawner: {fileID: 4109946081041660198}
-  isStartAction: 0
   hitPoint: 0
-  gameUIController: {fileID: 0}
-  powerupSpawner: {fileID: 0}
-  explosion: {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
+  isStartAction: 0
 --- !u!1 &3644038820244014003
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +230,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3956811127557407252}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FiringPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8532034536804641754}
   - component: {fileID: 5849176376061268739}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Thrust
   m_TagString: Untagged
   m_Icon: {fileID: 0}

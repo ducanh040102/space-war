@@ -1,3 +1,4 @@
+using Playniax.Pyro.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public class EnemyBulletSpawner : Spawner
 {
-    public bool isFiring = false;
+    [SerializeField] private bool isFiring = false;
 
     [SerializeField] private Transform enemyFiringPoint;
     [SerializeField] private FiringPattern firingPattern;
@@ -14,6 +15,8 @@ public class EnemyBulletSpawner : Spawner
 
     private float enemyFireCountdown = 0;
     private Transform laserBullet;
+
+    public bool IsFiring { get => isFiring; private set => isFiring = value; }
 
     public enum FiringPattern
     {
@@ -31,49 +34,55 @@ public class EnemyBulletSpawner : Spawner
 
     private void Update()
     {
-        if(isFiring)
+        if(IsFiring)
         {
             enemyFireCountdown -= Time.deltaTime;
         }
-        
     }
 
     public void SpawnBullet()
     {
-        if (enemyFireCountdown <= 0)
+        if (IsFiring)
         {
-            switch (firingPattern)
+            if (enemyFireCountdown <= 0)
             {
-                case FiringPattern.StraightDownPattern:
-                    StraightDown();
-                    break;
-                case FiringPattern.ThreeShotPattern:
-                    ThreeShot();
-                    break;
-                case FiringPattern.HommingPattern:
-                    Homming();
-                    break;
-                case FiringPattern.StraightDownLaser:
-                    Laser();
-                    break;
+                switch (firingPattern)
+                {
+                    case FiringPattern.StraightDownPattern:
+                        StraightDown();
+                        break;
+                    case FiringPattern.ThreeShotPattern:
+                        ThreeShot();
+                        break;
+                    case FiringPattern.HommingPattern:
+                        Homming();
+                        break;
+                    case FiringPattern.StraightDownLaser:
+                        Laser();
+                        break;
+                }
             }
         }
     }
 
     private void StraightDown()
     {
-        Spawn(enemyFiringPoint.position);
+        Transform bullet = Spawn(enemyFiringPoint.position);
+
+        bullet.GetComponent<ObjectMoveInScene>().UpdateMoveType(ObjectMoveInScene.Move.Down);
         enemyFireCountdown = GetSpawnRandomCountdown();
     }
 
     private void ThreeShot()
     {
-        Spawn(enemyFiringPoint.position);
+        Transform middleBullet = Spawn(enemyFiringPoint.position);
         Transform leftBullet = Spawn(enemyFiringPoint.position + Vector3.left);
         Transform rightBullet = Spawn(enemyFiringPoint.position + Vector3.right);
 
-        leftBullet.GetComponent<ObjectMoveInScene>().move = ObjectMoveInScene.Move.DownLeft;
-        rightBullet.GetComponent<ObjectMoveInScene>().move = ObjectMoveInScene.Move.DownRight;
+
+        middleBullet.GetComponent<ObjectMoveInScene>().UpdateMoveType(ObjectMoveInScene.Move.Down);
+        leftBullet.GetComponent<ObjectMoveInScene>().UpdateMoveType(ObjectMoveInScene.Move.DownLeft);
+        rightBullet.GetComponent<ObjectMoveInScene>().UpdateMoveType(ObjectMoveInScene.Move.DownRight);
 
         enemyFireCountdown = GetSpawnRandomCountdown();
     }
@@ -82,14 +91,13 @@ public class EnemyBulletSpawner : Spawner
     {
         Transform bullet = Spawn(enemyFiringPoint.position);
 
-        bullet.GetComponent<ObjectMoveInScene>().move = ObjectMoveInScene.Move.FlyToPlayer;
+        bullet.GetComponent<ObjectMoveInScene>().UpdateMoveType(ObjectMoveInScene.Move.FlyToPlayer);
 
         enemyFireCountdown = GetSpawnRandomCountdown();
     }
 
-    private async void Laser()
+    private void Laser()
     {
-        
         if(laserBullet == null)
         {
             laserBullet = Spawn(enemyFiringPoint.position);
@@ -98,13 +106,37 @@ public class EnemyBulletSpawner : Spawner
         
         if(laserBullet != null)
         {
-            EnemyLaser laser = laserBullet.GetComponent<EnemyLaser>();
+            if (transform == null)
+                return;
+            Laser laser = laserBullet.GetComponent<Laser>();
             laser.EnableLaser();
-            await Task.Delay(laserDuration * 1000);
-            laser.DisableLaser();
-            enemyFireCountdown = GetSpawnRandomCountdown();
-        }
+            laser.UpdateLaser(transform, Vector3.down);
+            StartCoroutine(WaitForDisableLaser(laser));
+            
+        }    
+    }
 
-        
+    public void StartFiring()
+    {
+        IsFiring = true;
+    }
+
+    public void StopFiring()
+    {
+        IsFiring = false;
+    }
+
+    private IEnumerator WaitForDisableLaser(Laser laser)
+    {
+        yield return new WaitForSeconds(laserDuration);
+        laser.DisableLaser();
+        enemyFireCountdown = GetSpawnRandomCountdown();
+    }
+
+    private void OnDestroy()
+    {
+        if (laserBullet == null)
+            return;
+        laserBullet.GetComponent<Laser>().SelfDestroy();
     }
 }
