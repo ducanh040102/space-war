@@ -1254,14 +1254,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1615058864021971620, guid: b9ab564385349a440ba9cf39732904cd, type: 3}
-      propertyPath: typeBullet
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1615058864021971620, guid: b9ab564385349a440ba9cf39732904cd, type: 3}
-      propertyPath: bulletLevel
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 2931033601521461894, guid: b9ab564385349a440ba9cf39732904cd, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1937,7 +1929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawnedList: []
-  wave: 9
+  wave: 1
   loadCSV: {fileID: 1831163932}
   enemyPrefab:
   - {fileID: 9033898346042632013, guid: 81a4e99f300aa64458a32d3ad08c9b9f, type: 3}
@@ -3038,7 +3030,7 @@ MonoBehaviour:
   - {fileID: 1741331318571708761, guid: 995c97c939000ab4c934965d902937ff, type: 3}
   - {fileID: 5160020215448610534, guid: 6ef96a265447cb44f8653f5475c2eecb, type: 3}
   - {fileID: 8787241469478616669, guid: a279c64f49cb1f04dbae9f53a9494f03, type: 3}
-  powerupDropChance: 0.4
+  powerupDropChance: 0.3
 --- !u!1 &2083093902
 GameObject:
   m_ObjectHideFlags: 0
