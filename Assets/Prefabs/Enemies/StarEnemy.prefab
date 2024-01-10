@@ -112,12 +112,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83573f87e5bb30408ec879b1006303f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnObjectTransform: {fileID: 8150724272112130020, guid: e16c39cefe3cd1c4382a92a70c37f600, type: 3}
+  objectPool: {fileID: 0}
   spawnCountdownMin: 2
   spawnCountdownMax: 10
   isFiring: 0
   enemyFiringPoint: {fileID: 41445173580848126}
   firingPattern: 0
+  bulletPoolName: StarEnemyPool
   laserDuration: 0
 --- !u!114 &-241012045260719192
 MonoBehaviour:
@@ -131,8 +132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2b94b18c7f869458a7dd4d8bfe4f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPointMax: 2
+  hitPointMax: 10
   hitPoint: 0
+  scoreValue: 20000
   isStartAction: 0
 --- !u!95 &8625929560355462315
 Animator:

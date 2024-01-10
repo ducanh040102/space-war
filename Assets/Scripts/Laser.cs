@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    [SerializeField] private float damage;
+    [SerializeField] private float baseDamage;
     [SerializeField] private float perSec;
     [SerializeField] private float maxLength;
 
@@ -36,6 +36,8 @@ public class Laser : MonoBehaviour
         lineRenderer.enabled = true;
         startVFX.gameObject.SetActive(true);
         endVFX.gameObject.SetActive(true);
+
+        
     }
 
 
@@ -57,18 +59,16 @@ public class Laser : MonoBehaviour
             {
                 if(hit.transform.GetComponent<Enemy>() != null)
                 {
-                    Debug.Log("Hit");
-                    hit.transform.GetComponent<Enemy>().Hit(1);
+                    float finalDamage = baseDamage + (PlayerBulletManager.instance.bulletLevel/2);
+                    hit.transform.GetComponent<Enemy>().Hit(finalDamage);
                 }
 
                 else
                 {
                     Player.instance.Damage(1);
-                    DisableLaser();
                 }
                 countdown = perSec;
-            }
-                
+            } 
         }
         
         lineRenderer.SetPosition(0, spawnPosition);
@@ -83,10 +83,5 @@ public class Laser : MonoBehaviour
         lineRenderer.enabled = false;
         startVFX.gameObject.SetActive(false);
         endVFX.gameObject.SetActive(false);
-    }
-
-    public void SelfDestroy()
-    {
-        Destroy(gameObject);
     }
 }

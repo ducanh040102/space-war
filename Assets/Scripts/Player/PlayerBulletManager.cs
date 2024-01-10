@@ -6,9 +6,11 @@ public class PlayerBulletManager : MonoBehaviour
 {
     public static PlayerBulletManager instance;
 
-    [SerializeField] private GameObject laserPrefab;
-    [SerializeField] private float attackInterval;
+    public int bulletLevel;
 
+    [SerializeField] private GameObject laserPrefab;
+    [SerializeField] private float mainGunAttackInterval;
+    [SerializeField] private float doubleshotGunAttackInterval;
 
     private PMainGun pMainGun;
     private PDoubleshotGun pDoubleshotGun;
@@ -18,7 +20,8 @@ public class PlayerBulletManager : MonoBehaviour
     private Respawn respawn;
     private TypeOfBullet previousTypeBullet;
 
-    [SerializeField] private float attackIntervalCountdown;
+    private float attackInterval;
+    private float attackIntervalCountdown;
 
     public enum TypeOfBullet
     {
@@ -49,6 +52,8 @@ public class PlayerBulletManager : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenu.isPaused)
+            return;
         Fire();
         FireRocket();
         ChangeBulletType();
@@ -66,6 +71,16 @@ public class PlayerBulletManager : MonoBehaviour
             laser.DisableLaser();
             previousTypeBullet = typeBullet;
         }
+
+        if (typeBullet == TypeOfBullet.MainGun)
+        {
+            attackInterval = mainGunAttackInterval;
+        }
+
+        else if (typeBullet == TypeOfBullet.DoubleshotGun)
+        {
+            attackInterval = doubleshotGunAttackInterval;
+        }
     }
 
     private void Fire()
@@ -78,17 +93,24 @@ public class PlayerBulletManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (typeBullet == TypeOfBullet.Laser)
+            {
+                laser.EnableLaser();
+                AudioManager.instance.PlayPlayerShootLaser();
+            }
+                
             if (typeBullet == TypeOfBullet.MainGun)
                 pMainGun.FireBullet();
             if (typeBullet == TypeOfBullet.DoubleshotGun)
                 pDoubleshotGun.FireBullet();
-            if (typeBullet == TypeOfBullet.Laser)
-                laser.EnableLaser();
         }
         if (Input.GetMouseButton(0))
         {
             if (typeBullet == TypeOfBullet.Laser)
+            {
                 laser.UpdateLaser(transform, Vector3.up);
+            }
+                
             else
             {
                 if (attackIntervalCountdown <= 0)
@@ -97,6 +119,9 @@ public class PlayerBulletManager : MonoBehaviour
                         pDoubleshotGun.FireBullet();
                     if (typeBullet == TypeOfBullet.MainGun)
                         pMainGun.FireBullet();
+
+                    AudioManager.instance.PlayPlayerShoot();
+
                     attackIntervalCountdown = attackInterval;
                 }
             }
@@ -106,7 +131,7 @@ public class PlayerBulletManager : MonoBehaviour
         {
             laser.DisableLaser();
         }
-            
+        
     }
 
     private void FireRocket()

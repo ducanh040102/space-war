@@ -6,7 +6,11 @@ public class MainGunPowerup : PowerUp
 {
     protected override void ActPowerup()
     {
-        PMainGun.bulletCounts++;
-        PlayerBulletManager.instance.typeBullet = PlayerBulletManager.TypeOfBullet.MainGun;
+        AudioManager.instance.PlayWeaponUpgrade();
+
+        if (PlayerBulletManager.instance.typeBullet != PlayerBulletManager.TypeOfBullet.MainGun)
+            PlayerBulletManager.instance.typeBullet = PlayerBulletManager.TypeOfBullet.MainGun;
+        else
+            PlayerBulletManager.instance.bulletLevel++;
     }
 }

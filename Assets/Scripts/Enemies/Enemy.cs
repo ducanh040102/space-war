@@ -1,13 +1,13 @@
 using DG.Tweening;
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float hitPointMax = 50;
     [SerializeField] private float hitPoint;
+    [SerializeField] private int scoreValue;
     [SerializeField] private bool isStartAction = false;
 
     protected EnemyBulletSpawner enemyBulletSpawner;
@@ -60,6 +60,7 @@ public class Enemy : MonoBehaviour
 
             EnemySpawner.Instance.enemySpawnedList.Remove(transform);
             VFXManager.instance.SpawnExplosion(transform.position, Vector3.one, 1);
+            GameManager.sharedInstance.UpdateScore(scoreValue);
 
             Destroy(gameObject);
         }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
+
 public class EnemySpawner : MonoBehaviour
 {
     public static EnemySpawner Instance { get; private set; }
@@ -26,28 +27,32 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        NextWave();
+        StartCoroutine(NextWave());
+        
     }
 
-    private async void NextWave()
+    private IEnumerator NextWave()
     {
-        await Task.Delay(5000);
+        yield return new WaitForSeconds(5);
 
         LoadCSVAndSpawnEnemy(wave);
-
-        while (!(enemySpawnedList.Count == 0))
+        while (enemySpawnedList.Count != 0)
         {
-            await Task.Delay(1000);
+            yield return null;
         }
 
         wave++;
-        NextWave();
+        StartCoroutine(NextWave());
     }
+
 
 
     public void LoadCSVAndSpawnEnemy(int number)
     {
-        loadCSV.LoadNewCSV(number);
+        if (loadCSV.IsDataNull(number)){
+            return;
+        }
+        loadCSV.LoadNewCSV();
         for (int i = 0; i < 6; i++)
         {
             string[] row = loadCSV.ReadSpawnRow(i);
@@ -62,17 +67,17 @@ public class EnemySpawner : MonoBehaviour
 
                 if (int.Parse(row[j]) == 2)
                 {
-                    SpawnEnemy(bossPrefab[0], position);
+                    SpawnEnemy(enemyPrefab[1], position);
                 }
                 
                 if (int.Parse(row[j]) == 3)
                 {
-                    SpawnEnemy(enemyPrefab[1], position);
+                    SpawnEnemy(enemyPrefab[2], position);
                 }
                 
-                if (int.Parse(row[j]) == 4)
+                if (int.Parse(row[j]) == 11)
                 {
-                    SpawnEnemy(enemyPrefab[2], position);
+                    SpawnEnemy(bossPrefab[0], position);
                 }
             }
         }
@@ -89,4 +94,6 @@ public class EnemySpawner : MonoBehaviour
 
         return enemySpawned;
     }
+
+    
 }

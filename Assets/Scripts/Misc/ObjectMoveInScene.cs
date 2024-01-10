@@ -23,18 +23,17 @@ public class ObjectMoveInScene : MonoBehaviour
         DownRight,
         Still,
         FlyToPlayer,
+        FlyToZero
     }
 
     [SerializeField] private Move move;
 
     private void Start()
     {
-        playerPosition = Player.instance.transform.position;
-
         UpdateMoveType(move);
     }
-    
-    
+
+
 
     private void Update()
     {
@@ -42,12 +41,12 @@ public class ObjectMoveInScene : MonoBehaviour
         {
             MoveWithDirection(direction.normalized);
         }
-
     }
 
     public void UpdateMoveType(Move _move)
     {
         move = _move;
+        playerPosition = Player.instance.transform.position;
 
         switch (move)
         {
@@ -80,6 +79,9 @@ public class ObjectMoveInScene : MonoBehaviour
                 break;
             case Move.FlyToPlayer:
                 direction = playerPosition - transform.position;
+                break;
+            case Move.FlyToZero:
+                direction = Vector3.zero - transform.position;
                 break;
         }
 

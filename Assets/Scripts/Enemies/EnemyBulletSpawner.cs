@@ -1,4 +1,3 @@
-using Playniax.Pyro.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,10 +10,12 @@ public class EnemyBulletSpawner : Spawner
     [SerializeField] private Transform enemyFiringPoint;
     [SerializeField] private FiringPattern firingPattern;
 
+    [SerializeField] private string bulletPoolName;
     [SerializeField] private int laserDuration;
 
     private float enemyFireCountdown = 0;
     private Transform laserBullet;
+    private Laser laser;
 
     public bool IsFiring { get => isFiring; private set => isFiring = value; }
 
@@ -29,6 +30,7 @@ public class EnemyBulletSpawner : Spawner
 
     private void Start()
     {
+        objectPool = GameObject.Find(bulletPoolName).GetComponent<ObjectPool>();
         enemyFireCountdown = GetSpawnRandomCountdown();
     }
 
@@ -108,7 +110,7 @@ public class EnemyBulletSpawner : Spawner
         {
             if (transform == null)
                 return;
-            Laser laser = laserBullet.GetComponent<Laser>();
+            laser = laserBullet.GetComponent<Laser>();
             laser.EnableLaser();
             laser.UpdateLaser(transform, Vector3.down);
             StartCoroutine(WaitForDisableLaser(laser));
@@ -135,8 +137,9 @@ public class EnemyBulletSpawner : Spawner
 
     private void OnDestroy()
     {
-        if (laserBullet == null)
+        if (laser == null)
             return;
-        laserBullet.GetComponent<Laser>().SelfDestroy();
+        laser.DisableLaser();
+        laser.gameObject.SetActive(false);
     }
 }

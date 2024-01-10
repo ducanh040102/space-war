@@ -5,15 +5,26 @@ using UnityEngine;
 public class LoadCSV : MonoBehaviour
 {
     private string[] data;
+    private TextAsset csv;
 
-    public void LoadNewCSV(int wave)
+    public bool IsDataNull(int wave)
     {
-        TextAsset csv = Resources.Load<TextAsset>("Wave"+wave);
+        csv = Resources.Load<TextAsset>("Wave" + wave);
+        if (csv == null)
+            return true;
+
+        return false;
+    }
+
+    public void LoadNewCSV()
+    {
         data = csv.text.Split(new char[] { '\n' });
     }
 
     public string[] ReadSpawnRow(int i)
     {
+        
+
         string[] row = data[i].Split(',');
         return row;
     }

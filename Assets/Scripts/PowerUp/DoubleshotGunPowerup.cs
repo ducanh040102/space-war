@@ -7,8 +7,12 @@ public class DoubleshotGunPowerup : PowerUp
 {
     protected override void ActPowerup()
     {
-        PlayerBulletManager.instance.typeBullet = PlayerBulletManager.TypeOfBullet.DoubleshotGun;
-        PDoubleshotGun.bulletCounts++;
+        AudioManager.instance.PlayWeaponUpgrade();
+
+        if (PlayerBulletManager.instance.typeBullet != PlayerBulletManager.TypeOfBullet.DoubleshotGun)
+            PlayerBulletManager.instance.typeBullet = PlayerBulletManager.TypeOfBullet.DoubleshotGun;
+        else
+            PlayerBulletManager.instance.bulletLevel++;
 
     }
 }

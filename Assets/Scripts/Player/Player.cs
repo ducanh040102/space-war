@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject shieldPrefab;
 
     [SerializeField] private bool hasShield = false;
+    [SerializeField] private float moveSpeed;
 
     public event EventHandler OnPlayerHit;
 
@@ -20,6 +21,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenu.isPaused)
+            return;
         MoveWithMouse();
     }
 
@@ -34,7 +37,9 @@ public class Player : MonoBehaviour
                 mousePos.y > ScreenBoundary.Instance.ScreenHeight || mousePos.y < -ScreenBoundary.Instance.ScreenHeight) {
                 return;
             }
-            transform.position = mousePos;
+
+            Vector3 direction = mousePos - transform.position;
+            transform.position += direction * Time.deltaTime * moveSpeed;
         }
     }
 
@@ -66,12 +71,23 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (hasShield)
+            return;
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Damage(1);
+            collision.gameObject.GetComponent<Enemy>().Hit(1);
         }
-    }
 
+        if (collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            collision.gameObject.SetActive(false);
+        }
+
+        
+        Damage(1);
+
+    }
 
     public void PowerupShield()
     {

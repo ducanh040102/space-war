@@ -5,51 +5,45 @@ using UnityEngine.UIElements;
 
 public class PDoubleshotGun : PGunBase
 {
-    public static int bulletCounts;
-
-    private void Start()
-    {
-        bulletCounts = 0;
-    }
 
     public override void FireBullet()
     {
 
-        if (bulletCounts == 1)
+        if (PlayerBulletManager.instance.bulletLevel == 0)
         {
-            GameObject bullet = SpawnBullet(firingPoint.position);
+            GameObject bullet = SpawnObject(spawnPosition.position);
             return;
         }
-        if (bulletCounts == 2)
+        if (PlayerBulletManager.instance.bulletLevel == 1)
         {
-            GameObject bullet1 = SpawnBullet(firingPoint.position + new Vector3(.5f, 0, 0));
-            GameObject bullet2 = SpawnBullet(firingPoint.position + new Vector3(-.5f, 0, 0));
+            GameObject bullet1 = SpawnObject(spawnPosition.position + new Vector3(.2f, 0, 0));
+            GameObject bullet2 = SpawnObject(spawnPosition.position + new Vector3(-.2f, 0, 0));
             return;
         }
-        if (bulletCounts == 3)
+        if (PlayerBulletManager.instance.bulletLevel == 2)
         {
-            GameObject bullet1 = SpawnBullet(firingPoint.position + new Vector3(1f, 0, 0));
-            GameObject bullet2 = SpawnBullet(firingPoint.position + new Vector3(-1f, 0, 0));
-            GameObject bullet3 = SpawnBullet(firingPoint.position);
-            return;
-        }
-
-        if (bulletCounts == 4)
-        {
-            GameObject bullet1 = SpawnBullet(firingPoint.position + new Vector3(.5f, 0, 0));
-            GameObject bullet2 = SpawnBullet(firingPoint.position + new Vector3(-.5f, 0, 0));
+            GameObject bullet1 = SpawnObject(spawnPosition.position + new Vector3(.3f, 0, 0));
+            GameObject bullet2 = SpawnObject(spawnPosition  .position + new Vector3(-.3f, 0, 0));
+            GameObject bullet3 = SpawnObject(spawnPosition.position + new Vector3(0, .1f, 0));
             return;
         }
 
-        if (bulletCounts == 5)
+        if (PlayerBulletManager.instance.bulletLevel == 3)
         {
-            GameObject bullet1 = SpawnBullet(firingPoint.position + new Vector3(.5f, 0, 0));
-            GameObject bullet2 = SpawnBullet(firingPoint.position + new Vector3(-.5f, 0, 0));
+            GameObject bullet1 = SpawnObject(spawnPosition.position + new Vector3(.2f, .1f, 0));
+            GameObject bullet2 = SpawnObject(spawnPosition.position + new Vector3(-.2f, .1f, 0));
+            GameObject bullet3 = SpawnObject(spawnPosition.position + new Vector3(.4f, 0, 0));
+            GameObject bullet4 = SpawnObject(spawnPosition.position + new Vector3(-.4f, 0, 0));
             return;
         }
 
-        else if (bulletCounts > 5)
+        if (PlayerBulletManager.instance.bulletLevel > 3)
         {
+            GameObject bullet1 = SpawnObject(spawnPosition.position + new Vector3(.3f, .1f, 0));
+            GameObject bullet2 = SpawnObject(spawnPosition.position + new Vector3(-.3f, .1f, 0));
+            GameObject bullet3 = SpawnObject(spawnPosition.position + new Vector3(0, .2f, 0));
+            GameObject bullet4 = SpawnObject(spawnPosition.position + new Vector3(.5f, 0, 0));
+            GameObject bullet5 = SpawnObject(spawnPosition.position + new Vector3(-.5f, 0, 0));
             return;
         }
         

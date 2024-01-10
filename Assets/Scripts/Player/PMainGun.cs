@@ -4,50 +4,33 @@ using UnityEngine;
 
 public class PMainGun : PGunBase
 {
-    public static int bulletCounts;
-
-    private void Start()
-    {
-        bulletCounts = 0;
-    }
 
     float Angle;
 
     public override void FireBullet()
     {
-        if (bulletCounts == 0)
+        if (PlayerBulletManager.instance.bulletLevel == 0)
         {
-            GameObject bullet = SpawnBullet(firingPoint.position);
+            GameObject bullet = SpawnObject(spawnPosition.position);
             return;
         }
-        if (bulletCounts == 1)
+        if (PlayerBulletManager.instance.bulletLevel == 1)
         {
-            GameObject bullet1 = SpawnBullet(firingPoint.position + new Vector3(.4f, 0, 0));
-            GameObject bullet2 = SpawnBullet(firingPoint.position + new Vector3(-.4f, 0, 0));
+            GameObject bullet1 = SpawnObject(spawnPosition.position + new Vector3(.4f, 0, 0));
+            GameObject bullet2 = SpawnObject(spawnPosition.position + new Vector3(-.4f, 0, 0));
             return;
         }
-        if (bulletCounts == 2)
-        {
-            GameObject bullet1 = SpawnBullet(firingPoint.position + new Vector3(.4f, 0, 0));
-            GameObject bullet2 = SpawnBullet(firingPoint.position);
-            GameObject bullet3 = SpawnBullet(firingPoint.position + new Vector3(-.4f, 0, 0));
-            return;
-        }
-        if (bulletCounts >= 3)
+
+        if (PlayerBulletManager.instance.bulletLevel > 1)
         {
             Angle = -15f;
             Vector3 vec = new Vector3(0, 0, Angle);
-            for (int i = 0; i < bulletCounts; i++)
+            for (int i = 0; i < PlayerBulletManager.instance.bulletLevel; i++)
             {
-
-                GameObject bullet = SpawnBullet(firingPoint.position);
+                GameObject bullet = SpawnObject(spawnPosition.position);
                 bullet.transform.rotation = Quaternion.Euler(vec);
-                vec.z += 2 * Mathf.Abs(Angle) / (bulletCounts - 1);
+                vec.z += 2 * Mathf.Abs(Angle) / (PlayerBulletManager.instance.bulletLevel - 1);
             }
-        }
-        else if (bulletCounts > 5)
-        {
-            return;
         }
 
     }

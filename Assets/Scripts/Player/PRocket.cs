@@ -5,50 +5,24 @@ using UnityEngine;
 
 public class PRocket : MonoBehaviour
 {
-    public float explosionRadius;
-    public float moveSpeed;
+    public float timer;
     public float damage;
 
-    void Update()
+    private void Start()
     {
-        Move();
-        CrossBoarderDestroySelf();
+        StartCoroutine(Explode());
     }
 
-    private void Move()
-    {
-        transform.Translate(transform.up * Time.deltaTime * moveSpeed);
 
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator Explode()
     {
-        if (collision.CompareTag("Enemy") || collision.CompareTag("Boss"))
+        yield return new WaitForSeconds(timer);
+        foreach (Transform enemy in EnemySpawner.Instance.enemySpawnedList)
         {
-            Explode();
-        }
-    }
-
-
-    void Explode()
-    {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
-
-        foreach (Collider2D collider in colliders)
-        {
-            if (collider.CompareTag("Enemy") || collider.CompareTag("Boss"))
-            {
-                Enemy enemy = collider.GetComponent<Enemy>();
-                enemy.Hit(damage);
-            }
+            enemy.GetComponent<Enemy>().Hit(damage);
         }
         Destroy(gameObject);
     }
 
-    void CrossBoarderDestroySelf()
-    {
-        if (transform.position.y < ScreenBoundary.Instance.ScreenWidth && transform.position.y > -ScreenBoundary.Instance.ScreenWidth)
-            return;
-        Destroy(gameObject);
-    }
+    
 }

@@ -187,12 +187,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83573f87e5bb30408ec879b1006303f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnObjectTransform: {fileID: 4828423039550468004, guid: f174c3ffa219ff4499e2ab406eb8f4bc, type: 3}
+  objectPool: {fileID: 0}
   spawnCountdownMin: 2
   spawnCountdownMax: 2
   isFiring: 0
   enemyFiringPoint: {fileID: 3956811127557407252}
   firingPattern: 3
+  bulletPoolName: StarknifeEnemyPool
   laserDuration: 0
 --- !u!114 &-3198195986214911062
 MonoBehaviour:
@@ -218,8 +219,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2b94b18c7f869458a7dd4d8bfe4f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPointMax: 5
+  hitPointMax: 15
   hitPoint: 0
+  scoreValue: 10000
   isStartAction: 0
 --- !u!1 &3644038820244014003
 GameObject:

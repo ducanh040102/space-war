@@ -9,6 +9,6 @@ public class Bullet : MonoBehaviour
         if (transform.position.y < ScreenBoundary.Instance.ScreenWidth && transform.position.y > - ScreenBoundary.Instance.ScreenWidth)
             return;
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

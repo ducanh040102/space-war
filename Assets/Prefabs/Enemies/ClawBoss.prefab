@@ -144,8 +144,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2b94b18c7f869458a7dd4d8bfe4f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPointMax: 50
+  hitPointMax: 1000
   hitPoint: 0
+  scoreValue: 1000000
   isStartAction: 0
 --- !u!114 &4926366461536061293
 MonoBehaviour:
@@ -179,12 +180,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83573f87e5bb30408ec879b1006303f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnObjectTransform: {fileID: 8993657941732201732, guid: 7eb7f545849971041845429b58759493, type: 3}
+  objectPool: {fileID: 0}
   spawnCountdownMin: 1
   spawnCountdownMax: 1
   isFiring: 0
   enemyFiringPoint: {fileID: 7560980551359210749}
   firingPattern: 1
+  bulletPoolName: ClawBossPool
   laserDuration: 0
 --- !u!114 &4749941332817371910
 MonoBehaviour:

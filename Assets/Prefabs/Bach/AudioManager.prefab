@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 6496946092897755906, guid: f4448f0446edb0f4f989a61c6d752381, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -179,9 +179,10 @@ MonoBehaviour:
   background: {fileID: 8300000, guid: 10d0874cac1741e47ae126e2bb2b0fbb, type: 3}
   pause: {fileID: 8300000, guid: 453624137a536ba49bbed2befa06fc91, type: 3}
   playerShoot: {fileID: 8300000, guid: e47ffbafee5d9e34a9ef76dd3177666d, type: 3}
-  playerDeath: {fileID: 8300000, guid: 21ad953398f31e145a0493d2f263e0e8, type: 3}
+  explode: {fileID: 8300000, guid: 21ad953398f31e145a0493d2f263e0e8, type: 3}
   itemPick: {fileID: 8300000, guid: f5a182e92c6f6fa42864eb2a777361f7, type: 3}
   weaponUpgrade: {fileID: 8300000, guid: 0703446539928af41916f802786f432e, type: 3}
+  playerShootLaser: {fileID: 8300000, guid: 60b29b16c39dab542a7babdd0c80dbfe, type: 3}
 --- !u!1 &7687465939367981916
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +227,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 3029630534079773120, guid: f4448f0446edb0f4f989a61c6d752381, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -26,8 +26,6 @@ public class GameManager : MonoBehaviour
         }
 
         score.value = 0;
-        hitPoints.value = MaxHitPoints;
-        nuke.value = 0;
     }
 
     public void UpdateScore(int points)

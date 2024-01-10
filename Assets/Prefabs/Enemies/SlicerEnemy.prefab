@@ -239,8 +239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2b94b18c7f869458a7dd4d8bfe4f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPointMax: 5
+  hitPointMax: 20
   hitPoint: 0
+  scoreValue: 50000
   isStartAction: 0
 --- !u!114 &7287245427756333557
 MonoBehaviour:
@@ -254,12 +255,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83573f87e5bb30408ec879b1006303f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnObjectTransform: {fileID: 1498998107514726435, guid: 91d739851da2d354c9ecc069345d8b55, type: 3}
-  spawnCountdownMin: 5
-  spawnCountdownMax: 5
+  objectPool: {fileID: 0}
+  spawnCountdownMin: 3
+  spawnCountdownMax: 8
   isFiring: 0
   enemyFiringPoint: {fileID: 3439610337649342823}
   firingPattern: 4
+  bulletPoolName: SlicerEnemyPool
   laserDuration: 3
 --- !u!70 &5496476860308013146
 CapsuleCollider2D:

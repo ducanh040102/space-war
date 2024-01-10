@@ -21,6 +21,7 @@ public class ClawBoss : MonoBehaviour
         objectMoveInScene = gameObject.GetComponent<ObjectMoveInScene>();
         enemy = gameObject.GetComponent<Enemy>();
         enemyBulletSpawner = gameObject.GetComponent<EnemyBulletSpawner>();
+        AudioManager.instance.PlayBossTheme();
 
         StartCoroutine(WaitForStart());
         StartCoroutine(WaitForSpawnMore());
@@ -41,7 +42,7 @@ public class ClawBoss : MonoBehaviour
     
     private IEnumerator WaitForDoSpecial()
     {
-        while (enemy.HitPoint != (int)(enemy.HitPointMax / 2))
+        while (enemy.HitPoint > (int)(enemy.HitPointMax / 2))
         {
             yield return null;
         }

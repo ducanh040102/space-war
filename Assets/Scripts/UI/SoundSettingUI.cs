@@ -5,27 +5,29 @@ using UnityEngine;
 public class SoundSettingUI : MonoBehaviour
 {
 
-    [SerializeField] private Transform pauseContainer;
-
-    private void Show()
-    {
-        pauseContainer.gameObject.SetActive(true);
-    }
-
-    private void Hide()
-    {
-        pauseContainer.gameObject.SetActive(false);
-    }
-
+    [SerializeField] private Transform container;
 
     private void Start()
     {
-        //optionButton.onClick.AddListener(() =>
-        //{
-        //    Hide();
-        //    OptionUI.Instance.Show(Show);
-        //});
+        Hide();
     }
 
+    public void Show()
+    {
+        container.gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        container.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (!PauseMenu.isPaused)
+        {
+            Hide();
+        }
+    }
 }
 
