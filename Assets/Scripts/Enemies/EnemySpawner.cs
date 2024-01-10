@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Sequence = DG.Tweening.Sequence;
+
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
 
     public List<Transform> enemySpawnedList;
 
+    [SerializeField] private int wave;
     [SerializeField] private LoadCSV loadCSV;
     [SerializeField] private Transform[] enemyPrefab;
     [SerializeField] private Transform[] bossPrefab;
@@ -27,47 +27,32 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        Wave1();
+        StartCoroutine(NextWave());
+        
     }
 
-    private async void Wave1()
+    private IEnumerator NextWave()
     {
-        await Task.Delay(5000);
+        yield return new WaitForSeconds(5);
 
-        LoadCSVAndSpawnEnemy(1);
-
-        while (!(enemySpawnedList.Count == 0))
+        LoadCSVAndSpawnEnemy(wave);
+        while (enemySpawnedList.Count != 0)
         {
-            await Task.Delay(1000);
+            yield return null;
         }
 
-        Wave2();
+        wave++;
+        StartCoroutine(NextWave());
     }
 
-    private async void Wave2() 
-    {
-        await Task.Delay(5000);
 
-        LoadCSVAndSpawnEnemy(2);
-
-        while (!(enemySpawnedList.Count == 0))
-        {
-            await Task.Delay(1000);
-        }
-
-        BossFight();
-    }
-
-    private async void BossFight()
-    {
-        await Task.Delay(5000);
-        LoadCSVAndSpawnEnemy(3);
-    }
 
     public void LoadCSVAndSpawnEnemy(int number)
     {
-
-        loadCSV.LoadNewCSV(number);
+        if (loadCSV.IsDataNull(number)){
+            return;
+        }
+        loadCSV.LoadNewCSV();
         for (int i = 0; i < 6; i++)
         {
             string[] row = loadCSV.ReadSpawnRow(i);
@@ -82,12 +67,17 @@ public class EnemySpawner : MonoBehaviour
 
                 if (int.Parse(row[j]) == 2)
                 {
-                    SpawnEnemy(bossPrefab[0], position);
+                    SpawnEnemy(enemyPrefab[1], position);
                 }
                 
                 if (int.Parse(row[j]) == 3)
                 {
-                    SpawnEnemy(enemyPrefab[1], position);
+                    SpawnEnemy(enemyPrefab[2], position);
+                }
+                
+                if (int.Parse(row[j]) == 11)
+                {
+                    SpawnEnemy(bossPrefab[0], position);
                 }
             }
         }
@@ -104,4 +94,6 @@ public class EnemySpawner : MonoBehaviour
 
         return enemySpawned;
     }
+
+    
 }

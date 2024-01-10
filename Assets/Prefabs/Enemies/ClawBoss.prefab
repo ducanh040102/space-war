@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7560980551359210749}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FiringPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,12 +42,13 @@ GameObject:
   - component: {fileID: 3399243380778417357}
   - component: {fileID: 6481787477005925194}
   - component: {fileID: 2189284112254419494}
+  - component: {fileID: 7375157180115869096}
   - component: {fileID: 4926366461536061293}
   - component: {fileID: 5104150157245339512}
   - component: {fileID: 4749941332817371910}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ClawBoss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,7 +61,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2728725679012727749}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
@@ -68,7 +69,7 @@ Transform:
   - {fileID: 2954003571047494354}
   - {fileID: 7560980551359210749}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &6481787477005925194
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -101,9 +102,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.38959545, y: 9.089199e-15}
-  m_Size: {x: 0.66458493, y: 1.423997}
-  m_Direction: 0
+  m_Offset: {x: -0.5554275, y: -0.00000082785766}
+  m_Size: {x: 1.1634096, y: 0.66591364}
+  m_Direction: 1
 --- !u!50 &2189284112254419494
 Rigidbody2D:
   serializedVersion: 4
@@ -131,6 +132,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7375157180115869096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728725679012727749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa2b94b18c7f869458a7dd4d8bfe4f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPointMax: 1000
+  hitPoint: 0
+  scoreValue: 1000000
+  isStartAction: 0
 --- !u!114 &4926366461536061293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,10 +160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a75f49d3093ce9c49b1312e9e0afba80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPointMax: 50
-  enemyBulletSpawner: {fileID: 5104150157245339512}
-  isStartAction: 0
-  isSpawningBullet: 0
   moveDestinations:
   - {x: -7, y: 3, z: 0}
   - {x: 6, y: 0, z: 0}
@@ -154,8 +167,6 @@ MonoBehaviour:
   - {x: -6, y: 0, z: 0}
   - {x: 7, y: 3, z: 0}
   - {x: 0, y: 1, z: 0}
-  objectMoveInScene: {fileID: 4749941332817371910}
-  player: {fileID: 0}
   clawAnimator: {fileID: 5184057374008447353}
 --- !u!114 &5104150157245339512
 MonoBehaviour:
@@ -169,11 +180,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83573f87e5bb30408ec879b1006303f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnObjectTransform: {fileID: 8993657941732201732, guid: 7eb7f545849971041845429b58759493, type: 3}
+  objectPool: {fileID: 0}
   spawnCountdownMin: 1
   spawnCountdownMax: 1
+  isFiring: 0
   enemyFiringPoint: {fileID: 7560980551359210749}
   firingPattern: 1
+  bulletPoolName: ClawBossPool
+  laserDuration: 0
 --- !u!114 &4749941332817371910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +213,7 @@ GameObject:
   - component: {fileID: 2954003571047494354}
   - component: {fileID: 6642348317349391125}
   - component: {fileID: 5184057374008447353}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +228,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4329549091441660440}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

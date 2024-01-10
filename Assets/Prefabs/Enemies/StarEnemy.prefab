@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1086736937045270025}
   - component: {fileID: 4269761304507089698}
   - component: {fileID: 4186491912566786892}
-  - component: {fileID: 5705863105455951917}
+  - component: {fileID: -241012045260719192}
   - component: {fileID: 8625929560355462315}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: StarEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -112,12 +112,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83573f87e5bb30408ec879b1006303f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnObjectTransform: {fileID: 8150724272112130020, guid: e16c39cefe3cd1c4382a92a70c37f600, type: 3}
+  objectPool: {fileID: 0}
   spawnCountdownMin: 2
   spawnCountdownMax: 10
+  isFiring: 0
   enemyFiringPoint: {fileID: 41445173580848126}
   firingPattern: 0
---- !u!114 &5705863105455951917
+  bulletPoolName: StarEnemyPool
+  laserDuration: 0
+--- !u!114 &-241012045260719192
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,13 +129,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2641745181381371123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1b2a6bcc7473bf4787f124579ee198d, type: 3}
+  m_Script: {fileID: 11500000, guid: aa2b94b18c7f869458a7dd4d8bfe4f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPointMax: 2
-  enemyBulletSpawner: {fileID: 4186491912566786892}
+  hitPointMax: 10
+  hitPoint: 0
+  scoreValue: 20000
   isStartAction: 0
-  isSpawningBullet: 0
 --- !u!95 &8625929560355462315
 Animator:
   serializedVersion: 5
@@ -165,7 +168,7 @@ GameObject:
   - component: {fileID: 3089986249524700871}
   - component: {fileID: 6210393031055926944}
   - component: {fileID: 2465228474999335926}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +272,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 41445173580848126}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FiringPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

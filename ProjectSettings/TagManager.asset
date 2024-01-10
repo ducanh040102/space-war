@@ -5,17 +5,22 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Shield
+  - GameManager
+  - Boss
+  - Audio
   - PlayerBullet
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
   - 
-  - 
+  - Enemy
   - 
   - 
   - 

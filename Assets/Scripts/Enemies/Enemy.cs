@@ -1,59 +1,83 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] protected float hitPointMax = 50;
-    [SerializeField] protected EnemyBulletSpawner enemyBulletSpawner;
-    [SerializeField] protected bool isStartAction = false;
+    [SerializeField] private float hitPointMax = 50;
+    [SerializeField] private float hitPoint;
+    [SerializeField] private int scoreValue;
+    [SerializeField] private bool isStartAction = false;
 
-    protected float hitPoint;
+    protected EnemyBulletSpawner enemyBulletSpawner;
+    private PowerupSpawner powerupSpawner;
 
-    public void InitHP()
+    public bool IsStartAction { get => isStartAction; private set => isStartAction = value; }
+    public float HitPoint { get => hitPoint; private set => hitPoint = value; }
+    public float HitPointMax { get => hitPointMax; private set => hitPointMax = value; }
+
+    private void Start()
     {
-        hitPoint = hitPointMax;
+        InitialStats();
+        StartCoroutine(WaitForAttack());
     }
 
-    public void Fire(bool isFiring)
+    private void Update()
     {
-        if (isFiring)
-            enemyBulletSpawner.SpawnBullet();
+        Fire();
+        Destroy();
     }
-    public void StartAction()
-    {
-        isStartAction = true;
-    }
-    
 
-    public void GotHit()
+    protected virtual void InitialStats()
     {
-        if(isStartAction)
+        powerupSpawner = PowerupSpawner.sharedInstance;
+        enemyBulletSpawner = gameObject.GetComponent<EnemyBulletSpawner>();
+
+        HitPoint = HitPointMax;
+    }
+
+    protected virtual void Fire()
+    {
+        enemyBulletSpawner.SpawnBullet();
+    }
+
+    public void Hit(float damage)
+    {
+        if (IsStartAction)
         {
-            hitPoint -= 1;
-            if (hitPoint <= 0)
-            {
-                GotDestroy();
-            }
+            HitPoint -= damage;
+        }
+    }
+
+    protected virtual void Destroy()
+    {
+        if(HitPoint <= 0)
+        {
+            transform.DOKill();
+            powerupSpawner.SpawnPowerup(transform);
+            enemyBulletSpawner.StopFiring();
+
+            EnemySpawner.Instance.enemySpawnedList.Remove(transform);
+            VFXManager.instance.SpawnExplosion(transform.position, Vector3.one, 1);
+            GameManager.sharedInstance.UpdateScore(scoreValue);
+
+            Destroy(gameObject);
         }
         
     }
 
-    private void GotDestroy()
-    {
-        transform.DOKill();
-        EnemySpawner.Instance.enemySpawnedList.Remove(transform);
-        Destroy(gameObject);
-    }
-
     protected virtual IEnumerator WaitForAttack()
     {
-        while (!isStartAction)
+        while (!IsStartAction)
         {
             yield return null;
         }
-        enemyBulletSpawner.isFiring = true;
+        enemyBulletSpawner.StartFiring();
     }
 
-
+    public void StartAction()
+    {
+        IsStartAction = true;
+    }
 }

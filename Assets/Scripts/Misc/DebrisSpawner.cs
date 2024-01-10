@@ -4,31 +4,31 @@ using UnityEngine;
 
 public class DebrisSpawner : Spawner
 {
-    [SerializeField] Sprite[] debrisSprites;
+    //[SerializeField] Sprite[] debrisSprites;
 
-    private float debrisSpawnCountdown;
+    //private float debrisSpawnCountdown;
 
-    private void Update()
-    {
-        debrisSpawnCountdown -= Time.deltaTime;
+    //private void Update()
+    //{
+    //    debrisSpawnCountdown -= Time.deltaTime;
 
-        if (debrisSpawnCountdown <= 0)
-        {
-            Vector3 debrisSpawnPosition = new Vector3(Random.Range(-ScreenBoundary.Instance.ScreenWidth, ScreenBoundary.Instance.ScreenWidth), gameObject.transform.position.y);
-            Transform debrisSpawed = Spawn(debrisSpawnPosition);
+    //    if (debrisSpawnCountdown <= 0)
+    //    {
+    //        Vector3 debrisSpawnPosition = new Vector3(Random.Range(-ScreenBoundary.Instance.ScreenWidth, ScreenBoundary.Instance.ScreenWidth), gameObject.transform.position.y);
+    //        Transform debrisSpawed = Spawn(debrisSpawnPosition);
 
-            debrisSpawed.TryGetComponent<Debris>(out Debris debris);
-            if (debris != null)
-            {
-                int randomDebrisSpritesIndex = Random.Range(0, debrisSprites.Length);
-                Sprite debrisSprite = debrisSprites[randomDebrisSpritesIndex];
-                debris.SetDebrisSprite(debrisSprite);
-            }
+    //        debrisSpawed.TryGetComponent<Debris>(out Debris debris);
+    //        if (debris != null)
+    //        {
+    //            int randomDebrisSpritesIndex = Random.Range(0, debrisSprites.Length);
+    //            Sprite debrisSprite = debrisSprites[randomDebrisSpritesIndex];
+    //            debris.SetDebrisSprite(debrisSprite);
+    //        }
 
-            debrisSpawnCountdown = GetSpawnRandomCountdown();
-        }
+    //        debrisSpawnCountdown = GetSpawnRandomCountdown();
+    //    }
         
         
-    }
+    //}
 }
 

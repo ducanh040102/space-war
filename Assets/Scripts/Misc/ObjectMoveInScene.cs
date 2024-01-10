@@ -7,8 +7,9 @@ public class ObjectMoveInScene : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
 
-    private Transform player;
     private Vector3 direction;
+    private Vector3 playerPosition;
+    private Transform player;
 
     public enum Move
     {
@@ -22,16 +23,36 @@ public class ObjectMoveInScene : MonoBehaviour
         DownRight,
         Still,
         FlyToPlayer,
+        FlyToZero
     }
 
-    public Move move;
+    [SerializeField] private Move move;
 
     private void Start()
     {
-        player = GameObject.Find("Player").transform;
+        UpdateMoveType(move);
+    }
+
+
+
+    private void Update()
+    {
+        if (move != Move.Still)
+        {
+            MoveWithDirection(direction.normalized);
+        }
+    }
+
+    public void UpdateMoveType(Move _move)
+    {
+        move = _move;
+        playerPosition = Player.instance.transform.position;
 
         switch (move)
         {
+            case Move.Still:
+                direction = Vector3.down;
+                break;
             case Move.Left:
                 direction = Vector3.left;
                 break;
@@ -57,19 +78,16 @@ public class ObjectMoveInScene : MonoBehaviour
                 direction = new Vector3(-1, -1, 0);
                 break;
             case Move.FlyToPlayer:
-                direction = player.position - transform.position;
+                direction = playerPosition - transform.position;
+                break;
+            case Move.FlyToZero:
+                direction = Vector3.zero - transform.position;
                 break;
         }
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = rotation;
-    }
-
-    private void Update()
-    {
-
-        MoveWithDirection(direction.normalized);
     }
 
     private void MoveWithDirection(Vector3 direction)
