@@ -6,9 +6,9 @@ public class Bullet : MonoBehaviour
 {
     protected virtual void CrossBoarderDestroySelf()
     {
-        if (transform.position.y < ScreenBoundary.Instance.ScreenWidth && transform.position.y > - ScreenBoundary.Instance.ScreenWidth)
-            return;
+        if (!ScreenBoundary.Instance.IsInsideScreen(transform.position))
+            gameObject.SetActive(false);
 
-        gameObject.SetActive(false);
+
     }
 }

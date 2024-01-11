@@ -11,6 +11,8 @@ public class MenuUI : MonoBehaviour
     [SerializeField] private Button leaderboardButton;
     [SerializeField] private Button quitButton;
 
+    [SerializeField] private SoundSettingUI soundsetting;
+
     [SerializeField] private AudioSource uiSoundEffect;
 
     private void Awake()
@@ -24,13 +26,14 @@ public class MenuUI : MonoBehaviour
         settingsButton.onClick.AddListener(() =>
         {
             uiSoundEffect.Play();
-            Loader.LoadWithoutLoading(Loader.Scene.SettingsScene);
+            Debug.Log("Setting");
+            soundsetting.Show();
         });
 
         leaderboardButton.onClick.AddListener(() =>
         {
             uiSoundEffect.Play();
-            Loader.LoadWithoutLoading(Loader.Scene.LeaderboardScene);
+            Loader.Load(Loader.Scene.LeaderboardScene);
         });
 
         quitButton.onClick.AddListener(() =>

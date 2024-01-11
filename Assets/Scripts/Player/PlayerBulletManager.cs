@@ -6,23 +6,6 @@ public class PlayerBulletManager : MonoBehaviour
 {
     public static PlayerBulletManager instance;
 
-    public int bulletLevel;
-
-    [SerializeField] private GameObject laserPrefab;
-    [SerializeField] private float mainGunAttackInterval;
-    [SerializeField] private float doubleshotGunAttackInterval;
-
-    private PMainGun pMainGun;
-    private PDoubleshotGun pDoubleshotGun;
-    private PRocketGun pRocketGun;
-    private GameObject pLaser;
-    private Laser laser;
-    private Respawn respawn;
-    private TypeOfBullet previousTypeBullet;
-
-    private float attackInterval;
-    private float attackIntervalCountdown;
-
     public enum TypeOfBullet
     {
         MainGun,
@@ -31,6 +14,26 @@ public class PlayerBulletManager : MonoBehaviour
     }
 
     public TypeOfBullet typeBullet = TypeOfBullet.Laser;
+
+    [SerializeField] private int bulletLevel;
+    [SerializeField] private float mainGunAttackInterval;
+    [SerializeField] private float doubleshotGunAttackInterval;
+
+    [SerializeField] private PMainGun mainGunPool;
+    [SerializeField] private PDoubleshotGun doubleshotPool;
+    [SerializeField] private PRocketGun rocketPool;
+    [SerializeField] private GameObject laserPrefab;
+
+    private GameObject pLaser;
+    private Laser laser;
+    private Respawn respawn;
+
+    private TypeOfBullet previousTypeBullet;
+
+    private float attackInterval;
+    private float attackIntervalCountdown;
+
+    public int BulletLevel { get => bulletLevel; private set => bulletLevel = value; }
 
     private void Awake()
     {
@@ -43,9 +46,7 @@ public class PlayerBulletManager : MonoBehaviour
         attackIntervalCountdown = 0;
 
         respawn = gameObject.GetComponent<Respawn>();
-        pMainGun = gameObject.GetComponent<PMainGun>();
-        pDoubleshotGun = gameObject.GetComponent<PDoubleshotGun>();
-        pRocketGun = gameObject.gameObject.GetComponent<PRocketGun>();
+
         pLaser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
         laser = pLaser.GetComponent<Laser>();
     }
@@ -85,7 +86,7 @@ public class PlayerBulletManager : MonoBehaviour
 
     private void Fire()
     {
-        if (respawn.isRespawn)
+        if (respawn.isInvisible)
         {
             laser.DisableLaser();
             return;
@@ -100,9 +101,9 @@ public class PlayerBulletManager : MonoBehaviour
             }
                 
             if (typeBullet == TypeOfBullet.MainGun)
-                pMainGun.FireBullet();
+                mainGunPool.FireBullet();
             if (typeBullet == TypeOfBullet.DoubleshotGun)
-                pDoubleshotGun.FireBullet();
+                doubleshotPool.FireBullet();
         }
         if (Input.GetMouseButton(0))
         {
@@ -116,9 +117,9 @@ public class PlayerBulletManager : MonoBehaviour
                 if (attackIntervalCountdown <= 0)
                 {
                     if (typeBullet == TypeOfBullet.DoubleshotGun)
-                        pDoubleshotGun.FireBullet();
+                        doubleshotPool.FireBullet();
                     if (typeBullet == TypeOfBullet.MainGun)
-                        pMainGun.FireBullet();
+                        mainGunPool.FireBullet();
 
                     AudioManager.instance.PlayPlayerShoot();
 
@@ -138,8 +139,20 @@ public class PlayerBulletManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && GameManager.sharedInstance.GetNukeValue() > 0)
         {
-            pRocketGun.Fire();
+            rocketPool.Fire();
             GameManager.sharedInstance.DecreNuke();
         }
+    }
+
+    public void IncreaseBulletLevel()
+    {
+        if(bulletLevel < 8)
+            bulletLevel++;
+    }
+    
+    public void DecreaseBulletLevel()
+    {
+        if(bulletLevel > 0)
+            bulletLevel--;
     }
 }

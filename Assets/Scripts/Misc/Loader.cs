@@ -22,11 +22,6 @@ public static class Loader
 
         SceneManager.LoadScene(Scene.LoadingScene.ToString());
     }
-    
-    public static void LoadWithoutLoading(Scene scene )
-    {
-        SceneManager.LoadScene(scene.ToString());
-    }
 
     public static void LoaderCallback()
     {

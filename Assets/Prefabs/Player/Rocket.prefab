@@ -198,8 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ce54f1430e62b478a360f51c5903d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10000
   timer: 2
-  damage: 20
 --- !u!114 &-5951656748006851401
 MonoBehaviour:
   m_ObjectHideFlags: 0

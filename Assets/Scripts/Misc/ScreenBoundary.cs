@@ -10,8 +10,8 @@ public class ScreenBoundary : MonoBehaviour
     private float screenHeight;
 
     public static ScreenBoundary Instance { get => instance; private set => instance = value; }
-    public float ScreenWidth { get => screenWidth; private set => screenWidth = value; }
     public float ScreenHeight { get => screenHeight; private set => screenHeight = value; }
+    public float ScreenWidth { get => screenWidth; private set => screenWidth = value; }
 
     private void Awake()
     {
@@ -25,5 +25,11 @@ public class ScreenBoundary : MonoBehaviour
         ScreenHeight = screenSize.y;
     }
 
+    public bool IsInsideScreen(Vector3 pos)
+    {
+        if(pos.x > ScreenWidth || pos.x < -ScreenWidth ||
+                pos.y > ScreenHeight || pos.y < -ScreenHeight) return false;
+        return true;
+    }
 
 }

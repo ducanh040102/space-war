@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5713663449961681515}
   - component: {fileID: 7361830667657675922}
   - component: {fileID: 563886713460338338}
+  - component: {fileID: -7774470988690517027}
   m_Layer: 0
   m_Name: DoubleshotGunPowerup
   m_TagString: Untagged
@@ -145,3 +146,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedFall: 0.5
   direction: {x: 0, y: -1, z: 0}
+--- !u!95 &-7774470988690517027
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741331318571708761}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 529239ccdd07bef4cbc24a1b781acf7a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

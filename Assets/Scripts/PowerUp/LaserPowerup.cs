@@ -11,7 +11,7 @@ public class LaserPowerup : PowerUp
         if (PlayerBulletManager.instance.typeBullet != PlayerBulletManager.TypeOfBullet.Laser)
             PlayerBulletManager.instance.typeBullet = PlayerBulletManager.TypeOfBullet.Laser;
         else
-            PlayerBulletManager.instance.bulletLevel++;
+            PlayerBulletManager.instance.IncreaseBulletLevel();
     }
 
 }

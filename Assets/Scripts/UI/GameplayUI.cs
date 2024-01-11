@@ -6,6 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class GameplayUI : MonoBehaviour
 {
+
     [SerializeField] private TextMeshProUGUI hitPointText;
     [SerializeField] private TextMeshProUGUI nukeText;
     [SerializeField] private TextMeshProUGUI powerText;
@@ -16,7 +17,7 @@ public class GameplayUI : MonoBehaviour
         hitPointText.text = GameManager.sharedInstance.hitPoints.value.ToString();
         nukeText.text = GameManager.sharedInstance.nuke.value.ToString();
         scoreText.text = GameManager.sharedInstance.score.value.ToString();
-        powerText.text = PlayerBulletManager.instance.bulletLevel.ToString();
+        powerText.text = PlayerBulletManager.instance.BulletLevel.ToString();
     }
 
     void Update()

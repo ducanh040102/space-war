@@ -60,6 +60,7 @@ public class Enemy : MonoBehaviour
 
             EnemySpawner.Instance.enemySpawnedList.Remove(transform);
             VFXManager.instance.SpawnExplosion(transform.position, Vector3.one, 1);
+            AudioManager.instance.PlayExplode();
             GameManager.sharedInstance.UpdateScore(scoreValue);
 
             Destroy(gameObject);

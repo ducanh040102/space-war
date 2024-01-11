@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -14,11 +15,14 @@ public class AudioManager : MonoBehaviour
     public AudioClip pause;
     public AudioClip playerShoot;
     public AudioClip explode;
+    public AudioClip bigExplode;
     public AudioClip itemPick;
     public AudioClip weaponUpgrade;
     public AudioClip playerShootLaser;
     public AudioClip enemyHit;
     public AudioClip bossTheme1;
+    public AudioClip bossTheme2;
+    public AudioClip victory;
 
 
     private void Awake()
@@ -31,11 +35,17 @@ public class AudioManager : MonoBehaviour
     {
         musicSource.clip = background;
         musicSource.Play();
+
+        Player.instance.OnPlayerHit += Player_OnPlayerHit;
+    }
+
+    private void Player_OnPlayerHit(object sender, System.EventArgs e)
+    {
+        PlayExplode();
     }
 
     public void PlaySFX(AudioClip audioClip)
     {
-        
         SFXSource.PlayOneShot(audioClip);
     }
 
@@ -46,8 +56,14 @@ public class AudioManager : MonoBehaviour
 
     public void PlayExplode() 
     {
-        if (SFXSource.isPlaying != explode)
-            PlaySFX(explode);
+        if (SFXSource.isPlaying == bigExplode)
+            return;
+        PlaySFX(explode);
+    }
+    
+    public void PlayBigExplode() 
+    {
+        PlaySFX(bigExplode);
     }
 
     public void PlayItemPick()
@@ -70,31 +86,40 @@ public class AudioManager : MonoBehaviour
         PlaySFX(enemyHit);
     }
 
-    private IEnumerator StartFade(AudioSource audioSource, float duration, float targetVolume)
-    {
-        float currentTime = 0;
-        float start = audioSource.volume;
-        while (currentTime < duration)
-        {
-            currentTime += Time.deltaTime;
-            audioSource.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
-            yield return null;
-        }
-        yield break;
-    }
-
     public void PlayBossTheme()
     {
-        float startVolume = musicSource.volume;
-        StartCoroutine(StartFade(musicSource, 3, 0));
-        StartCoroutine(WaitForFade(2, startVolume));
+        StartFadeInOut(musicSource, bossTheme1, 2);
     }
 
-    private IEnumerator WaitForFade(float duration, float volume)
+    public void PlayVictoryTheme()
     {
-        yield return new WaitForSeconds(duration);
-        musicSource.clip = bossTheme1;
-        musicSource.Play();
-        StartCoroutine(StartFade(musicSource, 3, volume));
+        musicSource.Stop();
+        StartCoroutine(WaitForPlayVictory(5f));
+    }
+
+    IEnumerator WaitForPlayVictory(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        PlaySFX(victory);
+    }
+
+    private void StartFadeInOut(AudioSource audioSource ,AudioClip audioClip, float duration)
+    {
+        float start = audioSource.volume;
+
+        DOVirtual.Float(start, 0, duration, v =>
+        {
+            audioSource.volume = v;
+        }).SetEase(Ease.InBounce).OnComplete(() =>
+        {
+            audioSource.clip = audioClip;
+            audioSource.Play();
+
+            DOVirtual.Float(0, start, duration, v =>
+            {
+                audioSource.volume = v;
+            });
+        });
+
     }
 }

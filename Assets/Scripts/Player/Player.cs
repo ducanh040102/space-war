@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Player : MonoBehaviour
 {
@@ -28,17 +29,13 @@ public class Player : MonoBehaviour
 
     private void MoveWithMouse()
     {
-        if (Camera.main != null)
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0;
-            
-            if(mousePos.x > ScreenBoundary.Instance.ScreenWidth || mousePos.x < -ScreenBoundary.Instance.ScreenWidth ||
-                mousePos.y > ScreenBoundary.Instance.ScreenHeight || mousePos.y < -ScreenBoundary.Instance.ScreenHeight) {
-                return;
-            }
 
-            Vector3 direction = mousePos - transform.position;
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+        Vector3 direction = mousePos - transform.position;
+
+        if (ScreenBoundary.Instance.IsInsideScreen(mousePos))
+        {
             transform.position += direction * Time.deltaTime * moveSpeed;
         }
     }
@@ -49,23 +46,14 @@ public class Player : MonoBehaviour
         {
             return;
         }
-
-        GameManager.sharedInstance.DecreHitPoints();
         
-        if (GameManager.sharedInstance.GetHitPointsValue() <= 0)
-        {
-            GameManager.sharedInstance.hitPoints.value = 0;
-            //Destroy();
-        }
-        else
-        {
-            OnPlayerHit?.Invoke(this, EventArgs.Empty);
-        }
+        GameManager.sharedInstance.DecreHitPoints();
+        OnPlayerHit?.Invoke(this, EventArgs.Empty);
     }
 
-    public void Destroy()
+    public void GameOver()
     {
-        Destroy(gameObject);
+        
     }
 
 

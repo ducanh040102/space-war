@@ -24,7 +24,7 @@ public class SoundSettingUI : MonoBehaviour
 
     private void Update()
     {
-        if (!PauseMenu.isPaused)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Hide();
         }

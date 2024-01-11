@@ -5,12 +5,21 @@ using UnityEngine;
 
 public class EnemyBulletSpawner : Spawner
 {
+    public enum BulletPool
+    {
+        ClawBossBulletPool,
+        StarEnemyBulletPool,
+        StarknifeEnemyBulletPool,
+        SlicerEnemyBulletPool,
+    }
+
     [SerializeField] private bool isFiring = false;
 
     [SerializeField] private Transform enemyFiringPoint;
-    [SerializeField] private FiringPattern firingPattern;
 
-    [SerializeField] private string bulletPoolName;
+    [SerializeField] private BulletPool bulletPool;
+    [SerializeField] private FiringPattern firingPattern;
+    
     [SerializeField] private int laserDuration;
 
     private float enemyFireCountdown = 0;
@@ -30,7 +39,7 @@ public class EnemyBulletSpawner : Spawner
 
     private void Start()
     {
-        objectPool = GameObject.Find(bulletPoolName).GetComponent<ObjectPool>();
+        objectPool = GameObject.Find(bulletPool.ToString()).GetComponent<ObjectPool>();
         enemyFireCountdown = GetSpawnRandomCountdown();
     }
 
@@ -137,6 +146,8 @@ public class EnemyBulletSpawner : Spawner
 
     private void OnDestroy()
     {
+        if (!Application.isPlaying)
+            return;
         if (laser == null)
             return;
         laser.DisableLaser();

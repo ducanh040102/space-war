@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PRocket : MonoBehaviour
 {
-    public float timer;
-    public float damage;
+    [SerializeField] private float damage;
+    [SerializeField] private float timer;
 
     private void Start()
     {
@@ -17,10 +17,9 @@ public class PRocket : MonoBehaviour
     private IEnumerator Explode()
     {
         yield return new WaitForSeconds(timer);
-        foreach (Transform enemy in EnemySpawner.Instance.enemySpawnedList)
-        {
-            enemy.GetComponent<Enemy>().Hit(damage);
-        }
+        EnemySpawner.Instance.HitAllEnemy(damage);
+        VFXManager.instance.SpawnExplosion(transform.position, Vector3.one * 5, 2, 0.5f);
+        AudioManager.instance.PlayBigExplode();
         Destroy(gameObject);
     }
 

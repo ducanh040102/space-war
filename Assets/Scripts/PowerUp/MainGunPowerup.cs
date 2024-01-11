@@ -11,6 +11,6 @@ public class MainGunPowerup : PowerUp
         if (PlayerBulletManager.instance.typeBullet != PlayerBulletManager.TypeOfBullet.MainGun)
             PlayerBulletManager.instance.typeBullet = PlayerBulletManager.TypeOfBullet.MainGun;
         else
-            PlayerBulletManager.instance.bulletLevel++;
+            PlayerBulletManager.instance.IncreaseBulletLevel();
     }
 }

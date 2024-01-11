@@ -8,6 +8,7 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button settingButton;
     [SerializeField] private Button toMenuButton;
+    [SerializeField] private GameObject container;
     [SerializeField] private PauseMenu pauseMenu;
     [SerializeField] private SoundSettingUI soundSettingUI;
 
@@ -21,6 +22,7 @@ public class PauseMenuUI : MonoBehaviour
         settingButton.onClick.AddListener(() =>
         {
             soundSettingUI.Show();
+            Hide();
         });
 
         toMenuButton.onClick.AddListener(() =>
@@ -30,5 +32,18 @@ public class PauseMenuUI : MonoBehaviour
         });
     }
 
+    private void Start()
+    {
+        Hide();
+    }
 
+    public void Show()
+    {
+        container.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        container.SetActive(false);
+    }
 }

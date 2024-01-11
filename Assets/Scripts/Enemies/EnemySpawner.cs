@@ -45,8 +45,6 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(NextWave());
     }
 
-
-
     public void LoadCSVAndSpawnEnemy(int number)
     {
         if (loadCSV.IsDataNull(number)){
@@ -95,5 +93,15 @@ public class EnemySpawner : MonoBehaviour
         return enemySpawned;
     }
 
-    
+    public void HitAllEnemy(float damage)
+    {
+        foreach (Transform enemy in Instance.enemySpawnedList)
+        {
+            if(enemy != null)
+            {
+                enemy.GetComponent<Enemy>().Hit(damage);
+            }
+            
+        }
+    }
 }

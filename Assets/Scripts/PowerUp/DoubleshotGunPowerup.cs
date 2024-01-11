@@ -12,7 +12,7 @@ public class DoubleshotGunPowerup : PowerUp
         if (PlayerBulletManager.instance.typeBullet != PlayerBulletManager.TypeOfBullet.DoubleshotGun)
             PlayerBulletManager.instance.typeBullet = PlayerBulletManager.TypeOfBullet.DoubleshotGun;
         else
-            PlayerBulletManager.instance.bulletLevel++;
+            PlayerBulletManager.instance.IncreaseBulletLevel();
 
     }
 }

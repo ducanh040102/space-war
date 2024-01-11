@@ -71,7 +71,7 @@ public class ClawBoss : MonoBehaviour
 
     private void Update()
     {
-        OutBoader();
+        DropLoop();
         FollowingPlayerHorizontal();
     }
 
@@ -103,9 +103,9 @@ public class ClawBoss : MonoBehaviour
         });
     }
 
-    private void OutBoader()
+    private void DropLoop()
     {
-        if (transform.position.y < -ScreenBoundary.Instance.ScreenHeight)
+        if (!ScreenBoundary.Instance.IsInsideScreen(transform.position))
         {
             transform.position = new Vector3(transform.position.x, ScreenBoundary.Instance.ScreenHeight, 0);
         }
@@ -119,5 +119,18 @@ public class ClawBoss : MonoBehaviour
         }
         float step = 5f * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, new Vector3(Player.instance.transform.position.x, transform.position.y, transform.position.z), step);
+    }
+
+    private void OnDestroy()
+    {
+        if (!Application.isPlaying)
+            return;
+
+        StopAllCoroutines();
+        EnemySpawner.Instance.HitAllEnemy(10000f);
+        VFXManager.instance.SpawnExplosion(transform.position, Vector3.one * 10, 2, 0.2f);
+
+        AudioManager.instance.PlayBigExplode();
+        AudioManager.instance.PlayVictoryTheme();
     }
 }

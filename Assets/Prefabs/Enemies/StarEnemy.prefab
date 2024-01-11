@@ -117,8 +117,8 @@ MonoBehaviour:
   spawnCountdownMax: 10
   isFiring: 0
   enemyFiringPoint: {fileID: 41445173580848126}
+  bulletPool: 1
   firingPattern: 0
-  bulletPoolName: StarEnemyPool
   laserDuration: 0
 --- !u!114 &-241012045260719192
 MonoBehaviour:
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2b94b18c7f869458a7dd4d8bfe4f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPointMax: 10
+  hitPointMax: 200
   hitPoint: 0
   scoreValue: 20000
   isStartAction: 0
