@@ -1309,7 +1309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1615058864021971620, guid: b9ab564385349a440ba9cf39732904cd, type: 3}
       propertyPath: bulletLevel
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1615058864021971620, guid: b9ab564385349a440ba9cf39732904cd, type: 3}
       propertyPath: mainGunPool
@@ -1942,7 +1942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawnedList: []
-  wave: 0
+  wave: 10
   loadCSV: {fileID: 1831163932}
   enemyPrefab:
   - {fileID: 9033898346042632013, guid: 81a4e99f300aa64458a32d3ad08c9b9f, type: 3}
