@@ -8,6 +8,7 @@ public class Laser : MonoBehaviour
     [SerializeField] private float baseDamage;
     [SerializeField] private float perSec;
     [SerializeField] private float maxLength;
+    [SerializeField] private float baseWidth;
 
     [SerializeField] private Vector3 direction;
     [SerializeField] private LineRenderer lineRenderer;
@@ -17,7 +18,8 @@ public class Laser : MonoBehaviour
     [SerializeField] private LayerMask obstacleLayer;
 
     [SerializeField] private float countdown;
-    
+    [SerializeField] private bool isPlayerLaser;
+   
     private void Start()
     {
         DisableLaser();
@@ -37,7 +39,12 @@ public class Laser : MonoBehaviour
         startVFX.gameObject.SetActive(true);
         endVFX.gameObject.SetActive(true);
 
-        
+        if(isPlayerLaser)
+        {
+            float laserWidth = baseWidth + (PlayerBulletManager.instance.BulletLevel / 10f);
+            lineRenderer.startWidth = laserWidth;
+            lineRenderer.endWidth = laserWidth;
+        }
     }
 
 
@@ -57,9 +64,9 @@ public class Laser : MonoBehaviour
         {
             if(countdown <= 0)
             {
-                if(hit.transform.GetComponent<Enemy>() != null)
+                if (isPlayerLaser)
                 {
-                    float finalDamage = baseDamage + (PlayerBulletManager.instance.BulletLevel * 10);
+                    float finalDamage = baseDamage + (PlayerBulletManager.instance.BulletLevel * 15);
                     hit.transform.GetComponent<Enemy>().Hit(finalDamage);
                 }
 

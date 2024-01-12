@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject shieldPrefab;
 
     [SerializeField] private bool hasShield = false;
+    [SerializeField] private float shieldDuration = 3f;
     [SerializeField] private float moveSpeed;
 
     public event EventHandler OnPlayerHit;
@@ -87,7 +88,7 @@ public class Player : MonoBehaviour
         hasShield = true;
         GameObject shieldObj = Instantiate(shieldPrefab, this.transform);
         shieldObj.transform.position = this.transform.position;
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(shieldDuration);
         Destroy(shieldObj);
         hasShield = false;
     }

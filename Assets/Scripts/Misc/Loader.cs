@@ -9,9 +9,8 @@ public static class Loader
     {
         GameplayScene,
         MainMenuScene,
-        SettingsScene,
-        LeaderboardScene,
-        LoadingScene
+        LoadingScene,
+        DialogueScene
     }
 
     private static Scene targetScene;

@@ -7,6 +7,7 @@ public class PowerupSpawner : MonoBehaviour
     public static PowerupSpawner sharedInstance = null;
 
     [SerializeField] private GameObject[] powerups;
+    [SerializeField] private float[] spawnWeights;
     [SerializeField] float powerupDropChance = .1f;
 
    
@@ -26,9 +27,34 @@ public class PowerupSpawner : MonoBehaviour
     {
         if (Random.value < powerupDropChance)
         {
-            GameObject powerup = powerups[Random.Range(0, powerups.Length)];
+            GameObject powerup = ChooseRandomPowerUp();
 
             Instantiate(powerup, position.position, Quaternion.identity);
         }
+    }
+
+
+    private GameObject ChooseRandomPowerUp()
+    {
+        float totalWeight = 0f;
+
+        foreach (float weight in spawnWeights)
+        {
+            totalWeight += weight;
+        }
+
+        float randomValue = Random.Range(0f, totalWeight);
+        float cumulativeWeight = 0f;
+
+        for (int i = 0; i < powerups.Length; i++)
+        {
+            cumulativeWeight += spawnWeights[i];
+            if (randomValue <= cumulativeWeight)
+            {
+                return powerups[i];
+            }
+        }
+
+        return powerups[powerups.Length - 1];
     }
 }

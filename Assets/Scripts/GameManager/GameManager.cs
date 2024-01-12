@@ -28,6 +28,12 @@ public class GameManager : MonoBehaviour
         score.value = 0;
     }
 
+    private void Start()
+    {
+        
+    }
+
+
     public void UpdateScore(int points)
     {
         score.value += points;

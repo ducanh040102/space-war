@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource SFXSource;
 
     [Header("------------Audio Clip-------------")]
-    public AudioClip background;
+    public AudioClip[] background;
     public AudioClip pause;
     public AudioClip playerShoot;
     public AudioClip explode;
@@ -33,8 +33,14 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        musicSource.clip = background;
-        musicSource.Play();
+        foreach (var bg in background)
+        {
+            bg.LoadAudioData();
+        }
+        bossTheme1.LoadAudioData();
+        bossTheme2.LoadAudioData();
+
+        explode.LoadAudioData();
 
         Player.instance.OnPlayerHit += Player_OnPlayerHit;
     }
@@ -42,6 +48,14 @@ public class AudioManager : MonoBehaviour
     private void Player_OnPlayerHit(object sender, System.EventArgs e)
     {
         PlayExplode();
+    }
+
+    public void PlayBG(int index)
+    {
+        if(index >= background.Length)
+            index = background.Length - 1;
+        musicSource.clip = background[index];
+        musicSource.Play();
     }
 
     public void PlaySFX(AudioClip audioClip)
@@ -88,16 +102,16 @@ public class AudioManager : MonoBehaviour
 
     public void PlayBossTheme()
     {
-        StartFadeInOut(musicSource, bossTheme1, 2);
+        StartFadeInOut(musicSource, bossTheme2, 2);
     }
 
     public void PlayVictoryTheme()
     {
         musicSource.Stop();
-        StartCoroutine(WaitForPlayVictory(5f));
+        StartCoroutine(WaitForPlaySFX(5f));
     }
 
-    IEnumerator WaitForPlayVictory(float delay)
+    IEnumerator WaitForPlaySFX(float delay)
     {
         yield return new WaitForSeconds(delay);
         PlaySFX(victory);
@@ -113,12 +127,9 @@ public class AudioManager : MonoBehaviour
         }).SetEase(Ease.InBounce).OnComplete(() =>
         {
             audioSource.clip = audioClip;
-            audioSource.Play();
+            audioSource.volume = start;
 
-            DOVirtual.Float(0, start, duration, v =>
-            {
-                audioSource.volume = v;
-            });
+            audioSource.Play();
         });
 
     }

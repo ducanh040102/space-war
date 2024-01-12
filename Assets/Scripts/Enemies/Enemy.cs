@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float hitPointMax = 50;
+    [SerializeField] private float baseHitPoint = 50;
     [SerializeField] private float hitPoint;
     [SerializeField] private int scoreValue;
     [SerializeField] private bool isStartAction = false;
@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
 
     public bool IsStartAction { get => isStartAction; private set => isStartAction = value; }
     public float HitPoint { get => hitPoint; private set => hitPoint = value; }
-    public float HitPointMax { get => hitPointMax; private set => hitPointMax = value; }
+    public float BaseHitPoint { get => baseHitPoint; private set => baseHitPoint = value; }
 
     private void Start()
     {
@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
         powerupSpawner = PowerupSpawner.sharedInstance;
         enemyBulletSpawner = gameObject.GetComponent<EnemyBulletSpawner>();
 
-        HitPoint = HitPointMax;
+        HitPoint = BaseHitPoint * (EnemySpawner.Instance.stage + 1);
     }
 
     protected virtual void Fire()

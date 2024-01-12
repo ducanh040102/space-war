@@ -36,6 +36,7 @@ public class Respawn : MonoBehaviour
         capsuleCollider.enabled = true;
         playerVisual.Show();
         isInvisible = false;
+        Player.instance.PowerupShield();
     }
 
     private void GameOver()
@@ -43,5 +44,14 @@ public class Respawn : MonoBehaviour
         capsuleCollider.enabled = false;
         playerVisual.Hide();
         isInvisible = true;
+        GameplayUI.instance.StageTextTrigger("GAME OVER","");
+        StartCoroutine(WaitForEndGame());
+
+    }
+
+    IEnumerator WaitForEndGame()
+    {
+        yield return new WaitForSeconds(10f);
+        Loader.Load(Loader.Scene.MainMenuScene);
     }
 }

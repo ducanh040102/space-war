@@ -4880,6 +4880,7 @@ MonoBehaviour:
   baseDamage: 20
   perSec: 0.2
   maxLength: 20
+  baseWidth: 0.2
   direction: {x: 0, y: 1, z: 0}
   lineRenderer: {fileID: 8186734916346533908}
   startVFX: {fileID: 1966590217394626535}
@@ -4888,6 +4889,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   countdown: 0
+  isPlayerLaser: 1
 --- !u!1 &2791737464103928522
 GameObject:
   m_ObjectHideFlags: 0
@@ -19519,17 +19521,17 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -10
   m_Positions:
-  - {x: 8.230868, y: 6.6213326, z: 0}
-  - {x: 0, y: 20, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.5
+    widthMultiplier: 0.2
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.99418604
         inSlope: 0
         outSlope: 0
         tangentMode: 0

@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class MenuUI : MonoBehaviour
 {
     [SerializeField] private Button newgameButton;
-    [SerializeField] private Button continueButton;
     [SerializeField] private Button settingsButton;
-    [SerializeField] private Button leaderboardButton;
     [SerializeField] private Button quitButton;
 
     [SerializeField] private SoundSettingUI soundsetting;
@@ -20,7 +18,7 @@ public class MenuUI : MonoBehaviour
         newgameButton.onClick.AddListener(() =>
         {
             uiSoundEffect.Play();
-            Loader.Load(Loader.Scene.GameplayScene);
+            Loader.Load(Loader.Scene.DialogueScene);
         });
 
         settingsButton.onClick.AddListener(() =>
@@ -30,11 +28,6 @@ public class MenuUI : MonoBehaviour
             soundsetting.Show();
         });
 
-        leaderboardButton.onClick.AddListener(() =>
-        {
-            uiSoundEffect.Play();
-            Loader.Load(Loader.Scene.LeaderboardScene);
-        });
 
         quitButton.onClick.AddListener(() =>
         {

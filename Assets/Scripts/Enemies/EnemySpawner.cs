@@ -1,7 +1,8 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+
 using UnityEngine;
 
 
@@ -9,9 +10,19 @@ public class EnemySpawner : MonoBehaviour
 {
     public static EnemySpawner Instance { get; private set; }
 
+    public event EventHandler<OnEnterNewWaveEventArgs> OnEnterNewWave;
+    public class OnEnterNewWaveEventArgs : EventArgs
+    {
+        public string _wave;
+        public string _text;
+    }
+
     public List<Transform> enemySpawnedList;
 
+    public int stage = 0;
+
     [SerializeField] private int wave;
+
     [SerializeField] private LoadCSV loadCSV;
     [SerializeField] private Transform[] enemyPrefab;
     [SerializeField] private Transform[] bossPrefab;
@@ -25,32 +36,61 @@ public class EnemySpawner : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    public void StartSpawn()
     {
         StartCoroutine(NextWave());
-        
     }
 
     private IEnumerator NextWave()
     {
-        yield return new WaitForSeconds(5);
+        string[] data = loadCSV.LoadNewCSV("Wave" + wave);
 
-        LoadCSVAndSpawnEnemy(wave);
-        while (enemySpawnedList.Count != 0)
+        if(data != null)
         {
-            yield return null;
+            string[] row = loadCSV.ReadSpawnRow(6);
+
+            OnEnterNewWave?.Invoke(this, new OnEnterNewWaveEventArgs
+            {
+                _wave = wave.ToString(),
+                _text = row[0]
+            });
+
+            yield return new WaitForSeconds(5);
+
+            SpawnEnemy();
+            while (enemySpawnedList.Count != 0)
+            {
+                yield return null;
+            }
+
+
+            wave++;
+            if (row[1] == "FinalWave")
+                StartCoroutine(NextStage());
+            else if (row[1] == "End")
+                StartCoroutine(EndGame());
+            else
+                StartCoroutine(NextWave());
+
         }
 
-        wave++;
-        StartCoroutine(NextWave());
+        yield return null;
     }
 
-    public void LoadCSVAndSpawnEnemy(int number)
+    IEnumerator NextStage()
     {
-        if (loadCSV.IsDataNull(number)){
-            return;
-        }
-        loadCSV.LoadNewCSV();
+        stage++;
+        yield return new WaitForSeconds(40f);
+    }
+    
+    IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(20f);
+        Loader.Load(Loader.Scene.MainMenuScene);
+    }
+
+    public void SpawnEnemy()
+    {
         for (int i = 0; i < 6; i++)
         {
             string[] row = loadCSV.ReadSpawnRow(i);
@@ -95,13 +135,14 @@ public class EnemySpawner : MonoBehaviour
 
     public void HitAllEnemy(float damage)
     {
-        foreach (Transform enemy in Instance.enemySpawnedList)
+        if (enemySpawnedList.Count == 0)
+            return;
+        foreach (Transform enemy in enemySpawnedList)
         {
             if(enemy != null)
             {
                 enemy.GetComponent<Enemy>().Hit(damage);
             }
-            
         }
     }
 }

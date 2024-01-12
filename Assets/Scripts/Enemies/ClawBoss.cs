@@ -12,19 +12,19 @@ public class ClawBoss : MonoBehaviour
     private bool isFollowingPlayer = false;
 
     private ObjectMoveInScene objectMoveInScene;
-    private Enemy enemy;
     private EnemyBulletSpawner enemyBulletSpawner;
+    private Enemy enemy;
     private Tween move;
 
     private void Start()
     {
-        objectMoveInScene = gameObject.GetComponent<ObjectMoveInScene>();
-        enemy = gameObject.GetComponent<Enemy>();
-        enemyBulletSpawner = gameObject.GetComponent<EnemyBulletSpawner>();
-        AudioManager.instance.PlayBossTheme();
+        enemy = GetComponent<Enemy>();
+        objectMoveInScene = GetComponent<ObjectMoveInScene>();
+        enemyBulletSpawner = GetComponent<EnemyBulletSpawner>();
+
+        BossManager.instance.BossSpawn();
 
         StartCoroutine(WaitForStart());
-        StartCoroutine(WaitForSpawnMore());
     }
 
     protected IEnumerator WaitForStart()
@@ -42,10 +42,11 @@ public class ClawBoss : MonoBehaviour
     
     private IEnumerator WaitForDoSpecial()
     {
-        while (enemy.HitPoint > (int)(enemy.HitPointMax / 2))
+        while (enemy.HitPoint > (int)(enemy.BaseHitPoint / 2))
         {
             yield return null;
         }
+
         move.Pause();
         enemyBulletSpawner.StopFiring();
 
@@ -59,22 +60,15 @@ public class ClawBoss : MonoBehaviour
     {
         yield return new WaitForSeconds(15f);
         EndSpecial();
+        BossManager.instance.BossSpawnHelper("Wave301");
 
     }
-
-    private IEnumerator WaitForSpawnMore()
-    {
-        yield return new WaitForSeconds(50f);
-        EnemySpawner.Instance.LoadCSVAndSpawnEnemy(301);
-    }
-
 
     private void Update()
     {
         DropLoop();
         FollowingPlayerHorizontal();
     }
-
 
     private void Attack()
     {
@@ -123,14 +117,6 @@ public class ClawBoss : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (!Application.isPlaying)
-            return;
-
-        StopAllCoroutines();
-        EnemySpawner.Instance.HitAllEnemy(10000f);
-        VFXManager.instance.SpawnExplosion(transform.position, Vector3.one * 10, 2, 0.2f);
-
-        AudioManager.instance.PlayBigExplode();
-        AudioManager.instance.PlayVictoryTheme();
+        BossManager.instance.BossDestroy(transform.position);
     }
 }

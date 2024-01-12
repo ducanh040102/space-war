@@ -4,27 +4,28 @@ using UnityEngine;
 
 public class LoadCSV : MonoBehaviour
 {
+    public static LoadCSV instance;
+
     private string[] data;
     private TextAsset csv;
 
-    public bool IsDataNull(int wave)
+    private void Awake()
     {
-        csv = Resources.Load<TextAsset>("Wave" + wave);
-        if (csv == null)
-            return true;
-
-        return false;
+        instance = this;
     }
 
-    public void LoadNewCSV()
+    public string[] LoadNewCSV(string dataname)
     {
+        csv = Resources.Load<TextAsset>(dataname);
+        if (csv == null)
+            return null;
+
         data = csv.text.Split(new char[] { '\n' });
+        return data;
     }
 
     public string[] ReadSpawnRow(int i)
     {
-        
-
         string[] row = data[i].Split(',');
         return row;
     }
