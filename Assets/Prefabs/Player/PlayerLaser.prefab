@@ -4877,8 +4877,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9555e27054be56046a47fcdfdf0c716c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDamage: 50
-  perSec: 0.2
+  baseDamage: 20
+  perSec: 0.1
   maxLength: 20
   baseWidth: 0.2
   direction: {x: 0, y: 1, z: 0}

@@ -67,7 +67,7 @@ public class Laser : MonoBehaviour
             {
                 if (isPlayerLaser)
                 {
-                    float finalDamage = baseDamage + (PlayerBulletManager.instance.BulletLevel * 10);
+                    float finalDamage = baseDamage + (PlayerBulletManager.instance.BulletLevel * 15f);
                     hit.transform.GetComponent<Enemy>().Hit(finalDamage);
                 }
 

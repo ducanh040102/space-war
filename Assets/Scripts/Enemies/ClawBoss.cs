@@ -11,6 +11,7 @@ public class ClawBoss : MonoBehaviour
     private Vector3 spawnPosition;
     private bool isFollowingPlayer = false;
 
+    private float maxHp;
     private ObjectMoveInScene objectMoveInScene;
     private EnemyBulletSpawner enemyBulletSpawner;
     private Enemy enemy;
@@ -24,6 +25,8 @@ public class ClawBoss : MonoBehaviour
 
         BossManager.instance.UpdateBossHp(enemy.HitPoint);
         BossManager.instance.BossSpawn();
+
+        maxHp = enemy.HitPoint;
 
         StartCoroutine(WaitForStart());
     }
@@ -43,7 +46,7 @@ public class ClawBoss : MonoBehaviour
     
     private IEnumerator WaitForDoSpecial()
     {
-        while (enemy.HitPoint > (int)(enemy.BaseHitPoint / 2))
+        while (enemy.HitPoint > (int)(maxHp / 2))
         {
             yield return null;
         }

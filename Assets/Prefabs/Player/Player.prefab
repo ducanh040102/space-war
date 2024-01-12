@@ -222,7 +222,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shieldPrefab: {fileID: 5787605838998719590, guid: db3a423ac2f9baa4d9c5049f2e9814cb, type: 3}
   hasShield: 0
-  shieldDuration: 3
   moveSpeed: 10
 --- !u!114 &210774882091000011
 MonoBehaviour:
@@ -269,7 +268,7 @@ MonoBehaviour:
   typeBullet: 0
   bulletLevel: 0
   mainGunAttackInterval: 0.3
-  doubleshotGunAttackInterval: 0.1
+  doubleshotGunAttackInterval: 0.15
   mainGunPool: {fileID: 0}
   doubleshotPool: {fileID: 0}
   rocketPool: {fileID: 0}

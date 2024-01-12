@@ -50,12 +50,6 @@ public class Player : MonoBehaviour
         OnPlayerHit?.Invoke(this, EventArgs.Empty);
     }
 
-    public void GameOver()
-    {
-        
-    }
-
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (hasShield)
@@ -71,7 +65,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
-            collision.gameObject.SetActive(false);
+            collision.GetComponent<EnemyBullet>().BackToPool();
             Damage();
         }
     }

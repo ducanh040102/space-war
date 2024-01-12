@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,6 +15,7 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Transform fadeOut;
 
     [SerializeField] private Slider bossHealthBar;
+    [SerializeField] private TextMeshProUGUI bossHealthPercent;
 
     [SerializeField] private TextMeshProUGUI stageNameText;
     [SerializeField] private TextMeshProUGUI hitPointText;
@@ -38,19 +40,23 @@ public class GameplayUI : MonoBehaviour
 
     private void BossManager_OnBossDamaged(object sender, BossManager.OnBossDamagedEventArgs e)
     {
+        float percent = e._bossHP / e._bossMaxHP;
         bossHealthBar.value = e._bossHP/e._bossMaxHP;
+        bossHealthPercent.text = String.Format("{0:0.00}", (percent * 100f)) + "%";
     }
 
     private void BossManager_OnBossSpawn(object sender, System.EventArgs e)
     {
         bossHealthBar.gameObject.SetActive(true);
         bossHealthBar.value = 1;
+        bossHealthPercent.text = "100%";
     }
 
     private void BossManager_OnBossDestroy(object sender, System.EventArgs e)
     {
         if(bossHealthBar != null)
         {
+            bossHealthPercent.text = "0%";
             bossHealthBar.gameObject.SetActive(false);
         }
         
