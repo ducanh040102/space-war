@@ -140,6 +140,7 @@ public class PlayerBulletManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && GameManager.sharedInstance.GetNukeValue() > 0)
         {
             rocketPool.Fire();
+            AudioManager.instance.PlayPlayerShootRocket();
             GameManager.sharedInstance.DecreNuke();
         }
     }

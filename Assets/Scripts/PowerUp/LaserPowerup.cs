@@ -6,6 +6,7 @@ public class LaserPowerup : PowerUp
 {
     protected override void ActPowerup()
     {
+        base.ActPowerup();
         AudioManager.instance.PlayWeaponUpgrade();
 
         if (PlayerBulletManager.instance.typeBullet != PlayerBulletManager.TypeOfBullet.Laser)

@@ -23,6 +23,7 @@ public class Respawn : MonoBehaviour
             GameOver();
             return;
         }
+        
         StartCoroutine(WaitForRespawn(respawnCountdown));
         PlayerBulletManager.instance.DecreaseBulletLevel();
     }
@@ -33,10 +34,10 @@ public class Respawn : MonoBehaviour
         playerVisual.Hide();
         isInvisible = true;
         yield return new WaitForSeconds(time);
+        Player.instance.PowerupShield(3f);
         capsuleCollider.enabled = true;
         playerVisual.Show();
         isInvisible = false;
-        Player.instance.PowerupShield();
     }
 
     private void GameOver()

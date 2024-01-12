@@ -37,5 +37,8 @@ public abstract class PowerUp : MonoBehaviour
         transform.localPosition += direction * speedFall * Time.deltaTime;
     }
 
-    protected abstract void ActPowerup();
+    protected virtual void ActPowerup()
+    {
+        GameManager.sharedInstance.UpdateScore(12000);
+    }
 }

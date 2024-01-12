@@ -46,6 +46,7 @@ public class LoopingBackground : MonoBehaviour
 
     private void WarpOut()
     {
+        AudioManager.instance.PlayPlayerWarpOut();
         DOVirtual.Float(normalSpeed, warpSpeed, 20f, v =>
         {
             scrollSpeed = v;
@@ -60,6 +61,7 @@ public class LoopingBackground : MonoBehaviour
     private void WarpIn()
     {
         GameplayUI.instance.SceneFadeOut();
+        AudioManager.instance.PlayPlayerWarpIn();
         ChangeBG();
         DOVirtual.Float(warpSpeed, normalSpeed, 10f, v =>
         {

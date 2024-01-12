@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,6 +30,7 @@ public class MenuUI : MonoBehaviour
         quitButton.onClick.AddListener(() =>
         {
             uiSoundEffect.Play();
+            Debug.Log("Quit");
             Application.Quit();
         });
     }

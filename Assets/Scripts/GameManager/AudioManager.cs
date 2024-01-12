@@ -19,6 +19,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip itemPick;
     public AudioClip weaponUpgrade;
     public AudioClip playerShootLaser;
+    public AudioClip playerShootRocket;
+    public AudioClip playerWarpIn;
+    public AudioClip playerWarpOut;
     public AudioClip enemyHit;
     public AudioClip bossTheme1;
     public AudioClip bossTheme2;
@@ -95,6 +98,21 @@ public class AudioManager : MonoBehaviour
         PlaySFX(playerShootLaser);
     }
     
+    public void PlayPlayerShootRocket() 
+    {
+        PlaySFX(playerShootRocket);
+    }
+
+    public void PlayPlayerWarpIn()
+    {
+        PlaySFX(playerWarpIn);
+    }
+
+    public void PlayPlayerWarpOut()
+    {
+        PlaySFX(playerWarpOut);
+    }
+
     public void PlayEnemyHit() 
     {
         PlaySFX(enemyHit);

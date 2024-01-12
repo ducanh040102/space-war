@@ -22,6 +22,7 @@ public class ClawBoss : MonoBehaviour
         objectMoveInScene = GetComponent<ObjectMoveInScene>();
         enemyBulletSpawner = GetComponent<EnemyBulletSpawner>();
 
+        BossManager.instance.UpdateBossHp(enemy.HitPoint);
         BossManager.instance.BossSpawn();
 
         StartCoroutine(WaitForStart());
@@ -60,12 +61,13 @@ public class ClawBoss : MonoBehaviour
     {
         yield return new WaitForSeconds(15f);
         EndSpecial();
-        BossManager.instance.BossSpawnHelper("Wave301");
+        BossManager.instance.BossSpawnHelper("WaveBossHelper"+EnemySpawner.Instance.stage);
 
     }
 
     private void Update()
     {
+        BossManager.instance.UpdateBossHp(enemy.HitPoint);
         DropLoop();
         FollowingPlayerHorizontal();
     }
@@ -117,6 +119,7 @@ public class ClawBoss : MonoBehaviour
 
     private void OnDestroy()
     {
-        BossManager.instance.BossDestroy(transform.position);
+        if(Application.isPlaying)
+            BossManager.instance.BossDestroy(transform.position);
     }
 }

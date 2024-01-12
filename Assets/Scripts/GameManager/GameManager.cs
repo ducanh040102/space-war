@@ -25,12 +25,14 @@ public class GameManager : MonoBehaviour
             sharedInstance = this;
         }
 
-        score.value = 0;
+        
     }
 
     private void Start()
     {
-        
+        hitPoints.value = 5;
+        nuke.value = 0;
+        score.value = 0;
     }
 
 

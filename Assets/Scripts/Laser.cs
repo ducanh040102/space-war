@@ -35,6 +35,7 @@ public class Laser : MonoBehaviour
 
     public void EnableLaser()
     {
+        countdown = perSec;
         lineRenderer.enabled = true;
         startVFX.gameObject.SetActive(true);
         endVFX.gameObject.SetActive(true);
@@ -66,13 +67,13 @@ public class Laser : MonoBehaviour
             {
                 if (isPlayerLaser)
                 {
-                    float finalDamage = baseDamage + (PlayerBulletManager.instance.BulletLevel * 15);
+                    float finalDamage = baseDamage + (PlayerBulletManager.instance.BulletLevel * 10);
                     hit.transform.GetComponent<Enemy>().Hit(finalDamage);
                 }
 
                 else
                 {
-                    Player.instance.Damage(1);
+                    Player.instance.Damage();
                 }
                 countdown = perSec;
             } 

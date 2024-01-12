@@ -7,6 +7,7 @@ public class NukePowerup : PowerUp
 
     protected override void ActPowerup()
     {
+        base.ActPowerup();
         AudioManager.instance.PlayItemPick();
         GameManager.sharedInstance.IncreNuke();
     }

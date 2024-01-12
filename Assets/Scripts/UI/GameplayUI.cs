@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class GameplayUI : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameplayUI : MonoBehaviour
 
     [SerializeField] private Transform fadeIn;
     [SerializeField] private Transform fadeOut;
+
+    [SerializeField] private Slider bossHealthBar;
 
     [SerializeField] private TextMeshProUGUI stageNameText;
     [SerializeField] private TextMeshProUGUI hitPointText;
@@ -26,11 +29,31 @@ public class GameplayUI : MonoBehaviour
     private void Start()
     {
         EnemySpawner.Instance.OnEnterNewWave += EnemySpawner_OnEnterNewWave;
-        BossManager.instance.OnBossDestroy += Instance_OnBossDestroy;
+        BossManager.instance.OnBossSpawn += BossManager_OnBossSpawn;
+        BossManager.instance.OnBossDamaged += BossManager_OnBossDamaged;
+        BossManager.instance.OnBossDestroy += BossManager_OnBossDestroy;
+
+        bossHealthBar.gameObject.SetActive(false);
     }
 
-    private void Instance_OnBossDestroy(object sender, System.EventArgs e)
+    private void BossManager_OnBossDamaged(object sender, BossManager.OnBossDamagedEventArgs e)
     {
+        bossHealthBar.value = e._bossHP/e._bossMaxHP;
+    }
+
+    private void BossManager_OnBossSpawn(object sender, System.EventArgs e)
+    {
+        bossHealthBar.gameObject.SetActive(true);
+        bossHealthBar.value = 1;
+    }
+
+    private void BossManager_OnBossDestroy(object sender, System.EventArgs e)
+    {
+        if(bossHealthBar != null)
+        {
+            bossHealthBar.gameObject.SetActive(false);
+        }
+        
         StageTextTrigger("Stage Clear", "Prepare To Warp");
     }
 

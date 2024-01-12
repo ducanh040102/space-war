@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Player : MonoBehaviour
 {
@@ -11,7 +10,6 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject shieldPrefab;
 
     [SerializeField] private bool hasShield = false;
-    [SerializeField] private float shieldDuration = 3f;
     [SerializeField] private float moveSpeed;
 
     public event EventHandler OnPlayerHit;
@@ -41,7 +39,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Damage(int damage)
+    public void Damage()
     {
         if (hasShield == true)
         {
@@ -65,30 +63,30 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<Enemy>().Hit(1);
+            Damage();
         }
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
             collision.gameObject.SetActive(false);
+            Damage();
         }
-
-        
-        Damage(1);
-
     }
 
-    public void PowerupShield()
+    public void PowerupShield(float duration)
     {
-        StartCoroutine(ShieldTimer());
+        StartCoroutine(ShieldTimer(duration));
     }
 
-    public IEnumerator ShieldTimer()
+    public IEnumerator ShieldTimer(float duration)
     {
         hasShield = true;
-        GameObject shieldObj = Instantiate(shieldPrefab, this.transform);
-        shieldObj.transform.position = this.transform.position;
-        yield return new WaitForSeconds(shieldDuration);
+        GameObject shieldObj = Instantiate(shieldPrefab, transform);
+        shieldObj.transform.position = transform.position;
+        yield return new WaitForSeconds(duration);
         Destroy(shieldObj);
         hasShield = false;
     }
