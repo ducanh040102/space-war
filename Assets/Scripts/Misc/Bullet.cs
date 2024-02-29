@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    protected virtual void CrossBoarderDestroySelf()
+    protected virtual void CrossBoarderBackToPool()
     {
         if (!ScreenBoundary.Instance.IsInsideScreen(transform.position))
         {
@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
 
     public void BackToPool()
     {
-        gameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        gameObject.transform.rotation = Quaternion.identity;
         gameObject.SetActive(false);
     }
 }

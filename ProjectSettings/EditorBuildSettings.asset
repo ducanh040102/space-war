@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DialogueScene.unity
     guid: 4a02043bc854a3449a0f7ea5480f335a
+  - enabled: 1
+    path: Assets/Scenes/HighscoreTableScene.unity
+    guid: 858a575c25fe53449bf33fb478e70ae0
+  - enabled: 1
+    path: Assets/Scenes/SelectCharacterScene.unity
+    guid: 45aa0d81be0019a44b1fb3b0d3752263
   m_configObjects: {}

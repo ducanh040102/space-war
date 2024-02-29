@@ -17,14 +17,19 @@ public class VFXManager : MonoBehaviour
     private void Start()
     {
         Player.instance.OnPlayerHit += Player_OnPlayerHit;
+        BossManager.instance.OnBossDestroy += BossManager_OnBossDestroy;
     }
 
     private void Player_OnPlayerHit(object sender, System.EventArgs e)
     {
-        SpawnExplosion(Player.instance.transform.position, Vector3.one, 0);
+        SpawnExplosion(Player.instance.transform.position, Vector3.one);
     }
 
-    public void SpawnExplosion(Vector3 position, Vector3 size, int type, float playbackSpeed = 1f)
+    private void BossManager_OnBossDestroy(object sender, System.EventArgs e){
+        SpawnExplosion(BossManager.instance.transform.position, Vector3.one * 100f);
+    }
+
+    public void SpawnExplosion(Vector3 position, Vector3 size, float playbackSpeed = 1f)
     {
         GameObject explosion = explosionPool.SpawnObject(position);
         ParticleSystem explosionParticleSystem = explosion.GetComponent<ParticleSystem>();

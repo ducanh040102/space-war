@@ -13,7 +13,7 @@ public class Debris : Bullet
 
     void Update()
     {
-        CrossBoarderDestroySelf();
+        CrossBoarderBackToPool();
     }
 
     public void SetDebrisSprite(Sprite setSprite)

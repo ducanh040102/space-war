@@ -10,12 +10,14 @@ public static class Loader
         GameplayScene,
         MainMenuScene,
         LoadingScene,
-        DialogueScene
+        DialogueScene,
+        HighscoreTableScene,
+        SelectCharacterScene,
     }
 
     private static Scene targetScene;
 
-    public static void Load(Scene scene )
+    public static void Load(Scene scene)
     {
         Loader.targetScene = scene;
 

@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class GameplayUI : MonoBehaviour
@@ -13,19 +11,34 @@ public class GameplayUI : MonoBehaviour
 
     [SerializeField] private Transform fadeIn;
     [SerializeField] private Transform fadeOut;
-
     [SerializeField] private Slider bossHealthBar;
     [SerializeField] private TextMeshProUGUI bossHealthPercent;
-
     [SerializeField] private TextMeshProUGUI stageNameText;
     [SerializeField] private TextMeshProUGUI hitPointText;
     [SerializeField] private TextMeshProUGUI nukeText;
     [SerializeField] private TextMeshProUGUI powerText;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private Button fireNukeButton;
+    [SerializeField] private Button pauseButton;
+
+    [SerializeField] private float fadeInDuration = 10f;
+    [SerializeField] private float fadeOutDuration = 10f;
+
+    public EventHandler OnFireNukeButton;
+    public EventHandler OnPauseButton;
+
 
     private void Awake()
     {
         instance = this;
+
+        fireNukeButton.onClick.AddListener(()=>{
+            OnFireNukeButton?.Invoke(this, EventArgs.Empty);
+        });
+
+        pauseButton.onClick.AddListener(()=>{
+            OnPauseButton?.Invoke(this, EventArgs.Empty);
+        });
     }
 
     private void Start()
@@ -36,6 +49,8 @@ public class GameplayUI : MonoBehaviour
         BossManager.instance.OnBossDestroy += BossManager_OnBossDestroy;
 
         bossHealthBar.gameObject.SetActive(false);
+
+        StartCoroutine(SceneFadeOut(0));
     }
 
     private void BossManager_OnBossDamaged(object sender, BossManager.OnBossDamagedEventArgs e)
@@ -84,10 +99,10 @@ public class GameplayUI : MonoBehaviour
 
     private void DisplayedInformation()
     {
-        hitPointText.text = GameManager.sharedInstance.hitPoints.value.ToString();
-        nukeText.text = GameManager.sharedInstance.nuke.value.ToString();
-        scoreText.text = GameManager.sharedInstance.score.value.ToString();
-        powerText.text = PlayerBulletManager.instance.BulletLevel.ToString();
+        hitPointText.text = GameManager.instance.GetHitPointsValue().ToString();
+        nukeText.text = GameManager.instance.GetNukeValue().ToString();
+        scoreText.text = GameManager.instance.GetScoreValue().ToString();
+        powerText.text = GameManager.instance.GetBulletLevel().ToString();
     }
 
     void Update()
@@ -95,15 +110,30 @@ public class GameplayUI : MonoBehaviour
         DisplayedInformation();
     }
 
-    public void SceneFadeIn()
+    IEnumerator SceneFadeIn(float delay)
     {
+        yield return new WaitForSeconds(delay);
         fadeIn.gameObject.SetActive(true);
+        fadeOut.gameObject.SetActive(false);
+        yield return new WaitForSeconds(fadeInDuration);
+        fadeIn.gameObject.SetActive(false);
+
+    }
+    
+    IEnumerator SceneFadeOut(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        fadeIn.gameObject.SetActive(false);
+        fadeOut.gameObject.SetActive(true);
+        yield return new WaitForSeconds(fadeOutDuration);
         fadeOut.gameObject.SetActive(false);
     }
     
-    public void SceneFadeOut()
+    public void SceneFadeInOut(float fadeInDelay = 3f)
     {
-        fadeIn.gameObject.SetActive(false);
-        fadeOut.gameObject.SetActive(true);
+        StartCoroutine(SceneFadeIn(fadeInDelay));
+        StartCoroutine(SceneFadeOut(fadeInDelay + fadeInDuration));
     }
+
+    
 }

@@ -42,7 +42,7 @@ public class Laser : MonoBehaviour
 
         if(isPlayerLaser)
         {
-            float laserWidth = baseWidth + (PlayerBulletManager.instance.BulletLevel / 10f);
+            float laserWidth = baseWidth + (GameManager.instance.GetBulletLevel() / 10f);
             lineRenderer.startWidth = laserWidth;
             lineRenderer.endWidth = laserWidth;
         }
@@ -67,7 +67,7 @@ public class Laser : MonoBehaviour
             {
                 if (isPlayerLaser)
                 {
-                    float finalDamage = baseDamage + (PlayerBulletManager.instance.BulletLevel * 15f);
+                    float finalDamage = baseDamage + (GameManager.instance.GetBulletLevel() * 15f);
                     hit.transform.GetComponent<Enemy>().Hit(finalDamage);
                 }
 

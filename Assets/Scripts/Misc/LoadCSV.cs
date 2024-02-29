@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class LoadCSV : MonoBehaviour
@@ -17,6 +18,9 @@ public class LoadCSV : MonoBehaviour
     public string[] LoadNewCSV(string dataname)
     {
         csv = Resources.Load<TextAsset>(dataname);
+
+        
+
         if (csv == null)
             return null;
 
@@ -26,7 +30,18 @@ public class LoadCSV : MonoBehaviour
 
     public string[] ReadSpawnRow(int i)
     {
+        if (data[i] == null) return null;
+
         string[] row = data[i].Split(',');
         return row;
+    }
+
+    public void InsertDataIntoLeaderboard()
+    {
+
+
+        
+
+        
     }
 }

@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
         powerupSpawner = PowerupSpawner.sharedInstance;
         enemyBulletSpawner = gameObject.GetComponent<EnemyBulletSpawner>();
 
-        HitPoint = BaseHitPoint * (EnemySpawner.Instance.stage + 1);
+        HitPoint = BaseHitPoint * (GameManager.instance.GetPlayerStage() + 1);
     }
 
     protected virtual void Fire()
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
             EnemySpawner.Instance.enemySpawnedList.Remove(transform);
             VFXManager.instance.SpawnExplosion(transform.position, Vector3.one, 1);
             AudioManager.instance.PlayExplode();
-            GameManager.sharedInstance.UpdateScore(scoreValue);
+            GameManager.instance.UpdateScore(scoreValue);
 
             Destroy(gameObject);
         }

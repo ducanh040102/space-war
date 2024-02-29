@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerBullet : Bullet
 {
-    public float moveSpeed;
-    public float damage;
+    [SerializeField] protected float moveSpeed;
+    [SerializeField] protected float damage;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,20 +24,13 @@ public class PlayerBullet : Bullet
     void Update()
     {
         Move();
-        CrossBoarderDestroySelf();
-        
+        CrossBoarderBackToPool();
     }
 
-    private void Move()
+    protected virtual void Move()
     {
         transform.Translate(transform.up * Time.deltaTime * moveSpeed);
-
     }
 
-    protected override void CrossBoarderDestroySelf()
-    {
-        if (transform.position.y < ScreenBoundary.Instance.ScreenWidth && transform.position.y > -ScreenBoundary.Instance.ScreenWidth)
-            return;
-        gameObject.SetActive(false);
-    }
+    
 }

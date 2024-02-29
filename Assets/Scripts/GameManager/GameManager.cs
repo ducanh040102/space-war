@@ -5,71 +5,138 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public HitPoints hitPoints;
-    public int maxHitPoints;
-    public Nuke nuke;
-    public Score score;
+    public static GameManager instance = null;
 
-    public static GameManager sharedInstance = null;
-
-    public int MaxHitPoints { get => maxHitPoints; set => maxHitPoints = value; }
+    [SerializeField] private int maxHitPoints;
+    [SerializeField] private PlayerDataSO playerDataSO;
 
     private void Awake()
     {
-        if (sharedInstance != null && sharedInstance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            sharedInstance = this;
+            instance = this;
         }
-
-        
     }
 
     private void Start()
     {
-        hitPoints.value = 5;
-        nuke.value = 0;
-        score.value = 0;
+        Player.instance.OnPlayerHit += Player_OnPlayerHit;
     }
 
+    private void Player_OnPlayerHit(object sender, System.EventArgs e)
+    {
+        DecreaseHitPoints();
+        DecreBulletLevel();
+    }
 
     public void UpdateScore(int points)
     {
-        score.value += points;
+        playerDataSO.playerScore += points;
     }
 
-    public void IncreHitPoints()
+    public void IncreaseHitPoints()
     {
-        hitPoints.value++;
+        playerDataSO.playerHP++;
     }
 
-    public void DecreHitPoints()
+    public void DecreaseHitPoints()
     {
-        hitPoints.value--;
+        playerDataSO.playerHP--;
+        if (playerDataSO.playerHP < 0)
+            playerDataSO.playerHP = 0;
+    }
+
+    public void IncreaseNuke()
+    {
+        playerDataSO.playerNuke++;
+    }
+
+    public void DecreaseNuke()
+    {
+        playerDataSO.playerNuke--;
+    }
+
+    public void IncreaseWave()
+    {
+        playerDataSO.playerWave++;
+    }
+    public void IncreaseStage()
+    {
+        playerDataSO.playerStage++;
+    }
+
+    public void IncreaseBulletLevel()
+    {
+        if (GetBulletLevel() >= 8) return;
+        playerDataSO.playerBulletLevel++;
+    }
+    
+    public void DecreBulletLevel()
+    {
+        if (GetBulletLevel() <= 0) return;
+        playerDataSO.playerBulletLevel--;
+    }
+
+    public void SetGunType(TypeOfGun typeOfGun){
+        playerDataSO.playerGunType = typeOfGun.ToString();
     }
 
     public int GetHitPointsValue()
     {
-        return hitPoints.value;
+        return playerDataSO.playerHP;
     }
 
     public int GetNukeValue()
     {
-        return nuke.value;
+        return playerDataSO.playerNuke;
     }
 
-    public void IncreNuke()
+    public int GetScoreValue()
     {
-        nuke.value++;
+        return playerDataSO.playerScore;
     }
-
-    public void DecreNuke()
+    
+    public string GetPlayerNameValue()
     {
-        nuke.value--;
+        return playerDataSO.playerName;
     }
 
+    public int GetBulletLevel()
+    {
+        return playerDataSO.playerBulletLevel;
+    }
+    public int GetPlayerType()
+    {
+        return playerDataSO.playerType;
+    }
+    public int GetPlayerwave()
+    {
+        return playerDataSO.playerWave;
+    }
+    
+    public int GetPlayerStage()
+    {
+        return playerDataSO.playerStage;
+    }
 
+    public string GetPlayerGunType(){
+        return playerDataSO.playerGunType;
+    }
+
+    public void ExitToMenu()
+    {
+        playerDataSO.playerPlaying = false;
+        if(playerDataSO.playerWave <= 1)
+            playerDataSO.ResetDataToDefault();
+        Loader.Load(Loader.Scene.MainMenuScene);
+    }
+
+    public void GameEnded()
+    {
+        Loader.Load(Loader.Scene.HighscoreTableScene);
+    }
 }

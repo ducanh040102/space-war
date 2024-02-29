@@ -60,6 +60,6 @@ public class DialogueManager : MonoBehaviour
     IEnumerator WaitForChangeScene()
     {
         yield return new WaitForSeconds(5f);
-        Loader.Load(Loader.Scene.GameplayScene);
+        Loader.Load(Loader.Scene.SelectCharacterScene);
     }
 }

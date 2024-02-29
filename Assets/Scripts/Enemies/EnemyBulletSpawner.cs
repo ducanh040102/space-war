@@ -33,7 +33,7 @@ public class EnemyBulletSpawner : Spawner
         StraightDownPattern,
         ThreeShotPattern,
         StarPattern,
-        HommingPattern,
+        HomingPattern,
         StraightDownLaser
     }
 
@@ -65,8 +65,8 @@ public class EnemyBulletSpawner : Spawner
                     case FiringPattern.ThreeShotPattern:
                         ThreeShot();
                         break;
-                    case FiringPattern.HommingPattern:
-                        Homming();
+                    case FiringPattern.HomingPattern:
+                        Homing();
                         break;
                     case FiringPattern.StraightDownLaser:
                         Laser();
@@ -98,11 +98,12 @@ public class EnemyBulletSpawner : Spawner
         enemyFireCountdown = GetSpawnRandomCountdown();
     }
     
-    private void Homming()
+    private void Homing()
     {
         Transform bullet = Spawn(enemyFiringPoint.position);
-
-        bullet.GetComponent<ObjectMoveInScene>().UpdateMoveType(ObjectMoveInScene.Move.FlyToPlayer);
+        ObjectMoveInScene objectMoveInScene = bullet.GetComponent<ObjectMoveInScene>();
+        objectMoveInScene.SetTarget(Player.instance.transform);
+        objectMoveInScene.UpdateMoveType(ObjectMoveInScene.Move.FlyToTarget);
 
         enemyFireCountdown = GetSpawnRandomCountdown();
     }

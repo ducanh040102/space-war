@@ -64,7 +64,7 @@ public class ClawBoss : MonoBehaviour
     {
         yield return new WaitForSeconds(15f);
         EndSpecial();
-        BossManager.instance.BossSpawnHelper("WaveBossHelper"+EnemySpawner.Instance.stage);
+        BossManager.instance.BossSpawnHelper("WaveBossHelper"+ GameManager.instance.GetPlayerStage());
 
     }
 
@@ -87,7 +87,6 @@ public class ClawBoss : MonoBehaviour
         objectMoveInScene.UpdateMoveType(ObjectMoveInScene.Move.Down);
         
         StartCoroutine(WaitForEndSpecial());
-        
     }
 
     private void EndSpecial()
@@ -123,6 +122,6 @@ public class ClawBoss : MonoBehaviour
     private void OnDestroy()
     {
         if(Application.isPlaying)
-            BossManager.instance.BossDestroy(transform.position);
+            BossManager.instance.BossDestroy();
     }
 }

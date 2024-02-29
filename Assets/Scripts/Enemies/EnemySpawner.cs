@@ -17,41 +17,53 @@ public class EnemySpawner : MonoBehaviour
         public string _text;
     }
 
+
     public List<Transform> enemySpawnedList;
-
-    public int stage = 0;
-
-    [SerializeField] private int wave;
 
     [SerializeField] private LoadCSV loadCSV;
     [SerializeField] private Transform[] enemyPrefab;
     [SerializeField] private Transform[] bossPrefab;
     [SerializeField] private Transform spawnPosittion;
     [SerializeField] private Transform endInitialPostition;
-    
     [SerializeField] private float spawnDelayMax;
+    [SerializeField] private bool bossWave = false;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public void StartSpawn()
+    private void Start()
     {
         StartCoroutine(NextWave());
+
+        BossManager.instance.OnBossSpawn += OnBossSpawn;
+        BossManager.instance.OnBossDestroy += OnBossDestroy;
+    }
+
+    private void OnBossSpawn(object sender, EventArgs e)
+    {
+        bossWave = true;
+    }
+
+    private void OnBossDestroy(object sender, EventArgs e)
+    {
+        HitAllEnemy(10000f);
+
+        StartCoroutine(NextStage());
     }
 
     private IEnumerator NextWave()
     {
-        string[] data = loadCSV.LoadNewCSV("Wave" + wave);
+        string[] data = loadCSV.LoadNewCSV("Wave" + GameManager.instance.GetPlayerwave());
 
-        if(data != null)
+        if (data != null)
         {
             string[] row = loadCSV.ReadSpawnRow(6);
 
             OnEnterNewWave?.Invoke(this, new OnEnterNewWaveEventArgs
             {
-                _wave = wave.ToString(),
+                _wave = GameManager.instance.GetPlayerwave().ToString(),
                 _text = row[0]
             });
 
@@ -63,15 +75,19 @@ public class EnemySpawner : MonoBehaviour
                 yield return null;
             }
 
+            GameManager.instance.IncreaseWave();
 
-            wave++;
-            if (row[1] == "FinalWave")
-                StartCoroutine(NextStage());
-            else if (row[1] == "End")
-                StartCoroutine(EndGame());
-            else
-                StartCoroutine(NextWave());
+            while (bossWave == true)
+            {
+                yield return null;
+            }
 
+            StartCoroutine(NextWave());
+        }
+
+        if (data == null)
+        {
+            StartCoroutine(EndGame());
         }
 
         yield return null;
@@ -79,14 +95,15 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator NextStage()
     {
-        stage++;
-        yield return new WaitForSeconds(40f);
+        GameManager.instance.IncreaseStage();
+        yield return new WaitForSeconds(30f);
+        bossWave = false;
     }
-    
+
     IEnumerator EndGame()
     {
-        yield return new WaitForSeconds(20f);
-        Loader.Load(Loader.Scene.MainMenuScene);
+        yield return new WaitForSeconds(10f);
+        GameManager.instance.GameEnded();
     }
 
     public void SpawnEnemy()
@@ -107,12 +124,12 @@ public class EnemySpawner : MonoBehaviour
                 {
                     SpawnEnemy(enemyPrefab[1], position);
                 }
-                
+
                 if (int.Parse(row[j]) == 3)
                 {
                     SpawnEnemy(enemyPrefab[2], position);
                 }
-                
+
                 if (int.Parse(row[j]) == 11)
                 {
                     SpawnEnemy(bossPrefab[0], position);
@@ -139,7 +156,7 @@ public class EnemySpawner : MonoBehaviour
             return;
         foreach (Transform enemy in enemySpawnedList)
         {
-            if(enemy != null)
+            if (enemy != null)
             {
                 enemy.GetComponent<Enemy>().Hit(damage);
             }

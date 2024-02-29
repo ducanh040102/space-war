@@ -6,6 +6,6 @@ public class EnemyBullet : Bullet
 {
     void Update()
     {
-        CrossBoarderDestroySelf(); 
+        CrossBoarderBackToPool(); 
     }
 }

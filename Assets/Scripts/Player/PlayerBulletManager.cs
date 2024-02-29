@@ -1,39 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+
+public enum TypeOfGun
+{
+    MainGun,
+    DoubleshotGun,
+    LaserGun,
+    HomingGun,
+}
 
 public class PlayerBulletManager : MonoBehaviour
 {
     public static PlayerBulletManager instance;
 
-    public enum TypeOfBullet
-    {
-        MainGun,
-        DoubleshotGun,
-        Laser
-    }
+    public TypeOfGun typeBullet = TypeOfGun.MainGun;
+    public EventHandler OnPLayerShoot;
 
-    public TypeOfBullet typeBullet = TypeOfBullet.Laser;
-
-    [SerializeField] private int bulletLevel;
     [SerializeField] private float mainGunAttackInterval;
     [SerializeField] private float doubleshotGunAttackInterval;
+    [SerializeField] private float homingGunAttackInterval;
 
-    [SerializeField] private PMainGun mainGunPool;
-    [SerializeField] private PDoubleshotGun doubleshotPool;
-    [SerializeField] private PRocketGun rocketPool;
+    [SerializeField] private MainGunPool mainGunPool;
+    [SerializeField] private DoubleshotPool doubleshotPool;
+    [SerializeField] private PlayerHomingBulletPool homingPool;
+    [SerializeField] private NukePool nukePool;
     [SerializeField] private GameObject laserPrefab;
 
     private GameObject pLaser;
     private Laser laser;
     private Respawn respawn;
 
-    private TypeOfBullet previousTypeBullet;
+    private TypeOfGun previousTypeBullet;
 
     private float attackInterval;
     private float attackIntervalCountdown;
-
-    public int BulletLevel { get => bulletLevel; private set => bulletLevel = value; }
 
     private void Awake()
     {
@@ -42,6 +42,8 @@ public class PlayerBulletManager : MonoBehaviour
 
     void Start()
     {
+        Enum.TryParse<TypeOfGun>(GameManager.instance.GetPlayerGunType(), out typeBullet);
+
         previousTypeBullet = typeBullet;
         attackIntervalCountdown = 0;
 
@@ -49,17 +51,23 @@ public class PlayerBulletManager : MonoBehaviour
 
         pLaser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
         laser = pLaser.GetComponent<Laser>();
+
+        GameplayUI.instance.OnFireNukeButton += OnFireNukeButton;
+    }
+
+    private void OnFireNukeButton(object sender, System.EventArgs e){
+        FireNuke();
     }
 
     void Update()
     {
         if (PauseMenu.isPaused)
             return;
+        
         Fire();
-        FireRocket();
         ChangeBulletType();
 
-        if(attackIntervalCountdown > 0)
+        if (attackIntervalCountdown > 0)
         {
             attackIntervalCountdown -= Time.deltaTime;
         }
@@ -67,18 +75,23 @@ public class PlayerBulletManager : MonoBehaviour
 
     private void ChangeBulletType()
     {
-        if(typeBullet != previousTypeBullet)
+        if (typeBullet != previousTypeBullet)
         {
             laser.DisableLaser();
             previousTypeBullet = typeBullet;
         }
 
-        if (typeBullet == TypeOfBullet.MainGun)
+        if (typeBullet == TypeOfGun.MainGun)
         {
             attackInterval = mainGunAttackInterval;
         }
 
-        else if (typeBullet == TypeOfBullet.DoubleshotGun)
+        else if (typeBullet == TypeOfGun.DoubleshotGun)
+        {
+            attackInterval = doubleshotGunAttackInterval;
+        }
+        
+        else if (typeBullet == TypeOfGun.HomingGun)
         {
             attackInterval = doubleshotGunAttackInterval;
         }
@@ -92,34 +105,47 @@ public class PlayerBulletManager : MonoBehaviour
             return;
         }
 
+        TapMouse();
+        HoldMouse();
+        UnholdMouse();
+    }
+
+    private void TapMouse(){
         if (Input.GetMouseButtonDown(0))
         {
-            if (typeBullet == TypeOfBullet.Laser)
+            if (typeBullet == TypeOfGun.LaserGun)
             {
                 laser.EnableLaser();
                 AudioManager.instance.PlayPlayerShootLaser();
             }
-                
-            if (typeBullet == TypeOfBullet.MainGun)
+
+            if (typeBullet == TypeOfGun.MainGun)
                 mainGunPool.FireBullet();
-            if (typeBullet == TypeOfBullet.DoubleshotGun)
+            if (typeBullet == TypeOfGun.DoubleshotGun)
                 doubleshotPool.FireBullet();
+            if (typeBullet == TypeOfGun.HomingGun)
+                homingPool.FireBullet();
         }
+    }
+
+    private void HoldMouse(){
         if (Input.GetMouseButton(0))
         {
-            if (typeBullet == TypeOfBullet.Laser)
+            if (typeBullet == TypeOfGun.LaserGun)
             {
                 laser.UpdateLaser(transform, Vector3.up);
             }
-                
+
             else
             {
                 if (attackIntervalCountdown <= 0)
                 {
-                    if (typeBullet == TypeOfBullet.DoubleshotGun)
+                    if (typeBullet == TypeOfGun.DoubleshotGun)
                         doubleshotPool.FireBullet();
-                    if (typeBullet == TypeOfBullet.MainGun)
+                    if (typeBullet == TypeOfGun.MainGun)
                         mainGunPool.FireBullet();
+                    if (typeBullet == TypeOfGun.HomingGun)
+                        homingPool.FireBullet();
 
                     AudioManager.instance.PlayPlayerShoot();
 
@@ -127,33 +153,23 @@ public class PlayerBulletManager : MonoBehaviour
                 }
             }
         }
+    }
 
+    private void UnholdMouse(){
         if (Input.GetMouseButtonUp(0))
         {
             laser.DisableLaser();
         }
-        
     }
 
-    private void FireRocket()
+    private void FireNuke()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && GameManager.sharedInstance.GetNukeValue() > 0)
+        if (GameManager.instance.GetNukeValue() > 0)
         {
-            rocketPool.Fire();
-            AudioManager.instance.PlayPlayerShootRocket();
-            GameManager.sharedInstance.DecreNuke();
-        }
-    }
+            nukePool.FireBullet();
 
-    public void IncreaseBulletLevel()
-    {
-        if(bulletLevel < 8)
-            bulletLevel++;
-    }
-    
-    public void DecreaseBulletLevel()
-    {
-        if(bulletLevel > 0)
-            bulletLevel--;
+            AudioManager.instance.PlayPlayerNuke();
+            GameManager.instance.DecreaseNuke();
+        }
     }
 }

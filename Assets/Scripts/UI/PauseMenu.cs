@@ -6,40 +6,24 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuUI;
     public static bool isPaused;
-    AudioManager audioManager;
 
-    private void Awake()
-    {
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    private void Start() {
+        GameplayUI.instance.OnPauseButton += OnPauseButton;
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (isPaused)
-            {
-                resumeGame();
-            }
-            else
-            {
-                pauseGame();
-            }
-
-        }
+    private void OnPauseButton(object sender, System.EventArgs e){
+        PauseGame();
     }
 
-    public void pauseGame()
+    public void PauseGame()
     {
         pauseMenuUI.GetComponent<PauseMenuUI>().Show();
         Time.timeScale = 0f;
-        audioManager.PlaySFX(audioManager.pause);
+        AudioManager.instance.PlaySFX(AudioManager.instance.pause);
         isPaused = true;
     }
 
-    public void resumeGame()
+    public void ResumeGame()
     {
         pauseMenuUI.GetComponent<PauseMenuUI>().Hide();
         Time.timeScale = 1f;

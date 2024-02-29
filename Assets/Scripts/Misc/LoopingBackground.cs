@@ -10,25 +10,13 @@ public class LoopingBackground : MonoBehaviour
     [SerializeField] private Sprite[] backgroundType;
     [SerializeField] private Transform[] backgroundPieces;
     [SerializeField] private float scrollSpeed = 0.5f;
-    [SerializeField] private float warpSpeed = 100f;
-    [SerializeField] private float normalSpeed = 5f;
-
     private Vector3 startPos;
     private float repeatWidth;
 
     private void Start()
     {
-        WarpIn();
-
         startPos = transform.position;
         repeatWidth = GetComponent<BoxCollider2D>().size.y * 0.5f;
-
-        BossManager.instance.OnBossDestroy += Instance_OnBossDestroy;
-    }
-
-    private void Instance_OnBossDestroy(object sender, System.EventArgs e)
-    {
-        WarpOut();
     }
 
     void Update()
@@ -44,45 +32,8 @@ public class LoopingBackground : MonoBehaviour
         transform.position += Time.deltaTime * scrollSpeed * Vector3.down;
     }
 
-    private void WarpOut()
+    public void ChangeBG(int type)
     {
-        AudioManager.instance.PlayPlayerWarpOut();
-        DOVirtual.Float(normalSpeed, warpSpeed, 20f, v =>
-        {
-            scrollSpeed = v;
-        }).SetEase(Ease.OutCubic).OnComplete(() =>
-        {
-            GameplayUI.instance.SceneFadeIn();
-            
-            StartCoroutine(WaitForWarpIn());
-        });
-    }
-    
-    private void WarpIn()
-    {
-        GameplayUI.instance.SceneFadeOut();
-        AudioManager.instance.PlayPlayerWarpIn();
-        ChangeBG();
-        DOVirtual.Float(warpSpeed, normalSpeed, 10f, v =>
-        {
-            scrollSpeed = v;
-        }).SetEase(Ease.OutCubic).OnComplete(() =>
-        {
-            EnemySpawner.Instance.StartSpawn();
-            AudioManager.instance.PlayBG(EnemySpawner.Instance.stage);
-        });
-    }
-
-    IEnumerator WaitForWarpIn()
-    {
-        yield return new WaitForSeconds(10f);
-        WarpIn();
-    }
-
-    private void ChangeBG()
-    {
-        int type = EnemySpawner.Instance.stage;
-
         if(type >= backgroundType.Length)
             type = backgroundType.Length - 1;
 
@@ -91,4 +42,12 @@ public class LoopingBackground : MonoBehaviour
             bg.GetComponent<SpriteRenderer>().sprite = backgroundType[type];
         }
     }
+
+    public void ScrollSpeedEase(float initialSpeed, float targetSpeed, float duration){
+        DOVirtual.Float(initialSpeed, targetSpeed, duration, v =>
+        {
+            scrollSpeed = v;
+        }).SetEase(Ease.OutCubic);        
+    }
+    
 }

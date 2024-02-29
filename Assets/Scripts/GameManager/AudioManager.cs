@@ -46,6 +46,9 @@ public class AudioManager : MonoBehaviour
         explode.LoadAudioData();
 
         Player.instance.OnPlayerHit += Player_OnPlayerHit;
+        BossManager.instance.OnBossSpawn += BossManager_OnBossSpawn;
+
+        PlayBGM(GameManager.instance.GetPlayerStage());
     }
 
     private void Player_OnPlayerHit(object sender, System.EventArgs e)
@@ -53,7 +56,12 @@ public class AudioManager : MonoBehaviour
         PlayExplode();
     }
 
-    public void PlayBG(int index)
+    private void BossManager_OnBossSpawn(object sender, System.EventArgs e){
+        PlayBossTheme();
+    }
+
+
+    public void PlayBGM(int index)
     {
         if(index >= background.Length)
             index = background.Length - 1;
@@ -98,17 +106,17 @@ public class AudioManager : MonoBehaviour
         PlaySFX(playerShootLaser);
     }
     
-    public void PlayPlayerShootRocket() 
+    public void PlayPlayerNuke() 
     {
         PlaySFX(playerShootRocket);
     }
 
-    public void PlayPlayerWarpIn()
+    public void PlayPlayerWarpOut()
     {
         PlaySFX(playerWarpIn);
     }
 
-    public void PlayPlayerWarpOut()
+    public void PlayPlayerWarpIn()
     {
         PlaySFX(playerWarpOut);
     }
@@ -123,10 +131,10 @@ public class AudioManager : MonoBehaviour
         StartFadeInOut(musicSource, bossTheme2, 2);
     }
 
-    public void PlayVictoryTheme()
+    public void PlayVictoryTheme(float delay)
     {
         musicSource.Stop();
-        StartCoroutine(WaitForPlaySFX(5f));
+        StartCoroutine(WaitForPlaySFX(delay));
     }
 
     IEnumerator WaitForPlaySFX(float delay)
