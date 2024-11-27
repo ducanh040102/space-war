@@ -18,8 +18,6 @@ public class PlayerBulletManager : MonoBehaviour
 
     [SerializeField] private float mainGunAttackInterval;
     [SerializeField] private float doubleshotGunAttackInterval;
-    [SerializeField] private float homingGunAttackInterval;
-
     [SerializeField] private MainGunPool mainGunPool;
     [SerializeField] private DoubleshotPool doubleshotPool;
     [SerializeField] private PlayerHomingBulletPool homingPool;

@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerName;
     [SerializeField] private GameObject shieldPrefab;
     [SerializeField] private bool hasShield = false;
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float MoveSpeed = 200f;
 
     private Vector3 lastMousePosition;
 
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
 
     private void MoveWithDirection(Vector3 direction)
     {
-        transform.position += direction * Time.deltaTime * moveSpeed;
+        transform.position += direction * Time.deltaTime * MoveSpeed;
     }
 
     public void Damage()

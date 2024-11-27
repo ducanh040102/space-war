@@ -16,10 +16,10 @@ MonoBehaviour:
   playerType: 0
   playerWave: 1
   playerStage: 0
-  playerHP: 2
-  playerNuke: 100
+  playerHP: 5
+  playerNuke: 0
   playerScore: 0
-  playerBulletLevel: 8
-  playerGunType: HomingGun
+  playerBulletLevel: 0
+  playerGunType: MainGun
   playerPlaying: 0
   playerDataDefaultSO: {fileID: 11400000}
